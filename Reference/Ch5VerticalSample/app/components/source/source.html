@@ -1,0 +1,15 @@
+<section class="details-container theme-bg">
+  <h1 class="text-uppercase" data-ch5-textcontent="source.title">Present a Source</h1>
+  <p class="lead desc-title" data-ch5-textcontent="source.description">Some inforamtion...</p>
+  <hr>
+  <ch5-list class="source-list" indexId="idx" size="4" maxWidth="1000px" receiveStateSize="source.item.size"
+    orientation="horizontal">
+    <template ngNonBindable>
+      <div class="horizontal-list-item">
+        <ch5-button customClass="source-btn-{{idx}}" class="d-block" type="text" shape="rectangle"
+          receivestatelabel="source.button.label{{idx}}" receivestateiconclass="source.button.icon{{idx}}"
+          iconPosition="top" receiveStateSelected="source.button.active.state{{idx}}"></ch5-button>
+      </div>
+    </template>
+  </ch5-list>
+</section>

@@ -1,0 +1,117 @@
+{
+  "buttons": {
+    "title": "BOUTONS",
+    "descripton": "Boutons entièrement personnalisables avec Crestron CH5. Touchez un bouton pour voir les animations des boutons.",
+    "icon": {
+      "title": "BOUTONS D'ICÔNE"
+    },
+    "standard": {
+      "title": "BOUTONS STANDARD",
+      "btn": {
+        "primary": "PRIMAIRE",
+        "default": "DÉFAUT",
+        "secondary": "SECONDAIRE",
+        "succes": "SUCCÈS",
+        "info": "INFO",
+        "warning": "ATTENTION",
+        "danger": "DANGER"
+      }
+    },
+    "gradient": {
+      "title": "BOUTONS DE GRADIENT",
+      "btn": {
+        "peach": "PÊCHE",
+        "purple": "VIOLET",
+        "blue": "BLEU",
+        "aqua": "AQUA"
+      }
+    },
+    "outlined": {
+      "title": "BOUTONS DÉTAILLÉS",
+      "btn": {
+        "primary": "PRIMAIRE",
+        "default": "DÉFAUT",
+        "secondary": "SECONDAIRE",
+        "succes": "SUCCÈS",
+        "info": "INFO",
+        "warning": "ATTENTION",
+        "danger": "DANGER"
+      }
+    },
+    "orientation": {
+      "title": "BOUTONS DÉTAILLÉS",
+      "btn": {
+        "horizontal": "Étiquette horizontale",
+        "vertical": "Étiquette verticale"
+      }
+    }
+  },
+  "lists": {
+    "title": "LISTES",
+    "description": "Utilisez les listes Crestron CH5 pour intégrer facilement la collecte de données.",
+    "header": "Liste de contacts",
+    "labels": {
+      "nickname": "Surnom",
+      "organization": "Organisation",
+      "title": "Titre",
+      "email": "Email",
+      "work": "Travail",
+      "extension": "Extension",
+      "mobile": "Mobile",
+      "home": "Accueil"
+    }
+  },
+  "source": {
+    "title": "Présenter une source",
+    "description": "Sélectionnez une source à connecter",
+    "sources": [
+      { "title": "HDMI", "icon": "fas fa-tv" },
+      { "title": "Airboard", "icon": "fas fa-chalkboard" },
+      { "title": "Portable", "icon": "fas fa-laptop" },
+      { "title": "AirMedia", "icon": "fas fa-wifi" }
+    ]
+  },
+  "lighting": {
+    "title": "ÉCLAIRAGE",
+    "heading": "GRANDE SALLE",
+    "alllights": "TOUTES LES LUMIÈRES",
+    "lightName": [
+      "Lampe",
+      "Bras de lumière",
+      "Downlights",
+      "Mur de médias",
+      "Des pistes",
+      "Pendentifs"
+    ],
+    "sceneTitle": "Des scènes",
+    "scenes": [
+      { "name": "TOUT SUR" },
+      { "name": "TOUS OFF" },
+      { "name": "HAUTE" },
+      { "name": "MOYEN" },
+      { "name": "FAIBLE" }
+    ]
+  },
+  "video": {
+    "title": "Vidéo",
+    "description": "Afficher la vidéo en streaming"
+  },
+  "swiperSlides": [
+    {
+      "thumbTitle": "Boutons"
+    },
+    {
+      "thumbTitle": "Des listes"
+    },
+    {
+      "thumbTitle": "La source"
+    },
+    {
+      "thumbTitle": "Éclairage"
+    },
+    {
+      "thumbTitle": "Vidéo"
+    }
+  ],
+  "lang": "French"
+}

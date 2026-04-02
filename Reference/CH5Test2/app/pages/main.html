@@ -1,0 +1,40 @@
+<div class="main">
+    <ch5-button id="TVs"
+        label="Crestron Button 1"  
+        sendeventonclick="1"
+        type="default" size="x-large">
+    </ch5-button>
+    <ch5-button id="Music"
+    label="Crestron Button 2"
+    sendeventonclick="2"
+    type="default" size="x-large">
+    </ch5-button>
+    <ch5-button id="Lighting"
+    label="Crestron Button 3"
+    sendeventontouch="3"
+    type="default" size="x-large">
+    </ch5-button>
+    <ch5-button id="Climate"
+    label="Crestron Button 4"
+    sendeventontouch="4"
+    type="default" 
+    size="x-large"
+    noshowType="display"
+    receiveStateShow="8">
+    </ch5-button>
+    </div>
+
+<div id="slider">
+
+    <ch5-slider
+        value="0"
+        step="1"  
+        min="0"
+        max="65535"
+        sendEventOnChange="1"
+        receiveStateValue="1"
+        toolTipShowType="auto"
+        >
+    </ch5-slider>
+
+</div>

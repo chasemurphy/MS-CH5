@@ -1,0 +1,410 @@
+/* =========================================================
+   MS-CH5 — Global Design System
+   ========================================================= */
+
+:root {
+  /* Color Palette */
+  --cream:       #f0ece3;
+  --cream-dark:  #e4dfd4;
+  --cream-deep:  #d6d0c4;
+  --charcoal:    #1c1c1c;
+  --charcoal-2:  #2a2a2a;
+  --charcoal-3:  #383838;
+  --gold:        #c9a84c;
+  --gold-hi:     #dbb85a;
+  --gold-lo:     #a8873a;
+  --nav-bg:      #181818;
+
+  /* Gold with alpha — borders & accents */
+  --gold-border: rgba(201, 168, 76, 0.2);
+
+  /* Layout dimensions */
+  --header-height: 64px;
+  --nav-height: 64px;
+}
+
+/* ---- Reset ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+body {
+  background: var(--cream);
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  color: var(--charcoal);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =========================================================
+   Header Bar
+   ========================================================= */
+#header-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background: var(--charcoal);
+  border-bottom: 1px solid var(--gold-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+}
+
+#header-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+}
+
+/* Room name + chevron (hidden on home, shown on room-context pages) */
+#header-room {
+  display: none;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: var(--gold);
+  cursor: pointer;
+}
+
+#header-room .chevron {
+  margin-left: 6px;
+  font-size: 0.75rem;
+}
+
+#header-clock {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  color: var(--gold);
+  opacity: 0.6;
+}
+
+/* Breadcrumb (below header, hidden on home) */
+#breadcrumb {
+  display: none;
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  padding: 6px 24px;
+  background: var(--charcoal);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  color: var(--gold);
+  opacity: 0.5;
+  z-index: 99;
+}
+
+/* =========================================================
+   Page Container
+   ========================================================= */
+#page-container {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  bottom: var(--nav-height);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  padding: 24px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.page.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  visibility: visible;
+}
+
+/* =========================================================
+   Bottom Navigation Bar
+   ========================================================= */
+#bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  background: var(--nav-bg);
+  border-top: 1px solid var(--gold-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  z-index: 100;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 6px 12px;
+  color: #666;
+  transition: color 0.2s ease;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nav-item i {
+  font-size: 1.25rem;
+}
+
+.nav-item.active {
+  color: var(--gold);
+}
+
+.nav-item:not(.active):hover {
+  color: #999;
+}
+
+/* Context buttons (left/right) — hidden on home */
+.nav-context-btn {
+  display: none;
+  background: var(--charcoal-2);
+  border: none;
+  border-radius: 6px;
+  color: #999;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.nav-context-btn.active {
+  color: var(--gold);
+  background: var(--charcoal-3);
+}
+
+/* =========================================================
+   Home Page — Tile Grid
+   ========================================================= */
+.home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 32px;
+}
+
+.home-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 2rem;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.home-subtitle {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.95rem;
+  color: var(--charcoal-3);
+  margin-bottom: 32px;
+}
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.tile {
+  background: var(--cream-dark);
+  border: 1px solid rgba(28, 28, 28, 0.15);
+  border-radius: 12px;
+  padding: 28px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.tile:active {
+  transform: scale(0.97);
+}
+
+.tile-icon {
+  font-size: 2rem;
+  color: var(--charcoal-3);
+  margin-bottom: 10px;
+  transition: color 0.2s ease;
+}
+
+.tile-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--charcoal);
+  transition: color 0.2s ease;
+}
+
+/* Tile hover / active states */
+.tile:hover {
+  border-color: var(--gold);
+  background: #fff;
+}
+
+.tile:hover .tile-icon,
+.tile:hover .tile-label {
+  color: var(--gold);
+}
+
+.tile.active {
+  border-color: var(--gold);
+  background: #fff;
+}
+
+.tile.active .tile-icon,
+.tile.active .tile-label {
+  color: var(--gold);
+}
+
+/* Tile disabled state (future pages) */
+.tile.disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.tile.disabled:hover {
+  border-color: rgba(28, 28, 28, 0.15);
+  background: var(--cream-dark);
+}
+
+.tile.disabled:hover .tile-icon,
+.tile.disabled:hover .tile-label {
+  color: var(--charcoal-3);
+}
+
+.tile.disabled:active {
+  transform: none;
+}
+
+/* =========================================================
+   Room Dropdown Overlay (shared — wired in future)
+   ========================================================= */
+#room-dropdown-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 200;
+}
+
+#room-dropdown-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #111;
+  padding: 80px 24px 24px;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+#room-dropdown-overlay.open {
+  display: block;
+}
+
+#room-dropdown-overlay.open #room-dropdown-panel {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   Responsive — TSW-1080 (1920 x 1200)
+   ========================================================= */
+@media (min-width: 900px) {
+  :root {
+    --header-height: 72px;
+    --nav-height: 72px;
+  }
+
+  #header-title {
+    font-size: 1.8rem;
+  }
+
+  #header-clock {
+    font-size: 1.15rem;
+  }
+
+  .home-content {
+    padding-top: 48px;
+  }
+
+  .home-title {
+    font-size: 2.6rem;
+  }
+
+  .home-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+  }
+
+  .tile-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 800px;
+  }
+
+  .tile {
+    padding: 36px 20px;
+    border-radius: 14px;
+  }
+
+  .tile-icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+  }
+
+  .tile-label {
+    font-size: 1.25rem;
+  }
+
+  .nav-item i {
+    font-size: 1.4rem;
+  }
+
+  .nav-item {
+    font-size: 0.8rem;
+  }
+}

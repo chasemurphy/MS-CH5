@@ -1,0 +1,78 @@
+<div id="lightingPage" class="row">
+
+  <div id="scenes" class="col-3 my-3">
+    <div class="my-3 ml-3">
+      <ch5-button class="shadow-sm"
+      receiveStateLabel="11"
+      sendEventOnClick="11"
+      receiveStateSelected="11"
+      noshowType="remove" receiveStateShow="31"
+      stretch="width"
+      type="default"
+      shape="rectangle">
+      </ch5-button>
+    </div>
+    <div class="my-3 ml-3">
+      <ch5-button class="shadow-sm"
+      receiveStateLabel="12"
+      sendEventOnClick="12"
+      receiveStateSelected="12"
+      noshowType="remove" receiveStateShow="32"
+      type="default"
+      stretch="width"
+      shape="rectangle">
+      </ch5-button>
+    </div>
+    <div class="my-3 ml-3">
+      <ch5-button class="shadow-sm"
+      receiveStateLabel="13"
+      sendEventOnClick="13"
+      receiveStateSelected="13"
+      noshowType="remove" receiveStateShow="33"
+      type="default"
+      stretch="width"
+      shape="rectangle">
+      </ch5-button>
+    </div>
+    <div class="my-3 ml-3">
+      <ch5-button class="shadow-sm"
+      receiveStateLabel="14"
+      sendEventOnClick="14"
+      receiveStateSelected="14"
+      noshowType="remove" receiveStateShow="34"
+      type="default"
+      stretch="width"
+      shape="rectangle">
+      </ch5-button>
+    </div>
+  </div>
+
+
+
+
+  <div id="lightingMain"  class="float-right col-9">
+    <ch5-list class="ch5-custom-list" maxHeight="640px" itemWidth="100%"  orientation="vertical" indexId="idx"
+    scrollbar="true" receiveStateSize="30">
+      <template>
+        <div class="vertical-list-item">
+          <span class="label" data-ch5-textcontent="11{{idx}}">Label</span>
+            <div class="d-flex align-items-center">
+              <ch5-button class="lighting-button"
+              shape="circle"
+              sendEventOnClick="11{{idx}}"
+              iconurl="./assets/img/lighting/fa-icon-lightbulb.svg">
+              </ch5-button>
+              <ch5-slider class="lighting-slider" stretch="width" handleShape="circle" toolTipShowType="auto"
+              sendEventOnChange="1{{idx}}" receiveStateValue="1{{idx}}"
+              orientation="horizontal">
+              </ch5-slider>
+              <ch5-button class="lighting-button"  shape="circle"
+              sendEventOnClick="31{{idx}}" iconClass="fas fa-lightbulb">
+              </ch5-button>
+            </div>
+        </div>
+      </template>
+    </ch5-list>
+  </div>
+</div>
+

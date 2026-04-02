@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHTest2 Touchpanel</title>
+    <!-- <link rel="stylesheet" href="app/assets/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="assets/css/dark-theme.css">  
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/custom new.css">
+ 
+</head>
+<body>
+    <div class="TSW">
+    <div class="header">
+        <h1>Media Systems Blue Steel 2.0</h1>
+    </div>
+    <div class="">
+    
+
+    <div class="" id="mainview" >
+
+    <ch5-triggerview  activeview="1"> 
+        <ch5-triggerview-child  receivestateshow="1">
+            <ch5-import-htmlsnippet class="" url="pages/main.html"></ch5-import-htmlsnippet>
+        </ch5-triggerview-child > 
+        <ch5-triggerview-child receivestateshow="2">
+            <ch5-import-htmlsnippet class="" url="pages/lighting.html"></ch5-import-htmlsnippet>
+        </ch5-triggerview-child >
+        <ch5-triggerview-child receivestateshow="3">
+            <div class="viewcontent">
+                <h1>Third View </h1>
+            </div> 
+        </ch5-triggerview-child >
+    </ch5-triggerview>
+
+    </div>
+
+    <!-- <div>
+    <ch5-list indexid="idx"
+    size="12"
+    indexId="idx"
+    orientation="horizontal"
+    itemheight="90px"
+    itemwidth="200px"
+    minwidth="250px"
+    maxwidth="100%"
+    minheight="100px"
+    maxheight="90px"
+    pagedswipe="false"
+    endless="false"
+    >
+    <template>
+        <div class="">
+            <ch5-button 
+            id="pages"
+            receiveStateLabel="1{{idx}}"
+            sendEventOnClick="1{{idx}}"
+            receiveStateSelected="1{{idx}}"
+            stretch="both"
+            type="default"
+            size="x-large"
+            shape="rectangle"
+            >
+            </ch5-button> 
+        </div>  
+    </template>
+    </ch5-list>
+
+    </div> -->
+
+    <div id="bottomRow" class="row">
+        <ch5-button 
+        id="pages"
+        class="col"
+        receiveStateLabel="1"
+        sendEventOnClick="1"
+        receiveStateSelected="1"
+        noshowType="remove" receiveStateShow="31"
+        stretch="both"
+        type="default"
+        size="x-large"
+        shape="rectangle"
+        >
+        </ch5-button>
+        <ch5-button 
+        id="pages"
+        class="col"
+        receiveStateLabel="2"
+        sendEventOnClick="2"
+        receiveStateSelected="2"
+        noshowType="remove" receiveStateShow="32"
+        stretch="both"
+        type="default"
+        size="x-large"
+        shape="rectangle"
+        >
+        </ch5-button>
+        <ch5-button 
+        id="pages"
+        class="col"
+        receiveStateLabel="3"
+        sendEventOnClick="3"
+        receiveStateSelected="3"
+        noshowType="remove" receiveStateShow="33"
+        stretch="both"
+        type="default"
+        size="x-large"
+        shape="rectangle"
+        >
+        </ch5-button>
+        <ch5-button 
+        id="pages"
+        class="col"
+        receiveStateLabel="4"
+        sendEventOnClick="4"
+        receiveStateSelected="4"
+        noshowType="remove" receiveStateShow="34"
+        stretch="both"
+        type="default"
+        size="x-large"
+        shape="rectangle"
+        >
+        </ch5-button>
+        <ch5-button 
+        id="pages"
+        class="col"
+        receiveStateLabel="5"
+        sendEventOnClick="5"
+        receiveStateSelected="5"
+        noshowType="remove" receiveStateShow="35"
+        stretch="both"
+        type="default"
+        size="x-large"
+        shape="rectangle"
+        >
+        </ch5-button>
+        <ch5-button 
+        id="pages"
+        class="col"
+        receiveStateLabel="6"
+        sendEventOnClick="6"
+        receiveStateSelected="6"
+        noshowType="remove" receiveStateShow="36"
+        stretch="both"
+        type="default"
+        size="x-large"
+        shape="rectangle"
+        >
+        </ch5-button>
+    </div>
+
+</div>
+
+</div>
+
+    
+
+    
+    <script src="./assets/vendor/cr-com-lib.js"></script> 
+    <script src="./assets/vendor/component.js"></script> 
+    <script src="./assets/bootstrap.min.js"></script>  
+</body>
+</html>

@@ -1,0 +1,117 @@
+{
+  "buttons": {
+    "title": "TOETSEN",
+    "descripton": "Volledig aanpasbare knoppen met Crestron CH5. Tik op een knop om knopanimaties te bekijken.",
+    "icon": {
+      "title": "ICOONKNOPPEN"
+    },
+    "standard": {
+      "title": "STANDAARD KNOPPEN",
+      "btn": {
+        "primary": "PRIMAIR",
+        "default": "STANDAARD",
+        "secondary": "TWEEDE",
+        "succes": "SUCCES",
+        "info": "INFO",
+        "warning": "WAARSCHUWING",
+        "danger": "GEVAAR"
+      }
+    },
+    "gradient": {
+      "title": "GRADIENT KNOPPEN",
+      "btn": {
+        "peach": "PERZIK",
+        "purple": "PURPER",
+        "blue": "BLAUW",
+        "aqua": "AQUA"
+      }
+    },
+    "outlined": {
+      "title": "UITGEBREIDE KNOPEN",
+      "btn": {
+        "primary": "PRIMAR",
+        "default": "STANDAARD",
+        "secondary": "TWEEDE",
+        "succes": "SUCCES",
+        "info": "INFO",
+        "warning": "WAARSCHUWING",
+        "danger": "GEVAAR"
+      }
+    },
+    "orientation": {
+      "title": "UITGEBREIDE KNOPEN",
+      "btn": {
+        "horizontal": "Horizontaal etiket",
+        "vertical": "Verticaal label"
+      }
+    }
+  },
+  "lists": {
+    "title": "LIJST",
+    "description": "Gebruik Crestron CH5-lijsten om eenvoudig gegevensverzameling te integreren.",
+    "header": "Contactlijst",
+    "labels": {
+      "nickname": "Bijnaam",
+      "organization": "Organisatie",
+      "title": "Titel",
+      "email": "E-mail",
+      "work": "Werk",
+      "extension": "Uitbreiding",
+      "mobile": "mobiel",
+      "home": "Huis"
+    }
+  },
+  "source": {
+    "title": "Presenteer een bron",
+    "description": "Selecteer een bron om verbinding te maken",
+    "sources": [
+      { "title": "HDMI", "icon": "fas fa-tv" },
+      { "title": "Airboard", "icon": "fas fa-chalkboard" },
+      { "title": "Laptop", "icon": "fas fa-laptop" },
+      { "title": "AirMedia", "icon": "fas fa-wifi" }
+    ]
+  },
+  "lighting": {
+    "title": "VERLICHTING",
+    "heading": "GEWELDIGE KAMER",
+    "alllights": "ALLE LICHTEN",
+    "lightName": [
+      "Lamp",
+      "Sconces",
+      "Downlights",
+      "Media Wall",
+      "Sporen",
+      "Hangers"
+    ],
+    "sceneTitle": "Scenes",
+    "scenes": [
+      { "name": "ALLES AAN" },
+      { "name": "ALLES UIT" },
+      { "name": "HIGH" },
+      { "name": "MEDIUM" },
+      { "name": "LAAG" }
+    ]
+  },
+  "video": {
+    "title": "Video",
+    "description": "Geef streaming video weer"
+  },
+  "swiperSlides": [
+    {
+      "thumbTitle": "Toetsen"
+    },
+    {
+      "thumbTitle": "lijsten"
+    },
+    {
+      "thumbTitle": "Bron"
+    },
+    {
+      "thumbTitle": "Verlichting"
+    },
+    {
+      "thumbTitle": "Video"
+    }
+  ],
+  "lang": "Dutch"
+}

@@ -1,0 +1,805 @@
+{
+  "cues": [
+    {
+      "type": "n",
+      "event": "lighting.loads.level_change_0",
+      "trigger": "&change",
+      "actions": [
+        { "state": "lighting.loads.level_0", "type": "n", "logic": "link" }
+      ]
+    },
+    {
+      "type": "n",
+      "event": "lighting.loads.level_change_1",
+      "trigger": "&change",
+      "actions": [
+        { "state": "lighting.loads.level_1", "type": "n", "logic": "link" }
+      ]
+    },
+    {
+      "type": "n",
+      "event": "lighting.loads.level_change_2",
+      "trigger": "&change",
+      "actions": [
+        { "state": "lighting.loads.level_2", "type": "n", "logic": "link" }
+      ]
+    },
+    {
+      "type": "n",
+      "event": "lighting.loads.level_change_3",
+      "trigger": "&change",
+      "actions": [
+        { "state": "lighting.loads.level_3", "type": "n", "logic": "link" }
+      ]
+    },
+    {
+      "type": "n",
+      "event": "lighting.loads.level_change_4",
+      "trigger": "&change",
+      "actions": [
+        { "state": "lighting.loads.level_4", "type": "n", "logic": "link" }
+      ]
+    },
+    {
+      "type": "n",
+      "event": "lighting.loads.level_change_5",
+      "trigger": "&change",
+      "actions": [
+        { "state": "lighting.loads.level_5", "type": "n", "logic": "link" }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.lower_press_0",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_0",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 0, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.lower_press_0",
+      "trigger": false,
+      "actions": [
+        {
+          "state": "lighting.loads.level_0",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 13107, "time": 0 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.lower_press_1",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_1",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 0, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.lower_press_1",
+      "trigger": false,
+      "actions": [
+        {
+          "state": "lighting.loads.level_1",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 13107, "time": 0 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.lower_press_2",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_2",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 0, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.lower_press_2",
+      "trigger": false,
+      "actions": [
+        {
+          "state": "lighting.loads.level_2",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 13107, "time": 0 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.lower_press_3",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_3",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 0, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.lower_press_3",
+      "trigger": false,
+      "actions": [
+        {
+          "state": "lighting.loads.level_3",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 13107, "time": 0 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.lower_press_4",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_4",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 0, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.lower_press_4",
+      "trigger": false,
+      "actions": [
+        {
+          "state": "lighting.loads.level_4",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 13107, "time": 0 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.lower_press_5",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_5",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 0, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.lower_press_5",
+      "trigger": false,
+      "actions": [
+        {
+          "state": "lighting.loads.level_5",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 13107, "time": 0 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.raise_press_0",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_0",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 65535, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.raise_press_0",
+      "trigger": false,
+      "actions": [
+        {
+          "state": "lighting.loads.level_0",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 52428, "time": 0 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.raise_press_1",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_1",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 65535, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.raise_press_1",
+      "trigger": false,
+      "actions": [
+        {
+          "state": "lighting.loads.level_1",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 52428, "time": 0 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.raise_press_2",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_2",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 65535, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.raise_press_2",
+      "trigger": false,
+      "actions": [
+        {
+          "state": "lighting.loads.level_2",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 52428, "time": 0 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.raise_press_3",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_3",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 65535, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.raise_press_3",
+      "trigger": false,
+      "actions": [
+        {
+          "state": "lighting.loads.level_3",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 52428, "time": 0 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.raise_press_4",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_4",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 65535, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.raise_press_4",
+      "trigger": false,
+      "actions": [
+        {
+          "state": "lighting.loads.level_4",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 52428, "time": 0 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.raise_press_5",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_5",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 65535, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.raise_press_5",
+      "trigger": false,
+      "actions": [
+        {
+          "state": "lighting.loads.level_5",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 52428, "time": 0 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.off_click_0",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_0",
+          "type": "object",
+          "logic": "set",
+          "value": {
+            "rcb": {
+              "value": 0,
+              "time": 300
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.off_click_1",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_1",
+          "type": "object",
+          "logic": "set",
+          "value": {
+            "rcb": {
+              "value": 0,
+              "time": 300
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.off_click_2",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_2",
+          "type": "object",
+          "logic": "set",
+          "value": {
+            "rcb": {
+              "value": 0,
+              "time": 300
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.off_click_3",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_3",
+          "type": "object",
+          "logic": "set",
+          "value": {
+            "rcb": {
+              "value": 0,
+              "time": 300
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.off_click_4",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_4",
+          "type": "object",
+          "logic": "set",
+          "value": {
+            "rcb": {
+              "value": 0,
+              "time": 300
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.off_click_5",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_5",
+          "type": "object",
+          "logic": "set",
+          "value": {
+            "rcb": {
+              "value": 0,
+              "time": 300
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.on_click_0",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_0",
+          "type": "object",
+          "logic": "set",
+          "value": {
+            "rcb": {
+              "value": 65535,
+              "time": 300
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.on_click_1",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_1",
+          "type": "object",
+          "logic": "set",
+          "value": {
+            "rcb": {
+              "value": 65535,
+              "time": 300
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.on_click_2",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_2",
+          "type": "object",
+          "logic": "set",
+          "value": {
+            "rcb": {
+              "value": 65535,
+              "time": 300
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.on_click_3",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_3",
+          "type": "object",
+          "logic": "set",
+          "value": {
+            "rcb": {
+              "value": 65535,
+              "time": 300
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.on_click_4",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_4",
+          "type": "object",
+          "logic": "set",
+          "value": {
+            "rcb": {
+              "value": 65535,
+              "time": 300
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.loads.on_click_5",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_5",
+          "type": "object",
+          "logic": "set",
+          "value": {
+            "rcb": {
+              "value": 65535,
+              "time": 300
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.scenes.select_0",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_0",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 65535, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_1",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 65535, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_2",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 65535, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_3",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 65535, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_4",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 65535, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_5",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 65535, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.scenes.select_1",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_0",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 0, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_1",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 0, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_2",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 0, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_3",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 0, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_4",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 0, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_5",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 0, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.scenes.select_2",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_0",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 55555, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_1",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 50000, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_2",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 48900, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_3",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 47100, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_4",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 60000, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_5",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 64000, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.scenes.select_3",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_0",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 32000, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_1",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 29123, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_2",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 35321, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_3",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 28921, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_4",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 30000, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_5",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 34100, "time": 300 } }
+        }
+      ]
+    },
+    {
+      "type": "b",
+      "event": "lighting.scenes.select_4",
+      "trigger": true,
+      "actions": [
+        {
+          "state": "lighting.loads.level_0",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 2000, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_1",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 12000, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_2",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 5000, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_3",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 8921, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_4",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 12000, "time": 300 } }
+        },
+        {
+          "state": "lighting.loads.level_5",
+          "type": "object",
+          "logic": "set",
+          "value": { "rcb": { "value": 3456, "time": 300 } }
+        }
+      ]
+    }
+  ],
+  "onStart": [
+    { "state": "lighting.loads.size", "type": "n", "value": 6 },
+    { "state": "lighting.loads.level_0", "type": "n", "value": 20000 },
+    { "state": "lighting.loads.level_1", "type": "n", "value": 30000 },
+    { "state": "lighting.loads.level_2", "type": "n", "value": 12345 },
+    { "state": "lighting.loads.level_3", "type": "n", "value": 54321 },
+    { "state": "lighting.loads.level_4", "type": "n", "value": 234 },
+    { "state": "lighting.loads.level_5", "type": "n", "value": 60000 },
+    { "state": "lighting.scenes.size", "type": "n", "value": 5 }
+  ]
+}

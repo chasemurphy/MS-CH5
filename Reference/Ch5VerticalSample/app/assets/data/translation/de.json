@@ -1,0 +1,117 @@
+{
+  "buttons": {
+    "title": "BUTTONS",
+    "descripton": "Vollständig anpassbare Tasten mit Crestron CH5. Berühren Sie eine Schaltfläche, um Schaltflächenanimationen anzuzeigen.",
+    "icon": {
+      "title": "IKONEN BUTTONS"
+    },
+    "standard": {
+      "title": "STANDARD BUTTONS",
+      "btn": {
+        "primary": "PRIMÄR",
+        "default": "STANDARD",
+        "secondary": "SEKUNDÄR",
+        "succes": "ERFOLG",
+        "info": "INFO",
+        "warning": "WARNUNG",
+        "danger": "ACHTUNG"
+      }
+    },
+    "gradient": {
+      "title": "GRADIENT-BUTTONS",
+      "btn": {
+        "peach": "PFIRSICH",
+        "purple": "LILA",
+        "blue": "BLAU",
+        "aqua": "AQUA"
+      }
+    },
+    "outlined": {
+      "title": "AUSGEZEICHNETE BUTTONS",
+      "btn": {
+        "primary": "PRIMÄR",
+        "default": "STANDARD",
+        "secondary": "SEKUNDÄR",
+        "succes": "ERFOLG",
+        "info": "INFO",
+        "warning": "WARNUNG",
+        "danger": "ACHTUNG"
+      }
+    },
+    "orientation": {
+      "title": "AUSGEZEICHNETE BUTTONS",
+      "btn": {
+        "horizontal": "Horizontales Etikett",
+        "vertical": "Vertikale Etikett"
+      }
+    }
+  },
+  "lists": {
+    "title": "LISTEN",
+    "description": "Verwenden Sie Crestron CH5-Listen, um die Datenerfassung einfach zu integrieren.",
+    "header": "Kontaktliste",
+    "labels": {
+      "nickname": "Spitzname",
+      "organization": "Organisation",
+      "title": "Titel",
+      "email": "Email",
+      "work": "Arbeit",
+      "extension": "Erweiterung",
+      "mobile": "Handy, Mobiltelefon",
+      "home": "Zuhause"
+    }
+  },
+  "source": {
+    "title": "Präsentieren Sie eine Quelle",
+    "description": "Wählen Sie eine Quelle für die Verbindung",
+    "sources": [
+      { "title": "HDMI", "icon": "fas fa-tv" },
+      { "title": "Airboard", "icon": "fas fa-chalkboard" },
+      { "title": "Laptop", "icon": "fas fa-laptop" },
+      { "title": "AirMedia", "icon": "fas fa-wifi" }
+    ]
+  },
+  "lighting": {
+    "title": "BELEUCHTUNG",
+    "heading": "WOHNBEREICH",
+    "alllights": "ALLE LICHTER",
+    "lightName": [
+      "Lampe",
+      "Wandlampen",
+      "Downlights",
+      "Medienwand",
+      "Lichtschiene",
+      "Pendelleuchte"
+    ],
+    "sceneTitle": "Szenen",
+    "scenes": [
+      { "name": "ALLE EIN" },
+      { "name": "ALLE AUS" },
+      { "name": "HOCH" },
+      { "name": "MITTEL" },
+      { "name": "NIEDRIG" }
+    ]
+  },
+  "video": {
+    "title": "Video",
+    "description": "Streaming-Video anzeigen"
+  },
+  "swiperSlides": [
+    {
+      "thumbTitle": "Buttons"
+    },
+    {
+      "thumbTitle": "Listen"
+    },
+    {
+      "thumbTitle": "Quelle"
+    },
+    {
+      "thumbTitle": "Beleuchtung"
+    },
+    {
+      "thumbTitle": "Video"
+    }
+  ],
+  "lang": "German"
+}

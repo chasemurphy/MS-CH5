@@ -1,0 +1,118 @@
+{
+  "buttons": {
+    "title": "BOTONES",
+    "descripton": "Botones totalmente personalizables con Crestron CH5. Toque un botón para ver las animaciones de los botones",
+    "icon": {
+      "title": "Botones de iconos"
+    },
+    "standard": {
+      "title": "BOTONES ESTANDAR",
+      "btn": {
+        "primary": "PRIMARIO",
+        "default": "DEFECTO",
+        "secondary": "SECUNDARIO",
+        "succes": "ÉXITO",
+        "info": "INFO",
+        "warning": "ADVERTENCIA",
+        "danger": "PELIGRO"
+      }
+    },
+    "gradient": {
+      "title": "BOTONES GRADIENTES",
+      "btn": {
+        "peach": "MELOCOTÓN",
+        "purple": "PÚRPURA",
+        "blue": "AZUL",
+        "aqua": "AGUA"
+      }
+    },
+    "outlined": {
+      "title": "BOTONES ESCRITOS",
+      "btn": {
+        "primary": "PRIMARIO",
+        "default": "DEFECTO",
+        "secondary": "SECUNDARIO",
+        "succes": "ÉXITO",
+        "info": "INFO",
+        "warning": "ADVERTENCIA",
+        "danger": "PELIGRO"
+      }
+    },
+    "orientation": {
+      "title": "BOTONES DE ORIENTACION",
+      "btn": {
+        "horizontal": "Etiqueta horizontal",
+        "vertical": "Etiqueta vertical"
+      }
+    }
+  },
+  "lists": {
+    "title": "LIZA",
+    "description": "Utilice Crestron CH5 para crear listas de desplazamiento suave de cualquier tamaño con cualquier contenido.",
+    "header": "Lista de contactos",
+    "labels": {
+      "nickname": "Apodo",
+      "organization": "Organización",
+      "title": "Título",
+      "email": "Email",
+      "work": "Trabajo",
+      "extension": "Extensión",
+      "mobile": "Móvil",
+      "home": "Casa"
+    }
+  },
+  "source": {
+    "title": "Presentar una fuente",
+    "description": "Seleccione una fuente para conectarse",
+    "sources": [
+      { "title": "HDMI", "icon": "fas fa-tv" },
+      { "title": "Aeronaves", "icon": "fas fa-chalkboard" },
+      { "title": "Ordenador Portátil", "icon": "fas fa-laptop" },
+      { "title": "AirMedia", "icon": "fas fa-wifi" }
+    ]
+  },
+  "lighting": {
+    "title": "ILUMINACIÓN",
+    "heading": "BUENA HABITACIÓN",
+    "alllights": "Todas las luces",
+    "lightName": [
+      "Lámpara",
+      "Apliques",
+      "Downlights",
+      "Pared de medios",
+      "Pistas",
+      "Colgantes"
+    ],
+    "sceneTitle": "Escenas",
+    "scenes": [
+      { "name": "TODO ENCENDIDO" },
+      { "name": "TODO APAGADO" },
+      { "name": "ALTO" },
+      { "name": "MEDIO" },
+      { "name": "BAJO" }
+    ]
+  },
+  "video": {
+    "title": "Vídeo",
+    "description": "Mostrar video en tiempo real"
+  },
+  "swiperSlides": [
+    {
+      "thumbTitle": "Botones"
+    },
+    {
+      "thumbTitle": "Liza"
+    },
+    {
+      "thumbTitle": "Fuente"
+    },
+    {
+      "thumbTitle": "Iluminación"
+    },
+    {
+      "thumbTitle": "Vídeo"
+    }
+  ],
+
+  "lang": "spanish"
+}
