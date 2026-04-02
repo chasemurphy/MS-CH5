@@ -2,7 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
-const appName = 'ms-ch5';
+const appName = 'msch5';
 const basePath = path.resolve(__dirname);
 const distPath = `dist/${appName}`;
 const nodeModules = './node_modules/';
@@ -12,11 +12,6 @@ const fontAwesomeCssBasePath = `${nodeModules}@fortawesome/fontawesome-free/css`
 let copyToDest = [];
 
 let fromToList = {
-  components: {
-    to: `${distPath}/components`,
-    from: `${srcRoot}components/**/*.html`,
-    context: 'app/components'
-  },
   fontIcon: {
     to: `${distPath}/assets/webfonts`,
     from: `${nodeModules}@fortawesome/fontawesome-free/webfonts/**/*`

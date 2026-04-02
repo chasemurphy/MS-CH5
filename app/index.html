@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>MS Home Control</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./assets/css/external.css" />
+  <link rel="stylesheet" href="./assets/css/main.css" />
+</head>
+
+<body>
+
+  <!-- ===== Header Bar ===== -->
+  <header id="header-bar">
+    <span id="header-title">Home Control</span>
+  </header>
+
+  <!-- ===== Page Container ===== -->
+  <main id="page-container">
+    <div id="page-home" class="page active">
+      <div class="home-content">
+        <h1 class="home-title">Home Control</h1>
+        <p class="home-subtitle">Select a system</p>
+        <div class="tile-grid">
+
+          <ch5-button id="tile-lighting"
+            label="Lighting"
+            iconClass="fas fa-lightbulb"
+            iconPosition="top"
+            sendEventOnClick="1"
+            receiveStateSelected="1"
+            noshowtype="remove"
+            receiveStateShow="11"
+            type="default"
+            shape="rectangle"
+            size="x-large"
+            stretch="both">
+          </ch5-button>
+
+          <ch5-button id="tile-climate"
+            label="Climate"
+            iconClass="fas fa-thermometer-half"
+            iconPosition="top"
+            sendEventOnClick="2"
+            receiveStateSelected="2"
+            noshowtype="remove"
+            receiveStateShow="12"
+            type="default"
+            shape="rectangle"
+            size="x-large"
+            stretch="both">
+          </ch5-button>
+
+          <ch5-button id="tile-shades"
+            label="Shades"
+            iconClass="fas fa-window-maximize"
+            iconPosition="top"
+            sendEventOnClick="3"
+            receiveStateSelected="3"
+            noshowtype="remove"
+            receiveStateShow="13"
+            type="default"
+            shape="rectangle"
+            size="x-large"
+            stretch="both">
+          </ch5-button>
+
+          <ch5-button id="tile-av"
+            label="AV"
+            iconClass="fas fa-tv"
+            iconPosition="top"
+            sendEventOnClick="4"
+            receiveStateSelected="4"
+            noshowtype="remove"
+            receiveStateShow="14"
+            type="default"
+            shape="rectangle"
+            size="x-large"
+            stretch="both">
+          </ch5-button>
+
+          <ch5-button id="tile-music"
+            label="Music"
+            iconClass="fas fa-music"
+            iconPosition="top"
+            sendEventOnClick="5"
+            receiveStateSelected="5"
+            noshowtype="remove"
+            receiveStateShow="15"
+            type="default"
+            shape="rectangle"
+            size="x-large"
+            stretch="both">
+          </ch5-button>
+
+          <ch5-button id="tile-security"
+            label="Security"
+            iconClass="fas fa-shield-alt"
+            iconPosition="top"
+            sendEventOnClick="6"
+            receiveStateSelected="6"
+            noshowtype="remove"
+            receiveStateShow="16"
+            type="default"
+            shape="rectangle"
+            size="x-large"
+            stretch="both">
+          </ch5-button>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== Bottom Navigation ===== -->
+  <nav id="bottom-nav">
+    <ch5-button id="nav-home"
+      label="Home"
+      iconClass="fas fa-home"
+      iconPosition="top"
+      sendEventOnClick="200"
+      receiveStateSelected="200"
+      type="default"
+      shape="rectangle"
+      size="large">
+    </ch5-button>
+  </nav>
+
+  <!-- ===== Scripts ===== -->
+  <script src="./assets/vendor/cr-com-lib.js"></script>
+  <script src="./assets/vendor/component.js"></script>
+
+</body>
+</html>

@@ -10,23 +10,23 @@ const srcRoot = './app/';
 const crLib = glob.sync(`${nodeModules}@crestron/ch5-crcomlib/build_bundles/umd/cr-com-lib.js`);
 const servicesJs = glob.sync(`${srcRoot}services/*.js`);
 const componentsJs = glob.sync(`${srcRoot}components/**/*.js`);
-const jsList = [...crLib];
+const coreLibs = [...crLib];
 const componentsList = [...servicesJs, ...componentsJs];
 
 module.exports = merge(common, {
   mode: 'production',
   plugins: [
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       name: 'crcomlib',
       outputPath: 'assets/vendor/',
       fileName: 'cr-com-lib.js',
-      filesToConcat: jsList,
+      filesToConcat: coreLibs,
       attributes: { async: true }
     }),
     new ConcatPlugin({
-      uglify: true,
+      uglify: false,
       sourceMap: false,
       name: 'components',
       outputPath: 'assets/vendor/',

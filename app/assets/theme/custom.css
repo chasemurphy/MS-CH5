@@ -1,5 +1,5 @@
 /* =========================================================
-   MS-CH5 — Global Design System
+   MSCH5 — Global Design System
    ========================================================= */
 
 :root {
@@ -39,7 +39,7 @@ html, body {
 
 body {
   background: var(--cream);
-  font-family: 'Jost', sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: 400;
   color: var(--charcoal);
   -webkit-font-smoothing: antialiased;
@@ -64,51 +64,12 @@ body {
 }
 
 #header-title {
-  font-family: 'Cormorant Garamond', serif;
   font-weight: 600;
   font-size: 1.5rem;
   color: var(--gold);
   letter-spacing: 0.02em;
 }
 
-/* Room name + chevron (hidden on home, shown on room-context pages) */
-#header-room {
-  display: none;
-  font-family: 'Jost', sans-serif;
-  font-weight: 400;
-  font-size: 1.1rem;
-  color: var(--gold);
-  cursor: pointer;
-}
-
-#header-room .chevron {
-  margin-left: 6px;
-  font-size: 0.75rem;
-}
-
-#header-clock {
-  font-family: 'Jost', sans-serif;
-  font-weight: 300;
-  font-size: 1rem;
-  color: var(--gold);
-  opacity: 0.6;
-}
-
-/* Breadcrumb (below header, hidden on home) */
-#breadcrumb {
-  display: none;
-  position: fixed;
-  top: var(--header-height);
-  left: 0;
-  right: 0;
-  padding: 6px 24px;
-  background: var(--charcoal);
-  font-family: 'Jost', sans-serif;
-  font-size: 0.8rem;
-  color: var(--gold);
-  opacity: 0.5;
-  z-index: 99;
-}
 
 /* =========================================================
    Page Container
@@ -163,59 +124,56 @@ body {
   z-index: 100;
 }
 
-.nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  cursor: pointer;
-  background: none;
+/* Nav ch5-button overrides */
+#bottom-nav ch5-button {
+  display: inline-block;
+}
+
+#bottom-nav .ch5-button--default {
+  background-color: transparent;
   border: none;
-  padding: 6px 12px;
   color: #666;
-  transition: color 0.2s ease;
-  font-family: 'Jost', sans-serif;
+}
+
+#bottom-nav .ch5-button--default .cb-btn {
+  background-color: transparent;
+  padding: 6px 12px;
+}
+
+#bottom-nav .ch5-button--default .ch5-button--icon {
+  font-size: 1.25rem;
+  color: #666;
+}
+
+#bottom-nav .ch5-button--default .ch5-button--label {
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  color: #666;
 }
 
-.nav-item i {
-  font-size: 1.25rem;
+#bottom-nav .ch5-button--default.ch5-button--pressed {
+  background-color: transparent;
+  color: var(--gold-lo);
 }
 
-.nav-item.active {
+#bottom-nav .ch5-button--default.ch5-button--pressed .ch5-button--icon,
+#bottom-nav .ch5-button--default.ch5-button--pressed .ch5-button--label {
+  color: var(--gold-lo);
+}
+
+#bottom-nav .ch5-button--default.ch5-button--selected {
+  background-color: transparent;
   color: var(--gold);
 }
 
-.nav-item:not(.active):hover {
-  color: #999;
-}
-
-/* Context buttons (left/right) — hidden on home */
-.nav-context-btn {
-  display: none;
-  background: var(--charcoal-2);
-  border: none;
-  border-radius: 6px;
-  color: #999;
-  font-family: 'Jost', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
-  padding: 8px 16px;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: color 0.2s ease, background 0.2s ease;
-}
-
-.nav-context-btn.active {
+#bottom-nav .ch5-button--default.ch5-button--selected .ch5-button--icon,
+#bottom-nav .ch5-button--default.ch5-button--selected .ch5-button--label {
   color: var(--gold);
-  background: var(--charcoal-3);
 }
 
 /* =========================================================
-   Home Page — Tile Grid
+   Home Page
    ========================================================= */
 .home-content {
   display: flex;
@@ -225,7 +183,6 @@ body {
 }
 
 .home-title {
-  font-family: 'Cormorant Garamond', serif;
   font-weight: 600;
   font-size: 2rem;
   color: var(--gold);
@@ -233,13 +190,15 @@ body {
 }
 
 .home-subtitle {
-  font-family: 'Jost', sans-serif;
   font-weight: 300;
   font-size: 0.95rem;
   color: var(--charcoal-3);
   margin-bottom: 32px;
 }
 
+/* =========================================================
+   Tile Grid — ch5-button overrides
+   ========================================================= */
 .tile-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -248,106 +207,70 @@ body {
   max-width: 600px;
 }
 
-.tile {
-  background: var(--cream-dark);
+/* Make ch5-button fill the grid cell */
+.tile-grid ch5-button {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Default (unpressed) tile style */
+.tile-grid .ch5-button--default {
+  background-color: var(--cream-dark);
   border: 1px solid rgba(28, 28, 28, 0.15);
   border-radius: 12px;
+  overflow: hidden;
+  color: var(--charcoal);
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+}
+
+.tile-grid .ch5-button--default .cb-btn {
+  background-color: transparent;
   padding: 28px 16px;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
-  user-select: none;
-  -webkit-user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
-.tile:active {
-  transform: scale(0.97);
-}
-
-.tile-icon {
+.tile-grid .ch5-button--default .ch5-button--icon {
   font-size: 2rem;
   color: var(--charcoal-3);
   margin-bottom: 10px;
+  display: block;
   transition: color 0.2s ease;
 }
 
-.tile-label {
-  font-family: 'Cormorant Garamond', serif;
+.tile-grid .ch5-button--default .ch5-button--label {
   font-weight: 600;
   font-size: 1.1rem;
   color: var(--charcoal);
   transition: color 0.2s ease;
 }
 
-/* Tile hover / active states */
-.tile:hover {
+/* Pressed state (finger down) */
+.tile-grid .ch5-button--default.ch5-button--pressed {
+  background-color: var(--cream-deep);
+  border-color: var(--gold-lo);
+  transform: scale(0.95);
+}
+
+.tile-grid .ch5-button--default.ch5-button--pressed .ch5-button--icon,
+.tile-grid .ch5-button--default.ch5-button--pressed .ch5-button--label {
+  color: var(--gold-lo);
+}
+
+/* Selected/Active state (SIMPL feedback) */
+.tile-grid .ch5-button--default.ch5-button--selected {
+  background-color: #fff;
   border-color: var(--gold);
-  background: #fff;
 }
 
-.tile:hover .tile-icon,
-.tile:hover .tile-label {
+.tile-grid .ch5-button--default.ch5-button--selected .ch5-button--icon,
+.tile-grid .ch5-button--default.ch5-button--selected .ch5-button--label {
   color: var(--gold);
-}
-
-.tile.active {
-  border-color: var(--gold);
-  background: #fff;
-}
-
-.tile.active .tile-icon,
-.tile.active .tile-label {
-  color: var(--gold);
-}
-
-/* Tile disabled state (future pages) */
-.tile.disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
-.tile.disabled:hover {
-  border-color: rgba(28, 28, 28, 0.15);
-  background: var(--cream-dark);
-}
-
-.tile.disabled:hover .tile-icon,
-.tile.disabled:hover .tile-label {
-  color: var(--charcoal-3);
-}
-
-.tile.disabled:active {
-  transform: none;
-}
-
-/* =========================================================
-   Room Dropdown Overlay (shared — wired in future)
-   ========================================================= */
-#room-dropdown-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 200;
-}
-
-#room-dropdown-panel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: #111;
-  padding: 80px 24px 24px;
-  transform: translateY(-100%);
-  transition: transform 0.3s ease;
-}
-
-#room-dropdown-overlay.open {
-  display: block;
-}
-
-#room-dropdown-overlay.open #room-dropdown-panel {
-  transform: translateY(0);
 }
 
 /* =========================================================
@@ -361,10 +284,6 @@ body {
 
   #header-title {
     font-size: 1.8rem;
-  }
-
-  #header-clock {
-    font-size: 1.15rem;
   }
 
   .home-content {
@@ -386,25 +305,28 @@ body {
     max-width: 800px;
   }
 
-  .tile {
+  .tile-grid .ch5-button--default .cb-btn {
     padding: 36px 20px;
+  }
+
+  .tile-grid .ch5-button--default {
     border-radius: 14px;
   }
 
-  .tile-icon {
+  .tile-grid .ch5-button--default .ch5-button--icon {
     font-size: 2.5rem;
     margin-bottom: 12px;
   }
 
-  .tile-label {
+  .tile-grid .ch5-button--default .ch5-button--label {
     font-size: 1.25rem;
   }
 
-  .nav-item i {
+  #bottom-nav .ch5-button--default .ch5-button--icon {
     font-size: 1.4rem;
   }
 
-  .nav-item {
+  #bottom-nav .ch5-button--default .ch5-button--label {
     font-size: 0.8rem;
   }
 }
