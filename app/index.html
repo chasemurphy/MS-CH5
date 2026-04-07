@@ -209,22 +209,52 @@
         </div>
       </template>
 
-      <ch5-subpage-reference-list id="music-room-list"
-        widgetId="music-room-tpl"
-        orientation="horizontal"
-        noshowtype="remove"
-        centerItems="true"
-        scrollbar="true"
-        loadItems="visible-only"
-        booleanJoinIncrement="10"
-        numericJoinIncrement="1"
-        stringJoinIncrement="6"
-        receiveStateNumberOfItems="400"
-        indexId="idx">
-      </ch5-subpage-reference-list>
+      <!-- Zones View (default) -->
+      <div id="music-zones-view" class="music-view">
+        <ch5-subpage-reference-list id="music-room-list"
+          widgetId="music-room-tpl"
+          orientation="horizontal"
+          noshowtype="remove"
+          centerItems="true"
+          scrollbar="true"
+          loadItems="visible-only"
+          booleanJoinIncrement="10"
+          numericJoinIncrement="1"
+          stringJoinIncrement="6"
+          receiveStateNumberOfItems="400"
+          indexId="idx">
+        </ch5-subpage-reference-list>
+      </div>
+
+      <!-- Media Player View (toggled via d303) -->
+      <div id="music-player-view" class="music-view hidden">
+        <ch5-media-player id="media-player-1"
+          demoMode="false"
+          receiveStateCRPC="301"
+          sendEventCRPC="301"
+          receiveStateDeviceOffline="305"
+          receiveStateMessage="302"
+          receiveStateRefreshMediaPlayer="306"
+          receiveStatePlayerName="300">
+        </ch5-media-player>
+      </div>
 
       <!-- Music-only bottom bar -->
       <div class="music-bottom-bar">
+        <ch5-button id="nav-zones"
+          label="Zones"
+          iconClass="fas fa-th-list"
+          sendEventOnClick="302"
+          receiveStateSelected="302"
+          type="default" shape="rectangle" size="regular">
+        </ch5-button>
+        <ch5-button id="nav-media-player"
+          label="Media Player"
+          iconClass="fas fa-play-circle"
+          sendEventOnClick="301"
+          receiveStateSelected="301"
+          type="default" shape="rectangle" size="regular">
+        </ch5-button>
         <ch5-button id="nav-all-off"
           label="All Off"
           sendEventOnClick="400"

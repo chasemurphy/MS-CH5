@@ -339,9 +339,26 @@ body {
   overflow: hidden !important;
 }
 
-/* SRL takes full height minus the bottom bar */
+/* Both music views fill the area above the bottom bar */
+.music-view {
+  height: calc(100% - var(--nav-height));
+  overflow: hidden;
+}
+
 #music-room-list {
-  height: calc(100% - var(--nav-height)) !important;
+  height: 100% !important;
+}
+
+/* Media player fills its container */
+#music-player-view ch5-media-player {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#music-player-view .ch5-media-player {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* Override ch5-theme label truncation inside music page */
@@ -405,6 +422,16 @@ body {
 
 .music-bottom-bar .ch5-button--default.ch5-button--pressed .ch5-button--label {
   color: var(--gold-lo);
+}
+
+.music-bottom-bar .ch5-button--default.ch5-button--selected {
+  background-color: rgba(201, 168, 76, 0.15);
+  border-color: var(--gold);
+}
+
+.music-bottom-bar .ch5-button--default.ch5-button--selected .ch5-button--label,
+.music-bottom-bar .ch5-button--default.ch5-button--selected .ch5-button--icon {
+  color: var(--gold);
 }
 
 /* ---- Room Column ---- */
