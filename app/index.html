@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
   <!-- Styles -->
+  <link rel="stylesheet" href="./assets/css/ch5-theme.css" />
   <link rel="stylesheet" href="./assets/css/external.css" />
   <link rel="stylesheet" href="./assets/css/main.css" />
 </head>
@@ -15,15 +16,21 @@
 
   <!-- ===== Header Bar ===== -->
   <header id="header-bar">
-    <span id="header-title">Home Control</span>
+    <ch5-button id="nav-home" class="header-nav-btn hidden"
+      iconClass="fas fa-home"
+      label=""
+      sendEventOnClick="200"
+      type="default"
+      shape="rectangle"
+      size="regular">
+    </ch5-button>
+    <ch5-text id="header-title" receiveStateLabel="1"></ch5-text>
   </header>
 
   <!-- ===== Page Container ===== -->
   <main id="page-container">
     <div id="page-home" class="page active">
       <div class="home-content">
-        <h1 class="home-title">Home Control</h1>
-        <p class="home-subtitle">Select a system</p>
         <div class="tile-grid">
 
           <ch5-button id="tile-lighting"
@@ -113,20 +120,123 @@
         </div>
       </div>
     </div>
+    <!-- ===== Music Page ===== -->
+    <div id="page-music" class="page">
+
+      <!-- Room template (repeated by ch5-subpage-reference-list)
+           Per-room join offsets: d+10, a+1, s+6
+           Room 0: d401-410, a401, s401-406
+           Room 1: d411-420, a402, s407-412  etc. -->
+      <template id="music-room-tpl">
+        <div class="room-col">
+
+          <!-- Room Name (s401, s407, s413 …) -->
+          <ch5-text class="room-name" receiveStateLabel="401"></ch5-text>
+
+          <!-- Main content: buttons left, slider right -->
+          <div class="room-body">
+
+            <!-- Left: sources, vol buttons, off -->
+            <div class="room-buttons">
+              <div class="source-list">
+                <ch5-button class="source-btn"
+                  receiveStateLabel="402"
+                  sendEventOnClick="401"
+                  receiveStateSelected="401"
+                  type="default" shape="rectangle" size="regular">
+                </ch5-button>
+                <ch5-button class="source-btn"
+                  receiveStateLabel="403"
+                  sendEventOnClick="402"
+                  receiveStateSelected="402"
+                  type="default" shape="rectangle" size="regular">
+                </ch5-button>
+                <ch5-button class="source-btn"
+                  receiveStateLabel="404"
+                  sendEventOnClick="403"
+                  receiveStateSelected="403"
+                  type="default" shape="rectangle" size="regular">
+                </ch5-button>
+                <ch5-button class="source-btn"
+                  receiveStateLabel="405"
+                  sendEventOnClick="404"
+                  receiveStateSelected="404"
+                  type="default" shape="rectangle" size="regular">
+                </ch5-button>
+                <ch5-button class="source-btn"
+                  receiveStateLabel="406"
+                  sendEventOnClick="405"
+                  receiveStateSelected="405"
+                  type="default" shape="rectangle" size="regular">
+                </ch5-button>
+              </div>
+
+              <!-- Volume Buttons -->
+              <div class="vol-controls">
+                <ch5-button class="vol-btn"
+                  iconClass="fas fa-volume-up"
+                  sendEventOnClick="406"
+                  type="default" shape="rectangle" size="regular">
+                </ch5-button>
+                <ch5-button class="vol-btn"
+                  iconClass="fas fa-volume-down"
+                  sendEventOnClick="407"
+                  type="default" shape="rectangle" size="regular">
+                </ch5-button>
+              </div>
+
+              <!-- Off Button -->
+              <ch5-button class="off-btn"
+                label="Off"
+                sendEventOnClick="410"
+                type="danger" shape="rectangle" size="regular">
+              </ch5-button>
+            </div>
+
+            <!-- Right: vertical volume slider -->
+            <div class="vol-slider-wrap">
+              <ch5-slider class="vol-slider"
+                orientation="vertical"
+                handleShape="rounded-rectangle"
+                size="regular"
+                min="0" max="65535" step="1"
+                sendEventOnChange="401"
+                receiveStateValue="401">
+              </ch5-slider>
+            </div>
+
+          </div>
+        </div>
+      </template>
+
+      <ch5-subpage-reference-list id="music-room-list"
+        widgetId="music-room-tpl"
+        orientation="horizontal"
+        noshowtype="remove"
+        centerItems="true"
+        scrollbar="true"
+        loadItems="visible-only"
+        booleanJoinIncrement="10"
+        numericJoinIncrement="1"
+        stringJoinIncrement="6"
+        receiveStateNumberOfItems="400"
+        indexId="idx">
+      </ch5-subpage-reference-list>
+
+      <!-- Music-only bottom bar -->
+      <div class="music-bottom-bar">
+        <ch5-button id="nav-all-off"
+          label="All Off"
+          sendEventOnClick="400"
+          type="default" shape="rectangle" size="regular">
+        </ch5-button>
+      </div>
+
+    </div>
   </main>
 
-  <!-- ===== Bottom Navigation ===== -->
-  <nav id="bottom-nav">
-    <ch5-button id="nav-home"
-      label="Home"
-      iconClass="fas fa-home"
-      iconPosition="top"
-      sendEventOnClick="200"
-      receiveStateSelected="200"
-      type="default"
-      shape="rectangle"
-      size="large">
-    </ch5-button>
+  <!-- ===== Bottom Navigation (unused for now) ===== -->
+  <nav id="bottom-nav" class="hidden">
   </nav>
 
   <!-- ===== Scripts ===== -->

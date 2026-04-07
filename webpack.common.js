@@ -15,6 +15,10 @@ let fromToList = {
   fontIcon: {
     to: `${distPath}/assets/webfonts`,
     from: `${nodeModules}@fortawesome/fontawesome-free/webfonts/**/*`
+  },
+  ch5Theme: {
+    to: `${distPath}/assets/css`,
+    from: `${nodeModules}@crestron/ch5-theme/output/themes/css/ch5-theme.css`
   }
 };
 

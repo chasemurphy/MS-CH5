@@ -36,6 +36,12 @@
     },
     publishEvent: function (type, join, value) {
       console.log('[CrComLib Shim] publish', type, join, value);
+      var k = _key(type, String(join));
+      if (_subs[k]) {
+        for (var i = 0; i < _subs[k].length; i++) {
+          _subs[k][i](value);
+        }
+      }
     }
   };
 
