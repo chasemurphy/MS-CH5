@@ -189,7 +189,8 @@
               <ch5-button class="off-btn"
                 label="Off"
                 sendEventOnClick="410"
-                type="danger" shape="rectangle" size="regular">
+                receiveStateSelected="410"
+                type="default" shape="rectangle" size="regular">
               </ch5-button>
             </div>
 
@@ -203,6 +204,12 @@
                 sendEventOnChange="401"
                 receiveStateValue="401">
               </ch5-slider>
+              <span class="vol-pct">
+                <ch5-jointotext-numeric
+                  type="percentage"
+                  receiveStateValue="401">
+                </ch5-jointotext-numeric>%
+              </span>
             </div>
 
           </div>

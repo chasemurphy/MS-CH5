@@ -497,9 +497,41 @@ body {
   flex: 1 !important;
 }
 
-.room-name {
+/* ---- Slider Colors (gold theme) ---- */
+.vol-slider-wrap .noUi-target {
+  background: var(--cream-dark) !important;
+  border-color: rgba(28, 28, 28, 0.15) !important;
+}
+
+.vol-slider-wrap .noUi-connect {
+  background: var(--gold) !important;
+}
+
+.vol-slider-wrap .noUi-handle {
+  background: var(--gold-lo) !important;
+  border: 2px solid var(--gold) !important;
+  box-shadow: none !important;
+}
+
+/* ---- Volume Percentage ---- */
+.vol-pct {
+  flex-shrink: 0;
+  text-align: center;
+  color: var(--charcoal);
+  font-size: 1rem;
   font-weight: 600;
-  font-size: 1.3rem;
+  padding-top: 6px;
+  width: 100%;
+  display: block !important;
+}
+
+.vol-pct ch5-jointotext-numeric {
+  color: var(--charcoal) !important;
+}
+
+.room-name {
+  font-weight: 700;
+  font-size: 1.6rem;
   color: var(--charcoal);
   margin-bottom: 12px;
   width: 100%;
@@ -512,6 +544,8 @@ body {
   display: block !important;
   width: 100% !important;
   min-height: auto !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
 }
 
 /* ---- Source Buttons ---- */
@@ -590,11 +624,19 @@ body {
   color: var(--charcoal);
 }
 
+.vol-btn .ch5-button--default {
+  min-height: 60px !important;
+}
+
 .vol-btn .ch5-button--default .cb-btn {
   background-color: transparent;
   border: none;
-  padding: 14px 16px;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+  padding-left: 16px;
+  padding-right: 16px;
   align-items: center;
+  min-height: 60px !important;
 }
 
 .vol-btn .ch5-button--default .ch5-button--icon {
@@ -619,31 +661,47 @@ body {
   flex-shrink: 0;
 }
 
-.off-btn .ch5-button--default,
-.off-btn .ch5-button--danger {
-  background-color: #c0392b;
-  border: none;
+.off-btn .ch5-button--default {
+  background-color: var(--cream-dark);
+  border: 1px solid rgba(28, 28, 28, 0.15);
   border-radius: 8px !important;
-  color: #fff;
+  color: var(--charcoal);
+  min-height: 60px !important;
 }
 
-.off-btn .ch5-button--default .cb-btn,
-.off-btn .ch5-button--danger .cb-btn {
+.off-btn .ch5-button--default .cb-btn {
   background-color: transparent;
   border: none;
-  padding: 14px 16px;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+  padding-left: 16px;
+  padding-right: 16px;
   align-items: center;
+  min-height: 60px !important;
 }
 
-.off-btn .ch5-button--default .ch5-button--label,
-.off-btn .ch5-button--danger .ch5-button--label {
-  color: #fff;
+.off-btn .ch5-button--default .ch5-button--label {
+  color: var(--charcoal);
   font-weight: 600;
   font-size: 1.15rem;
 }
 
-.off-btn .ch5-button--default.ch5-button--pressed,
-.off-btn .ch5-button--danger.ch5-button--pressed {
+.off-btn .ch5-button--default.ch5-button--pressed {
+  background-color: var(--cream-deep);
+  border-color: var(--gold-lo);
+}
+
+/* Off button — active (selected) state: red */
+.off-btn .ch5-button--default.ch5-button--selected {
+  background-color: #c0392b;
+  border-color: #c0392b;
+}
+
+.off-btn .ch5-button--default.ch5-button--selected .ch5-button--label {
+  color: #fff;
+}
+
+.off-btn .ch5-button--default.ch5-button--selected.ch5-button--pressed {
   background-color: #a93226;
 }
 
@@ -712,7 +770,7 @@ body {
   }
 
   .room-name {
-    font-size: 1.3rem;
+    font-size: 1.8rem;
     margin-bottom: 16px;
   }
 
