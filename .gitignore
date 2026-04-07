@@ -2,3 +2,6 @@ node_modules/
 dist/
 .DS_Store
 *.ch5z
+.DS_Store
+Reference/.DS_Store
+Reference/CH5Test2/.DS_Store

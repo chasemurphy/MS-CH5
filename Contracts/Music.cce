@@ -1,0 +1,128 @@
+{
+	"Errors": [],
+	"id": "_pgagz9iif",
+	"name": "Music",
+	"description": "",
+	"company": "",
+	"client": "",
+	"author": "",
+	"version": "1.0.0.0",
+	"schemaVersion": 1,
+	"subContractLinks": [],
+	"subContracts": [],
+	"specifications": [],
+	"components": [
+		{
+			"Errors": [],
+			"parentId": "_pgagz9iif",
+			"id": "_a57qih9h0",
+			"name": "Component_0",
+			"commands": [
+				{
+					"Errors": [],
+					"name": "Item_1_Visible",
+					"siblingId": "_l2jf4fhjq",
+					"dataType": 1,
+					"notes": "Subpage 1 Visible",
+					"id": "_e849u7btx",
+					"parentId": "_a57qih9h0",
+					"attributeType": 0
+				},
+				{
+					"Errors": [],
+					"name": "Item_2_Visible",
+					"siblingId": "_djcw8nl78",
+					"dataType": 1,
+					"notes": "",
+					"id": "_6a2xtl1wx",
+					"parentId": "_a57qih9h0",
+					"attributeType": 0
+				},
+				{
+					"Errors": [],
+					"name": "Item_3_Visible",
+					"siblingId": "_fdn0jdxm2",
+					"dataType": 1,
+					"notes": "",
+					"id": "_kb2rqodv0",
+					"parentId": "_a57qih9h0",
+					"attributeType": 0
+				},
+				{
+					"Errors": [],
+					"name": "Item_4_Visible",
+					"siblingId": "_15gs0diz3",
+					"dataType": 1,
+					"notes": "",
+					"id": "_lh3lxwpy4",
+					"parentId": "_a57qih9h0",
+					"attributeType": 0
+				},
+				{
+					"Errors": [],
+					"name": "Item_5_Visible",
+					"siblingId": "_sv92xf9vr",
+					"dataType": 1,
+					"notes": "",
+					"id": "_ux72ne5mo",
+					"parentId": "_a57qih9h0",
+					"attributeType": 0
+				}
+			],
+			"feedbacks": [
+				{
+					"Errors": [],
+					"name": "",
+					"siblingId": "_e849u7btx",
+					"dataType": 1,
+					"notes": "",
+					"id": "_l2jf4fhjq",
+					"parentId": "_a57qih9h0",
+					"attributeType": 1
+				},
+				{
+					"Errors": [],
+					"name": "",
+					"siblingId": "_6a2xtl1wx",
+					"dataType": 1,
+					"notes": "",
+					"id": "_djcw8nl78",
+					"parentId": "_a57qih9h0",
+					"attributeType": 1
+				},
+				{
+					"Errors": [],
+					"name": "",
+					"siblingId": "_kb2rqodv0",
+					"dataType": 0,
+					"notes": "",
+					"id": "_fdn0jdxm2",
+					"parentId": "_a57qih9h0",
+					"attributeType": 1
+				},
+				{
+					"Errors": [],
+					"name": "",
+					"siblingId": "_lh3lxwpy4",
+					"dataType": 0,
+					"notes": "",
+					"id": "_15gs0diz3",
+					"parentId": "_a57qih9h0",
+					"attributeType": 1
+				},
+				{
+					"Errors": [],
+					"name": "",
+					"siblingId": "_ux72ne5mo",
+					"dataType": 0,
+					"notes": "",
+					"id": "_sv92xf9vr",
+					"parentId": "_a57qih9h0",
+					"attributeType": 1
+				}
+			],
+			"specifications": []
+		}
+	],
+	"allComponentsForAllContracts": []
+}
