@@ -10,6 +10,15 @@
       "env": {
         "PATH": "/usr/local/bin:/usr/bin:/bin"
       }
+    },
+    {
+      "name": "mockups",
+      "runtimeExecutable": "/usr/local/bin/npx",
+      "runtimeArgs": ["http-server", "./mockups", "-p", "8090", "-c-1"],
+      "port": 8090,
+      "env": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin"
+      }
     }
   ]
 }

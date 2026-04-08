@@ -782,3 +782,455 @@ body {
     font-size: 1.6rem;
   }
 }
+
+
+/* =========================================================
+   Lighting Page
+   ========================================================= */
+
+#page-lighting {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+/* --- Room Drawer Overlay --- */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.drawer-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* --- Room Drawer --- */
+.room-drawer {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  background: var(--charcoal);
+  z-index: 51;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--gold-border);
+  overflow: hidden;
+}
+
+.room-drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  padding: 20px 20px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 1px solid var(--gold-border);
+  flex-shrink: 0;
+}
+
+.drawer-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 0;
+}
+
+/* Room button in drawer (plain div, joins wired via JS) */
+.drawer-room {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  color: var(--cream);
+  font-size: 1.05rem;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.drawer-room.visible {
+  display: flex;
+}
+
+.drawer-room:active {
+  background: var(--charcoal-2);
+}
+
+.drawer-room.selected {
+  border-left-color: var(--gold);
+  color: var(--gold);
+  background: var(--charcoal-2);
+}
+
+.drawer-room.selected .drawer-room-name {
+  font-weight: 600;
+}
+
+.drawer-room-icon {
+  font-size: 0.9rem;
+  color: var(--gold-lo);
+  opacity: 0.5;
+}
+
+.drawer-room.lights-on .drawer-room-icon {
+  opacity: 1;
+  color: var(--gold);
+}
+
+.drawer-room-name {
+  flex: 1;
+}
+
+/* --- Lighting Main Area --- */
+.lighting-main {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+/* --- Load Card Grid --- */
+.lighting-load-grid {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.lighting-load-grid::-webkit-scrollbar { width: 6px; }
+.lighting-load-grid::-webkit-scrollbar-track { background: transparent; }
+.lighting-load-grid::-webkit-scrollbar-thumb { background: var(--cream-deep); border-radius: 3px; }
+
+/* Load card grid */
+.lighting-load-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  align-content: start;
+}
+
+/* --- Load Card --- */
+.load-card {
+  background: var(--cream-dark);
+  border: 1px solid rgba(28, 28, 28, 0.1);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Toggle button (round lightbulb) */
+.load-toggle.ch5-button--default {
+  width: 38px !important;
+  height: 38px !important;
+  flex-shrink: 0 !important;
+}
+
+.load-toggle.ch5-button--default .cb-btn {
+  width: 38px !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--cream) !important;
+  border: 2px solid var(--charcoal-3) !important;
+}
+
+.load-toggle.ch5-button--default .ch5-button--icon {
+  font-size: 1rem !important;
+  color: var(--charcoal-3) !important;
+}
+
+.load-toggle.ch5-button--selected .cb-btn {
+  background: var(--gold) !important;
+  border-color: var(--gold-lo) !important;
+  box-shadow: 0 0 12px rgba(201, 168, 76, 0.4) !important;
+}
+
+.load-toggle.ch5-button--selected .ch5-button--icon {
+  color: white !important;
+}
+
+/* Load name */
+.load-name {
+  flex: 1;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--charcoal);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Percentage */
+.load-pct {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--gold);
+  min-width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Load slider */
+.load-slider.ch5-slider {
+  width: 100% !important;
+}
+
+.load-slider .ch5-slider__handle {
+  background: var(--gold-lo) !important;
+  border: 2px solid var(--gold) !important;
+}
+
+.load-slider .ch5-slider__on-range {
+  background: var(--gold) !important;
+}
+
+.load-slider .ch5-slider__off-range {
+  background: var(--cream) !important;
+}
+
+/* Card controls: Raise, Lower */
+.card-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.card-controls .ch5-button--default {
+  flex: 1 !important;
+}
+
+.card-controls .ch5-button--default .cb-btn {
+  background: var(--cream) !important;
+  border: 1px solid rgba(28, 28, 28, 0.15) !important;
+  border-radius: 8px !important;
+  padding: 8px 4px !important;
+  min-height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+}
+
+.card-controls .ch5-button--default .ch5-button--label {
+  font-size: 0.8rem !important;
+  color: var(--charcoal-3) !important;
+}
+
+.card-controls .ch5-button--default .ch5-button--icon {
+  font-size: 0.85rem !important;
+  color: var(--charcoal-3) !important;
+}
+
+.card-controls .ch5-button--pressed .cb-btn {
+  background: var(--gold) !important;
+  border-color: var(--gold-lo) !important;
+}
+
+.card-controls .ch5-button--pressed .ch5-button--label,
+.card-controls .ch5-button--pressed .ch5-button--icon {
+  color: white !important;
+}
+
+/* --- Scene Panel (right side) --- */
+.scene-panel {
+  width: 0;
+  overflow: hidden;
+  background: var(--cream);
+  border-left: 0 solid var(--gold-border);
+  transition: width 0.3s ease, padding 0.3s ease, border-left-width 0.3s ease;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.scene-panel.open {
+  width: 260px;
+  padding: 20px 16px;
+  border-left-width: 1px;
+}
+
+.scene-panel-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--gold-border);
+  margin-bottom: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.scene-panel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Scene button */
+.scene-btn.ch5-button--default {
+  width: 100% !important;
+}
+
+.scene-btn.ch5-button--default .cb-btn {
+  background: var(--charcoal-2) !important;
+  border: 2px solid transparent !important;
+  border-radius: 10px !important;
+  padding: 16px 18px !important;
+  justify-content: flex-start !important;
+  min-height: auto !important;
+}
+
+.scene-btn.ch5-button--default .ch5-button--label {
+  color: var(--cream) !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+}
+
+.scene-btn.ch5-button--default:hover .cb-btn {
+  background: var(--charcoal-3) !important;
+}
+
+.scene-btn.ch5-button--selected .cb-btn {
+  border-color: var(--gold) !important;
+}
+
+.scene-btn.ch5-button--selected .ch5-button--label {
+  color: var(--gold) !important;
+}
+
+/* --- Lighting Bottom Bar --- */
+.lighting-bottom-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  height: var(--nav-height);
+  background: var(--nav-bg);
+  border-top: 1px solid var(--gold-border);
+  flex-shrink: 0;
+}
+
+/* Hamburger toggle */
+#lighting-room-toggle.ch5-button--default .cb-btn {
+  background: transparent !important;
+  border: none !important;
+  padding: 8px 12px !important;
+  min-height: 44px !important;
+}
+
+#lighting-room-toggle.ch5-button--default .ch5-button--icon {
+  font-size: 1.3rem !important;
+  color: var(--gold) !important;
+}
+
+/* Current room name */
+.lighting-current-room {
+  flex: 1;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+/* Scene toggle button */
+#lighting-scene-toggle.ch5-button--default .cb-btn {
+  background: transparent !important;
+  border: 1px solid var(--gold-border) !important;
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+}
+
+#lighting-scene-toggle.ch5-button--default .ch5-button--label {
+  color: var(--gold) !important;
+  font-size: 0.9rem !important;
+}
+
+#lighting-scene-toggle.ch5-button--default .ch5-button--icon {
+  color: var(--gold) !important;
+  font-size: 0.9rem !important;
+}
+
+/* =========================================================
+   Lighting Page — Responsive (TSW-1080)
+   ========================================================= */
+@media (min-width: 900px) {
+  .room-drawer {
+    width: 300px;
+  }
+
+  .lighting-load-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .scene-panel.open {
+    width: 300px;
+    padding: 24px 20px;
+  }
+
+  .load-name {
+    font-size: 1rem;
+  }
+
+  .load-toggle.ch5-button--default,
+  .load-toggle.ch5-button--default .cb-btn {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+  }
+
+  .load-toggle.ch5-button--default .ch5-button--icon {
+    font-size: 1.2rem;
+  }
+
+  .card-controls .ch5-button--default .cb-btn {
+    padding: 8px 6px;
+    min-height: 40px;
+  }
+
+  .card-controls .ch5-button--default .ch5-button--label {
+    font-size: 0.85rem;
+  }
+
+  .scene-btn.ch5-button--default .cb-btn {
+    padding: 16px 18px;
+  }
+
+  .scene-btn.ch5-button--default .ch5-button--label {
+    font-size: 1rem;
+  }
+
+  .lighting-current-room {
+    font-size: 1.3rem;
+  }
+}

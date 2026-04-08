@@ -6,8 +6,9 @@
   'use strict';
 
   var pages = {
-    home:  { id: 'page-home',  title: 'Home' },
-    music: { id: 'page-music', title: 'Music' }
+    home:     { id: 'page-home',     title: 'Home' },
+    lighting: { id: 'page-lighting', title: 'Lighting' },
+    music:    { id: 'page-music',    title: 'Music' }
   };
 
   var currentPage = 'home';
@@ -38,6 +39,10 @@
   window.nav = { go: showPage };
 
   document.addEventListener('DOMContentLoaded', function () {
+    CrComLib.subscribeState('b', '1', function (val) {
+      if (val === true || val === 'true') showPage('lighting');
+    });
+
     CrComLib.subscribeState('b', '5', function (val) {
       if (val === true || val === 'true') showPage('music');
     });
