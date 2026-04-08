@@ -95,6 +95,14 @@
     /* Wire up room buttons */
     initRoomButtons();
 
+    /* Update header title with current room name from s600 */
+    CrComLib.subscribeState('s', '600', function (val) {
+      var titleEl = document.getElementById('header-title');
+      if (titleEl && val) {
+        titleEl.textContent = val + ' Lighting';
+      }
+    });
+
     /* Visibility observers */
     var page = document.getElementById('page-lighting');
     if (page) {

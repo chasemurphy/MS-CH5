@@ -65,17 +65,20 @@ body {
 
 #header-title {
   font-weight: 600;
-  font-size: 2rem !important;
+  font-size: 1.3rem !important;
   color: var(--gold) !important;
   letter-spacing: 0.02em;
   text-align: center !important;
   width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #header-title .ch5-text {
   color: var(--gold) !important;
   background-color: transparent !important;
-  font-size: 2rem !important;
+  font-size: 1.3rem !important;
   font-weight: 600 !important;
   text-align: center !important;
   width: 100% !important;
@@ -714,8 +717,9 @@ body {
     --nav-height: 72px;
   }
 
-  #header-title {
-    font-size: 2.4rem;
+  #header-title,
+  #header-title .ch5-text {
+    font-size: 2rem !important;
   }
 
   .home-content {
@@ -916,10 +920,10 @@ body {
 .lighting-load-grid::-webkit-scrollbar-track { background: transparent; }
 .lighting-load-grid::-webkit-scrollbar-thumb { background: var(--cream-deep); border-radius: 3px; }
 
-/* Load card grid */
+/* Load card grid — auto-fill: fits as many cards as the container allows */
 .lighting-load-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 12px;
   align-content: start;
 }
@@ -941,14 +945,34 @@ body {
   gap: 10px;
 }
 
-/* Toggle button (round lightbulb) */
-.load-toggle.ch5-button--default {
+/* ---- Toggle button — #page-lighting scoped for max specificity ---- */
+#page-lighting ch5-button.load-toggle {
   width: 38px !important;
   height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  max-width: 38px !important;
+  max-height: 38px !important;
   flex-shrink: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  padding: 0 !important;
 }
 
-.load-toggle.ch5-button--default .cb-btn {
+/* Kill ALL backgrounds/borders on every inner layer of the toggle */
+#page-lighting ch5-button.load-toggle *:not(.cb-btn):not(.ch5-button--icon):not(i) {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+}
+
+#page-lighting ch5-button.load-toggle .cb-btn {
   width: 38px !important;
   height: 38px !important;
   min-height: 38px !important;
@@ -959,20 +983,22 @@ body {
   justify-content: center !important;
   background: var(--cream) !important;
   border: 2px solid var(--charcoal-3) !important;
+  box-shadow: none !important;
 }
 
-.load-toggle.ch5-button--default .ch5-button--icon {
+#page-lighting ch5-button.load-toggle .ch5-button--icon {
   font-size: 1rem !important;
   color: var(--charcoal-3) !important;
 }
 
-.load-toggle.ch5-button--selected .cb-btn {
+/* Selected state — class is on the inner .ch5-button div, not the custom element */
+#page-lighting ch5-button.load-toggle .ch5-button--selected .cb-btn {
   background: var(--gold) !important;
   border-color: var(--gold-lo) !important;
   box-shadow: 0 0 12px rgba(201, 168, 76, 0.4) !important;
 }
 
-.load-toggle.ch5-button--selected .ch5-button--icon {
+#page-lighting ch5-button.load-toggle .ch5-button--selected .ch5-button--icon {
   color: white !important;
 }
 
@@ -987,49 +1013,82 @@ body {
   white-space: nowrap;
 }
 
-/* Percentage */
+/* Percentage — inside card-controls between Lower and Raise */
 .load-pct {
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--gold);
-  min-width: 36px;
-  text-align: right;
-  flex-shrink: 0;
+  color: var(--charcoal);
+  text-align: center;
+  flex: 1 !important;
 }
 
-/* Load slider */
-.load-slider.ch5-slider {
-  width: 100% !important;
+.load-pct ch5-jointotext-numeric {
+  color: var(--charcoal) !important;
 }
 
-.load-slider .ch5-slider__handle {
+/* ---- Load slider — constrain to card ---- */
+#page-lighting ch5-slider.load-slider {
+  display: block !important;
+  min-height: 30px !important;
+  box-sizing: border-box !important;
+  /* Use 95% width so the handle doesn't overflow the card edge */
+  width: 95% !important;
+  max-width: 95% !important;
+  margin: 0 auto !important;
+}
+
+#page-lighting .load-slider > div,
+#page-lighting .load-slider .ch5-slider__bar,
+#page-lighting .load-slider .ch5-slider__mask {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+#page-lighting .load-slider .ch5-slider__handle {
   background: var(--gold-lo) !important;
   border: 2px solid var(--gold) !important;
 }
 
-.load-slider .ch5-slider__on-range {
+#page-lighting .load-slider .ch5-slider__on-range {
   background: var(--gold) !important;
 }
 
-.load-slider .ch5-slider__off-range {
+#page-lighting .load-slider .ch5-slider__off-range {
   background: var(--cream) !important;
 }
 
-/* Card controls: Raise, Lower */
+/* ---- Card controls: Lower | Pct | Raise ---- */
 .card-controls {
-  display: flex;
-  gap: 8px;
+  display: flex !important;
+  align-items: center;
+  min-height: 40px;
 }
 
-.card-controls .ch5-button--default {
-  flex: 1 !important;
+/* Override the ch5-button wrapper at every level */
+#page-lighting .card-controls ch5-button {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  min-height: 36px !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  display: inline-flex !important;
+  padding: 0 !important;
 }
 
-.card-controls .ch5-button--default .cb-btn {
+#page-lighting .card-controls ch5-button > div,
+#page-lighting .card-controls .ch5-button {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 8px !important;
+}
+
+#page-lighting .card-controls .cb-btn {
   background: var(--cream) !important;
   border: 1px solid rgba(28, 28, 28, 0.15) !important;
   border-radius: 8px !important;
-  padding: 8px 4px !important;
+  padding: 8px 12px !important;
   min-height: 36px !important;
   display: flex !important;
   align-items: center !important;
@@ -1037,23 +1096,23 @@ body {
   gap: 4px !important;
 }
 
-.card-controls .ch5-button--default .ch5-button--label {
+#page-lighting .card-controls .ch5-button--label {
   font-size: 0.8rem !important;
   color: var(--charcoal-3) !important;
 }
 
-.card-controls .ch5-button--default .ch5-button--icon {
+#page-lighting .card-controls .ch5-button--icon {
   font-size: 0.85rem !important;
   color: var(--charcoal-3) !important;
 }
 
-.card-controls .ch5-button--pressed .cb-btn {
+#page-lighting .card-controls ch5-button[class*="pressed"] .cb-btn {
   background: var(--gold) !important;
   border-color: var(--gold-lo) !important;
 }
 
-.card-controls .ch5-button--pressed .ch5-button--label,
-.card-controls .ch5-button--pressed .ch5-button--icon {
+#page-lighting .card-controls ch5-button[class*="pressed"] .ch5-button--label,
+#page-lighting .card-controls ch5-button[class*="pressed"] .ch5-button--icon {
   color: white !important;
 }
 
@@ -1155,14 +1214,6 @@ body {
   color: var(--gold) !important;
 }
 
-/* Current room name */
-.lighting-current-room {
-  flex: 1;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--cream);
-}
-
 /* Scene toggle button */
 #lighting-scene-toggle.ch5-button--default .cb-btn {
   background: transparent !important;
@@ -1190,7 +1241,8 @@ body {
   }
 
   .lighting-load-grid {
-    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    padding: 20px;
   }
 
   .scene-panel.open {
@@ -1202,24 +1254,27 @@ body {
     font-size: 1rem;
   }
 
-  .load-toggle.ch5-button--default,
-  .load-toggle.ch5-button--default .cb-btn {
-    width: 44px;
-    height: 44px;
-    min-height: 44px;
+  #page-lighting ch5-button.load-toggle,
+  #page-lighting ch5-button.load-toggle .cb-btn {
+    width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    min-width: 44px !important;
   }
 
-  .load-toggle.ch5-button--default .ch5-button--icon {
-    font-size: 1.2rem;
+  #page-lighting ch5-button.load-toggle .ch5-button--icon {
+    font-size: 1.2rem !important;
   }
 
-  .card-controls .ch5-button--default .cb-btn {
-    padding: 8px 6px;
-    min-height: 40px;
+  #page-lighting .card-controls .cb-btn {
+    padding: 8px 14px !important;
+    min-height: 40px !important;
   }
 
-  .card-controls .ch5-button--default .ch5-button--label {
-    font-size: 0.85rem;
+  #page-lighting .card-controls .ch5-button--label {
+    font-size: 0.85rem !important;
   }
 
   .scene-btn.ch5-button--default .cb-btn {
@@ -1230,7 +1285,4 @@ body {
     font-size: 1rem;
   }
 
-  .lighting-current-room {
-    font-size: 1.3rem;
-  }
 }
