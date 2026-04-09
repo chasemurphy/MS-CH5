@@ -8,7 +8,7 @@
   var pages = {
     home:     { id: 'page-home',     title: 'Home' },
     lighting: { id: 'page-lighting', title: 'Lighting' },
-    music:    { id: 'page-music',    title: 'Music' }
+    music:    { id: 'page-music-v2', title: 'Music' }
   };
 
   var currentPage = 'home';

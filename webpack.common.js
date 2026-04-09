@@ -19,6 +19,14 @@ let fromToList = {
   ch5Theme: {
     to: `${distPath}/assets/css`,
     from: `${nodeModules}@crestron/ch5-theme/output/themes/css/ch5-theme.css`
+  },
+  mpFont: {
+    to: `${distPath}/assets/fonts`,
+    from: `${nodeModules}@crestron/ch5-theme/output/themes/fonts/mp-font.*`
+  },
+  mpImages: {
+    to: `${distPath}/assets/svgs/images`,
+    from: `${nodeModules}@crestron/ch5-theme/output/themes/svgs/images/*`
   }
 };
 
@@ -43,7 +51,8 @@ module.exports = {
       path.resolve(basePath, `${fontAwesomeCssBasePath}/fontawesome.css`),
       path.resolve(basePath, `${fontAwesomeCssBasePath}/regular.css`),
       path.resolve(basePath, `${fontAwesomeCssBasePath}/solid.css`),
-      path.resolve(basePath, `${fontAwesomeCssBasePath}/brands.css`)
+      path.resolve(basePath, `${fontAwesomeCssBasePath}/brands.css`),
+      path.resolve(basePath, `${srcRoot}assets/theme/mp-font.css`)
     ]
   },
   output: {

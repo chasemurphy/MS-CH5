@@ -120,153 +120,772 @@
         </div>
       </div>
     </div>
-    <!-- ===== Music Page ===== -->
-    <div id="page-music" class="page">
+    <!-- ===== Music Page (custom HTML, no SRL) ===== -->
+    <div id="page-music-v2" class="page">
 
-      <!-- Room template (repeated by ch5-subpage-reference-list)
-           Per-room join offsets: d+10, a+1, s+6
-           Room 0: d401-410, a401, s401-406
-           Room 1: d411-420, a402, s407-412  etc. -->
-      <template id="music-room-tpl">
-        <div class="room-col">
+      <div class="music-v2-main">
 
-          <!-- Room Name (s401, s407, s413 …) -->
-          <ch5-text class="room-name" receiveStateLabel="401"></ch5-text>
-
-          <!-- Main content: buttons left, slider right -->
-          <div class="room-body">
-
-            <!-- Left: sources, vol buttons, off -->
-            <div class="room-buttons">
-              <div class="source-list">
-                <ch5-button class="source-btn"
-                  receiveStateLabel="402"
-                  sendEventOnClick="401"
-                  receiveStateSelected="401"
-                  type="default" shape="rectangle" size="regular">
-                </ch5-button>
-                <ch5-button class="source-btn"
-                  receiveStateLabel="403"
-                  sendEventOnClick="402"
-                  receiveStateSelected="402"
-                  type="default" shape="rectangle" size="regular">
-                </ch5-button>
-                <ch5-button class="source-btn"
-                  receiveStateLabel="404"
-                  sendEventOnClick="403"
-                  receiveStateSelected="403"
-                  type="default" shape="rectangle" size="regular">
-                </ch5-button>
-                <ch5-button class="source-btn"
-                  receiveStateLabel="405"
-                  sendEventOnClick="404"
-                  receiveStateSelected="404"
-                  type="default" shape="rectangle" size="regular">
-                </ch5-button>
-                <ch5-button class="source-btn"
-                  receiveStateLabel="406"
-                  sendEventOnClick="405"
-                  receiveStateSelected="405"
-                  type="default" shape="rectangle" size="regular">
-                </ch5-button>
+        <!-- Horizontally scrolling room tiles -->
+        <div class="music-v2-room-scroll" id="music-v2-room-scroll">
+          <div class="music-v2-room-col" data-label="401" data-analog="401" data-vol-click="408">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="401" data-label="402"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="402" data-label="403"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="403" data-label="404"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="404" data-label="405"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="405" data-label="406"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="406"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="407"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="410">Off</div>
               </div>
-
-              <!-- Volume Buttons -->
-              <div class="vol-controls">
-                <ch5-button class="vol-btn"
-                  iconClass="fas fa-volume-up"
-                  sendEventOnClick="406"
-                  type="default" shape="rectangle" size="regular">
-                </ch5-button>
-                <ch5-button class="vol-btn"
-                  iconClass="fas fa-volume-down"
-                  sendEventOnClick="407"
-                  type="default" shape="rectangle" size="regular">
-                </ch5-button>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="401" data-click="408" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
               </div>
-
-              <!-- Off Button -->
-              <ch5-button class="off-btn"
-                label="Off"
-                sendEventOnClick="410"
-                receiveStateSelected="410"
-                type="default" shape="rectangle" size="regular">
-              </ch5-button>
             </div>
-
-            <!-- Right: vertical volume slider -->
-            <div class="vol-slider-wrap">
-              <ch5-slider class="vol-slider"
-                orientation="vertical"
-                handleShape="rounded-rectangle"
-                size="regular"
-                min="0" max="65535" step="1"
-                sendEventOnChange="401"
-                receiveStateValue="401">
-              </ch5-slider>
-              <span class="vol-pct">
-                <ch5-jointotext-numeric
-                  type="percentage"
-                  receiveStateValue="401">
-                </ch5-jointotext-numeric>%
-              </span>
+          </div>
+          <div class="music-v2-room-col" data-label="407" data-analog="402" data-vol-click="418">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="411" data-label="408"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="412" data-label="409"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="413" data-label="410"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="414" data-label="411"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="415" data-label="412"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="416"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="417"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="420">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="402" data-click="418" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
             </div>
-
+          </div>
+          <div class="music-v2-room-col" data-label="413" data-analog="403" data-vol-click="428">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="421" data-label="414"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="422" data-label="415"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="423" data-label="416"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="424" data-label="417"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="425" data-label="418"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="426"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="427"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="430">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="403" data-click="428" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="419" data-analog="404" data-vol-click="438">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="431" data-label="420"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="432" data-label="421"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="433" data-label="422"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="434" data-label="423"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="435" data-label="424"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="436"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="437"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="440">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="404" data-click="438" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="425" data-analog="405" data-vol-click="448">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="441" data-label="426"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="442" data-label="427"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="443" data-label="428"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="444" data-label="429"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="445" data-label="430"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="446"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="447"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="450">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="405" data-click="448" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="431" data-analog="406" data-vol-click="458">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="451" data-label="432"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="452" data-label="433"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="453" data-label="434"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="454" data-label="435"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="455" data-label="436"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="456"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="457"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="460">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="406" data-click="458" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="437" data-analog="407" data-vol-click="468">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="461" data-label="438"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="462" data-label="439"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="463" data-label="440"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="464" data-label="441"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="465" data-label="442"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="466"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="467"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="470">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="407" data-click="468" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="443" data-analog="408" data-vol-click="478">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="471" data-label="444"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="472" data-label="445"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="473" data-label="446"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="474" data-label="447"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="475" data-label="448"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="476"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="477"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="480">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="408" data-click="478" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="449" data-analog="409" data-vol-click="488">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="481" data-label="450"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="482" data-label="451"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="483" data-label="452"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="484" data-label="453"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="485" data-label="454"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="486"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="487"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="490">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="409" data-click="488" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="455" data-analog="410" data-vol-click="498">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="491" data-label="456"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="492" data-label="457"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="493" data-label="458"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="494" data-label="459"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="495" data-label="460"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="496"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="497"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="500">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="410" data-click="498" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="461" data-analog="411" data-vol-click="508">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="501" data-label="462"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="502" data-label="463"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="503" data-label="464"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="504" data-label="465"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="505" data-label="466"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="506"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="507"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="510">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="411" data-click="508" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="467" data-analog="412" data-vol-click="518">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="511" data-label="468"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="512" data-label="469"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="513" data-label="470"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="514" data-label="471"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="515" data-label="472"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="516"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="517"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="520">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="412" data-click="518" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="473" data-analog="413" data-vol-click="528">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="521" data-label="474"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="522" data-label="475"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="523" data-label="476"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="524" data-label="477"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="525" data-label="478"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="526"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="527"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="530">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="413" data-click="528" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="479" data-analog="414" data-vol-click="538">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="531" data-label="480"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="532" data-label="481"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="533" data-label="482"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="534" data-label="483"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="535" data-label="484"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="536"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="537"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="540">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="414" data-click="538" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="485" data-analog="415" data-vol-click="548">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="541" data-label="486"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="542" data-label="487"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="543" data-label="488"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="544" data-label="489"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="545" data-label="490"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="546"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="547"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="550">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="415" data-click="548" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="491" data-analog="416" data-vol-click="558">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="551" data-label="492"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="552" data-label="493"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="553" data-label="494"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="554" data-label="495"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="555" data-label="496"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="556"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="557"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="560">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="416" data-click="558" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="497" data-analog="417" data-vol-click="568">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="561" data-label="498"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="562" data-label="499"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="563" data-label="500"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="564" data-label="501"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="565" data-label="502"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="566"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="567"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="570">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="417" data-click="568" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="503" data-analog="418" data-vol-click="578">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="571" data-label="504"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="572" data-label="505"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="573" data-label="506"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="574" data-label="507"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="575" data-label="508"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="576"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="577"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="580">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="418" data-click="578" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="509" data-analog="419" data-vol-click="588">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="581" data-label="510"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="582" data-label="511"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="583" data-label="512"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="584" data-label="513"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="585" data-label="514"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="586"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="587"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="590">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="419" data-click="588" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="515" data-analog="420" data-vol-click="598">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="591" data-label="516"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="592" data-label="517"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="593" data-label="518"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="594" data-label="519"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="595" data-label="520"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="596"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="597"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="600">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="420" data-click="598" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="521" data-analog="421" data-vol-click="608">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="601" data-label="522"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="602" data-label="523"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="603" data-label="524"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="604" data-label="525"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="605" data-label="526"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="606"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="607"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="610">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="421" data-click="608" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="527" data-analog="422" data-vol-click="618">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="611" data-label="528"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="612" data-label="529"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="613" data-label="530"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="614" data-label="531"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="615" data-label="532"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="616"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="617"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="620">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="422" data-click="618" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="533" data-analog="423" data-vol-click="628">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="621" data-label="534"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="622" data-label="535"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="623" data-label="536"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="624" data-label="537"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="625" data-label="538"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="626"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="627"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="630">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="423" data-click="628" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="539" data-analog="424" data-vol-click="638">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="631" data-label="540"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="632" data-label="541"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="633" data-label="542"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="634" data-label="543"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="635" data-label="544"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="636"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="637"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="640">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="424" data-click="638" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="545" data-analog="425" data-vol-click="648">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="641" data-label="546"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="642" data-label="547"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="643" data-label="548"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="644" data-label="549"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="645" data-label="550"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="646"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="647"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="650">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="425" data-click="648" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="551" data-analog="426" data-vol-click="658">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="651" data-label="552"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="652" data-label="553"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="653" data-label="554"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="654" data-label="555"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="655" data-label="556"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="656"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="657"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="660">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="426" data-click="658" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="557" data-analog="427" data-vol-click="668">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="661" data-label="558"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="662" data-label="559"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="663" data-label="560"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="664" data-label="561"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="665" data-label="562"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="666"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="667"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="670">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="427" data-click="668" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="563" data-analog="428" data-vol-click="678">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="671" data-label="564"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="672" data-label="565"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="673" data-label="566"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="674" data-label="567"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="675" data-label="568"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="676"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="677"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="680">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="428" data-click="678" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="569" data-analog="429" data-vol-click="688">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="681" data-label="570"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="682" data-label="571"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="683" data-label="572"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="684" data-label="573"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="685" data-label="574"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="686"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="687"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="690">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="429" data-click="688" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="575" data-analog="430" data-vol-click="698">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="691" data-label="576"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="692" data-label="577"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="693" data-label="578"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="694" data-label="579"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="695" data-label="580"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="696"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="697"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="700">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="430" data-click="698" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="581" data-analog="431" data-vol-click="708">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="701" data-label="582"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="702" data-label="583"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="703" data-label="584"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="704" data-label="585"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="705" data-label="586"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="706"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="707"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="710">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="431" data-click="708" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
+          </div>
+          <div class="music-v2-room-col" data-label="587" data-analog="432" data-vol-click="718">
+            <div class="music-v2-room-name"></div>
+            <div class="music-v2-room-body">
+              <div class="music-v2-room-buttons">
+                <div class="music-v2-source-list">
+                  <div class="music-v2-src-btn" data-click="711" data-label="588"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="712" data-label="589"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="713" data-label="590"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="714" data-label="591"><span class="music-v2-src-name"></span></div>
+                  <div class="music-v2-src-btn" data-click="715" data-label="592"><span class="music-v2-src-name"></span></div>
+                </div>
+                <div class="music-v2-vol-controls">
+                  <div class="music-v2-vol-btn" data-press="716"><i class="fas fa-volume-up"></i></div>
+                  <div class="music-v2-vol-btn" data-press="717"><i class="fas fa-volume-down"></i></div>
+                </div>
+                <div class="music-v2-off-btn" data-click="720">Off</div>
+              </div>
+              <div class="music-v2-slider-wrap">
+                <input type="range" class="music-v2-slider" min="0" max="65535" step="1" value="0" data-analog="432" data-click="718" orient="vertical">
+                <span class="music-v2-vol-pct">0%</span>
+              </div>
+            </div>
           </div>
         </div>
-      </template>
 
-      <!-- Zones View (default) -->
-      <div id="music-zones-view" class="music-view">
-        <ch5-subpage-reference-list id="music-room-list"
-          widgetId="music-room-tpl"
-          orientation="horizontal"
-          noshowtype="display"
-          centerItems="true"
-          scrollbar="true"
-          loadItems="visible-only"
-          booleanJoinIncrement="10"
-          numericJoinIncrement="1"
-          stringJoinIncrement="6"
-          receiveStateNumberOfItems="400"
-          indexId="idx">
-        </ch5-subpage-reference-list>
+        <!-- Media Player Panel (right slide-out) -->
+        <div id="music-v2-media-panel" class="music-v2-media-panel">
+          <div class="music-v2-media-panel-title">Media Player</div>
+          <ch5-media-player id="media-player-v2"
+            demoMode="false"
+            receiveStateCRPC="301"
+            sendEventCRPC="301"
+            receiveStateDeviceOffline="305"
+            receiveStateMessage="302"
+            receiveStateRefreshMediaPlayer="306"
+            receiveStatePlayerName="300">
+          </ch5-media-player>
+        </div>
+
       </div>
 
-      <!-- Media Player View (toggled via d303) -->
-      <div id="music-player-view" class="music-view hidden">
-        <ch5-media-player id="media-player-1"
-          demoMode="false"
-          receiveStateCRPC="301"
-          sendEventCRPC="301"
-          receiveStateDeviceOffline="305"
-          receiveStateMessage="302"
-          receiveStateRefreshMediaPlayer="306"
-          receiveStatePlayerName="300">
-        </ch5-media-player>
-      </div>
-
-      <!-- Music-only bottom bar -->
-      <div class="music-bottom-bar">
-        <ch5-button id="nav-zones"
-          label="Zones"
-          iconClass="fas fa-th-list"
-          sendEventOnClick="302"
-          receiveStateSelected="302"
-          type="default" shape="rectangle" size="regular">
-        </ch5-button>
-        <ch5-button id="nav-media-player"
-          label="Media Player"
-          iconClass="fas fa-play-circle"
-          sendEventOnClick="301"
-          receiveStateSelected="301"
-          type="default" shape="rectangle" size="regular">
-        </ch5-button>
-        <ch5-button id="nav-all-off"
-          label="All Off"
-          sendEventOnClick="400"
-          type="default" shape="rectangle" size="regular">
-        </ch5-button>
+      <!-- Music Bottom Bar -->
+      <div class="music-v2-bottom-bar">
+        <div id="music-v2-all-off" class="bar-btn"><i class="fas fa-power-off"></i> All Off</div>
+        <div style="flex:1"></div>
+        <div id="music-v2-media-toggle" class="bar-btn"><i class="fas fa-play-circle"></i> Media</div>
       </div>
 
     </div>

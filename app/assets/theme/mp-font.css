@@ -1,0 +1,35 @@
+/* Media Player Icon Font — extracted from @crestron/ch5-theme external.css */
+@font-face{font-display:block;font-family:mp-font;font-style:normal;font-weight:400;src:url(../fonts/mp-font.eot?8uefit);src:url(../fonts/mp-font.eot?8uefit#iefix) format("embedded-opentype"),url(../fonts/mp-font.ttf?8uefit) format("truetype"),url(../fonts/mp-font.woff?8uefit) format("woff"),url(../fonts/mp-font.svg?8uefit#mp-font) format("svg")}
+.mp-icon{font-size:24px}
+.mp-icon{font-family:mp-font!important;speak:never;font-style:normal;font-variant:normal;font-weight:400;line-height:1;text-transform:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.mp-icon.mp-arrow-triangle-down:before{content:"\e900"}
+.mp-icon.mp-arrow-triangle-up:before{content:"\e901"}
+.mp-icon.mp-chevron-left:before{content:"\e902"}
+.mp-icon.mp-chevron-right:before{content:"\e903"}
+.mp-icon.mp-dots-horizontal:before{content:"\e904"}
+.mp-icon.mp-fast-backward:before{content:"\e905"}
+.mp-icon.mp-fast-forward:before{content:"\e906"}
+.mp-icon.mp-image-user-plus:before{content:"\e907"}
+.mp-icon.mp-music-list-favorites:before{content:"\e908"}
+.mp-icon.mp-music-list-home:before{content:"\e909"}
+.mp-icon.mp-music-list-quick:before{content:"\e90a"}
+.mp-icon.mp-music-note-dbl:before{content:"\e90b"}
+.mp-icon.mp-music-note-list:before{content:"\e90c"}
+.mp-icon.mp-music-note-plus:before{content:"\e90d"}
+.mp-icon.mp-pause:before{content:"\e90e"}
+.mp-icon.mp-play-multi-square:before{content:"\e90f"}
+.mp-icon.mp-play:before{content:"\e910"}
+.mp-icon.mp-plus-circle:before{content:"\e911"}
+.mp-icon.mp-repeat-1x_1:before{content:"\e912"}
+.mp-icon.mp-repeat-03:before{content:"\e913"}
+.mp-icon.mp-repeat-off:before{content:"\e914"}
+.mp-icon.mp-search-lg:before{content:"\e915"}
+.mp-icon.mp-settings:before{content:"\e916"}
+.mp-icon.mp-shuffle-1x_1:before{content:"\e917"}
+.mp-icon.mp-shuffle-02:before{content:"\e918"}
+.mp-icon.mp-shuffle-off:before{content:"\e919"}
+.mp-icon.mp-skip-back:before{content:"\e91a"}
+.mp-icon.mp-skip-forward:before{content:"\e91b"}
+.mp-icon.mp-thumbs-down:before{content:"\e91c"}
+.mp-icon.mp-thumbs-up:before{content:"\e91d"}
+.mp-animated-bar{background-image:url(../svgs/images/mp-animated-bar.gif);background-size:contain}
