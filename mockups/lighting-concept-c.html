@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lighting — Concept C: Card Grid</title>
+<style>
+  :root {
+    --cream: #f0ece3;
+    --cream-dark: #e4dfd4;
+    --cream-deep: #d6d0c4;
+    --charcoal: #1c1c1c;
+    --charcoal-2: #2a2a2a;
+    --charcoal-3: #383838;
+    --gold: #c9a84c;
+    --gold-hi: #dbb85a;
+    --gold-lo: #a8873a;
+    --nav-bg: #181818;
+    --gold-border: rgba(201, 168, 76, 0.2);
+    --header-height: 64px;
+  }
+  @media (min-width: 900px) {
+    :root { --header-height: 72px; }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  header {
+    height: var(--header-height);
+    background: var(--nav-bg);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 12px;
+    flex-shrink: 0;
+    z-index: 100;
+  }
+  .hamburger {
+    width: 44px; height: 44px;
+    background: none; border: none;
+    cursor: pointer;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 5px;
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .hamburger:hover { background: var(--charcoal-3); }
+  .hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+    transition: all 0.3s;
+  }
+
+  .home-btn {
+    width: 44px; height: 44px;
+    background: none; border: none;
+    color: var(--cream);
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .home-btn:hover { background: var(--charcoal-3); }
+
+  .header-room {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--cream);
+  }
+  .header-title {
+    margin-left: auto;
+    font-size: 1.1rem;
+    color: var(--cream-deep);
+  }
+
+  .scenes-toggle {
+    padding: 8px 16px;
+    background: none;
+    border: 1px solid var(--gold-border);
+    border-radius: 8px;
+    color: var(--gold);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .scenes-toggle:hover { background: var(--charcoal-3); }
+  .scenes-toggle.active { background: var(--gold); color: var(--charcoal); border-color: var(--gold); }
+
+  /* Room Drawer */
+  .drawer-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 300;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .drawer-overlay.open { opacity: 1; pointer-events: auto; }
+
+  .room-drawer {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 300px;
+    background: var(--charcoal);
+    z-index: 301;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--gold-border);
+  }
+  .room-drawer.open { transform: translateX(0); }
+
+  .drawer-header {
+    padding: 24px 20px 16px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-bottom: 1px solid var(--gold-border);
+  }
+  .drawer-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0;
+  }
+  .drawer-room {
+    padding: 16px 20px;
+    color: var(--cream);
+    font-size: 1.05rem;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .drawer-room:hover { background: var(--charcoal-2); }
+  .drawer-room.active {
+    border-left-color: var(--gold);
+    color: var(--gold);
+    background: var(--charcoal-2);
+  }
+  .drawer-room-icon { font-size: 0.9rem; opacity: 0.6; }
+
+  /* Main area */
+  .main-wrap {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Card grid */
+  .card-grid {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    align-content: start;
+  }
+  @media (min-width: 900px) {
+    .card-grid {
+      grid-template-columns: repeat(4, 1fr);
+      padding: 20px;
+      gap: 14px;
+    }
+  }
+  .card-grid::-webkit-scrollbar { width: 6px; }
+  .card-grid::-webkit-scrollbar-track { background: transparent; }
+  .card-grid::-webkit-scrollbar-thumb { background: var(--cream-deep); border-radius: 3px; }
+
+  /* Load card */
+  .load-card {
+    background: var(--cream-dark);
+    border: 1px solid rgba(28,28,28,0.1);
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: background 0.2s;
+  }
+  .load-card:hover { background: var(--cream-deep); }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .on-off-btn {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 2px solid var(--charcoal-3);
+    background: var(--cream);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    transition: all 0.2s;
+    color: var(--charcoal-3);
+    flex-shrink: 0;
+  }
+  .on-off-btn.on {
+    background: var(--gold);
+    border-color: var(--gold-lo);
+    color: white;
+    box-shadow: 0 0 12px rgba(201, 168, 76, 0.4);
+  }
+  .card-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--charcoal);
+    flex: 1;
+    line-height: 1.2;
+  }
+  .card-pct {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 36px;
+    text-align: right;
+  }
+
+  .card-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(to right, var(--gold) var(--val), var(--cream) var(--val));
+    outline: none;
+    cursor: pointer;
+  }
+  .card-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--gold-lo);
+    border: 2px solid var(--gold);
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+
+  .card-controls {
+    display: flex;
+    gap: 8px;
+  }
+  .rl-btn {
+    flex: 1;
+    padding: 8px;
+    background: var(--cream);
+    border: 1px solid rgba(28,28,28,0.15);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    color: var(--charcoal-3);
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .rl-btn:active { background: var(--gold); color: white; border-color: var(--gold-lo); }
+
+  /* Scene panel (right side) */
+  .scene-panel {
+    width: 0;
+    overflow: hidden;
+    background: var(--cream);
+    border-left: 0px solid var(--gold-border);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .scene-panel.open {
+    width: 280px;
+    border-left-width: 1px;
+    padding: 20px;
+  }
+  @media (min-width: 900px) {
+    .scene-panel.open { width: 320px; }
+  }
+
+  .scene-panel-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gold-border);
+    margin-bottom: 12px;
+    white-space: nowrap;
+  }
+  .scene-panel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .scene-btn {
+    padding: 16px 18px;
+    background: var(--charcoal-2);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    color: var(--cream);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    white-space: nowrap;
+  }
+  .scene-btn:hover { background: var(--charcoal-3); }
+  .scene-btn.active { border-color: var(--gold); color: var(--gold); }
+
+  /* Bottom bar (phone scenes) */
+  .bottom-bar {
+    display: none;
+    height: 56px;
+    background: var(--nav-bg);
+    border-top: 1px solid var(--gold-border);
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .bottom-scenes-btn {
+    padding: 10px 28px;
+    background: var(--charcoal-2);
+    border: 1px solid var(--gold-border);
+    border-radius: 8px;
+    color: var(--gold);
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  /* Bottom sheet */
+  .sheet-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 400;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .sheet-overlay.open { opacity: 1; pointer-events: auto; }
+
+  .bottom-sheet {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    background: var(--charcoal);
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 401;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  .bottom-sheet.open { transform: translateY(0); }
+
+  .sheet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .sheet-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .sheet-close {
+    width: 36px; height: 36px;
+    background: var(--charcoal-2);
+    border: none; border-radius: 50%;
+    color: var(--cream);
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  .sheet-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  @media (max-width: 899px) {
+    .scenes-toggle { display: none; }
+    .scene-panel { display: none; }
+    .bottom-bar { display: flex; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="hamburger" onclick="toggleDrawer()" title="Select Room">
+    <span></span><span></span><span></span>
+  </button>
+  <button class="home-btn" title="Home">&#x2302;</button>
+  <span class="header-room" id="currentRoom">Family Room</span>
+  <span class="header-title">Lighting</span>
+  <button class="scenes-toggle" id="scenesToggle" onclick="toggleScenePanel()">Scenes &#x25B8;</button>
+</header>
+
+<!-- Room Drawer -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+<div class="room-drawer" id="roomDrawer">
+  <div class="drawer-header">Select Room</div>
+  <div class="drawer-list" id="drawerList"></div>
+</div>
+
+<div class="main-wrap">
+  <div class="card-grid" id="cardGrid"></div>
+  <div class="scene-panel" id="scenePanel">
+    <div class="scene-panel-title">Scenes</div>
+    <div class="scene-panel-list" id="scenePanelList"></div>
+  </div>
+</div>
+
+<!-- Phone bottom bar -->
+<div class="bottom-bar">
+  <button class="bottom-scenes-btn" onclick="toggleSheet()">Scenes</button>
+</div>
+
+<!-- Bottom sheet -->
+<div class="sheet-overlay" id="sheetOverlay" onclick="toggleSheet()"></div>
+<div class="bottom-sheet" id="bottomSheet">
+  <div class="sheet-header">
+    <span class="sheet-title">Scenes</span>
+    <button class="sheet-close" onclick="toggleSheet()">&#x2715;</button>
+  </div>
+  <div class="sheet-grid" id="sheetGrid"></div>
+</div>
+
+<script>
+  const rooms = ['Family Room', 'Kitchen', 'Master Bedroom', 'Living Room', 'Dining Room', 'Office', 'Guest Room', 'Patio'];
+
+  const loads = [
+    { name: 'Kitchen Pendants', level: 78, on: true },
+    { name: 'Island Lights', level: 52, on: true },
+    { name: 'Recessed Cans', level: 95, on: true },
+    { name: 'Dining Chandelier', level: 38, on: false },
+    { name: 'Entry Sconces', level: 67, on: true },
+    { name: 'Hallway', level: 88, on: true },
+    { name: 'Stairway', level: 100, on: true },
+    { name: 'Pantry', level: 0, on: false },
+  ];
+
+  const scenes = ['All On', 'All Off', 'Movie Night', 'Dinner', 'Evening', 'Bright'];
+
+  function buildDrawer() {
+    const list = document.getElementById('drawerList');
+    rooms.forEach((room, i) => {
+      const el = document.createElement('div');
+      el.className = 'drawer-room' + (i === 0 ? ' active' : '');
+      el.innerHTML = `<span class="drawer-room-icon">&#x1F4A1;</span> ${room}`;
+      el.onclick = () => selectRoom(el, room);
+      list.appendChild(el);
+    });
+  }
+
+  function buildCards() {
+    const grid = document.getElementById('cardGrid');
+    grid.innerHTML = '';
+    loads.forEach((load, i) => {
+      const card = document.createElement('div');
+      card.className = 'load-card';
+      card.innerHTML = `
+        <div class="card-top">
+          <button class="on-off-btn ${load.on ? 'on' : ''}" onclick="toggleLoad(${i}, this)">&#x2600;</button>
+          <div class="card-name">${load.name}</div>
+          <div class="card-pct">${load.level}%</div>
+        </div>
+        <input type="range" class="card-slider" min="0" max="100" value="${load.level}"
+          style="--val: ${load.level}%"
+          oninput="updateSlider(${i}, this)">
+        <div class="card-controls">
+          <button class="rl-btn">&#x25B2; Raise</button>
+          <button class="rl-btn">&#x25BC; Lower</button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function buildSceneBtns(container) {
+    container.innerHTML = '';
+    scenes.forEach((scene, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'scene-btn' + (i === 5 ? ' active' : '');
+      btn.textContent = scene;
+      btn.onclick = function() {
+        document.querySelectorAll('.scene-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        // Sync all scene containers
+        document.querySelectorAll('.scene-btn').forEach(b => {
+          if (b.textContent === scene) b.classList.add('active');
+        });
+      };
+      container.appendChild(btn);
+    });
+  }
+
+  function updateSlider(i, el) {
+    const val = el.value;
+    el.style.setProperty('--val', val + '%');
+    el.closest('.load-card').querySelector('.card-pct').textContent = val + '%';
+    loads[i].level = parseInt(val);
+  }
+
+  function toggleLoad(i, btn) {
+    loads[i].on = !loads[i].on;
+    btn.classList.toggle('on');
+  }
+
+  function toggleDrawer() {
+    document.getElementById('drawerOverlay').classList.toggle('open');
+    document.getElementById('roomDrawer').classList.toggle('open');
+  }
+
+  function selectRoom(el, name) {
+    document.querySelectorAll('.drawer-room').forEach(r => r.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('currentRoom').textContent = name;
+    toggleDrawer();
+  }
+
+  let scenePanelOpen = false;
+  function toggleScenePanel() {
+    scenePanelOpen = !scenePanelOpen;
+    document.getElementById('scenePanel').classList.toggle('open', scenePanelOpen);
+    const btn = document.getElementById('scenesToggle');
+    btn.classList.toggle('active', scenePanelOpen);
+    btn.innerHTML = scenePanelOpen ? '&#x25C2; Scenes' : 'Scenes &#x25B8;';
+  }
+
+  function toggleSheet() {
+    document.getElementById('sheetOverlay').classList.toggle('open');
+    document.getElementById('bottomSheet').classList.toggle('open');
+  }
+
+  buildDrawer();
+  buildCards();
+  buildSceneBtns(document.getElementById('scenePanelList'));
+  buildSceneBtns(document.getElementById('sheetGrid'));
+</script>
+</body>
+</html>

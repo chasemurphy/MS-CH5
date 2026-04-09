@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lighting — Concept B: Vertical Faders</title>
+<style>
+  :root {
+    --cream: #f0ece3;
+    --cream-dark: #e4dfd4;
+    --cream-deep: #d6d0c4;
+    --charcoal: #1c1c1c;
+    --charcoal-2: #2a2a2a;
+    --charcoal-3: #383838;
+    --gold: #c9a84c;
+    --gold-hi: #dbb85a;
+    --gold-lo: #a8873a;
+    --nav-bg: #181818;
+    --gold-border: rgba(201, 168, 76, 0.2);
+    --header-height: 64px;
+    --scene-height: 80px;
+  }
+  @media (min-width: 900px) {
+    :root { --header-height: 72px; --scene-height: 88px; }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  header {
+    height: var(--header-height);
+    background: var(--nav-bg);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 16px;
+    flex-shrink: 0;
+    z-index: 100;
+  }
+  .home-btn {
+    width: 44px; height: 44px;
+    background: none; border: none;
+    color: var(--cream);
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .home-btn:hover { background: var(--charcoal-3); }
+
+  .room-selector {
+    display: flex; align-items: center; gap: 8px;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .room-selector:hover { background: var(--charcoal-3); }
+  .room-icon { font-size: 1.2rem; color: var(--gold); }
+  .room-name { font-size: 1.3rem; font-weight: 600; color: var(--cream); }
+  .room-chevron { color: var(--gold); font-size: 0.8rem; transition: transform 0.3s; }
+  .room-chevron.open { transform: rotate(180deg); }
+
+  .header-title {
+    margin-left: auto;
+    font-size: 1.1rem;
+    color: var(--cream-deep);
+    letter-spacing: 0.5px;
+  }
+
+  /* Room Dropdown */
+  .room-dropdown-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .room-dropdown-overlay.open { opacity: 1; pointer-events: auto; }
+
+  .room-dropdown {
+    position: fixed;
+    top: var(--header-height);
+    left: 0; right: 0;
+    background: var(--charcoal);
+    padding: 20px;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+    z-index: 201;
+    border-bottom: 2px solid var(--gold-border);
+  }
+  .room-dropdown.open { transform: translateY(0); }
+
+  .room-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .room-option {
+    padding: 14px 18px;
+    background: var(--charcoal-2);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    color: var(--cream);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .room-option:hover { border-color: var(--gold-border); background: var(--charcoal-3); }
+  .room-option.active { border-color: var(--gold); color: var(--gold); }
+
+  /* Fader columns area */
+  .fader-area {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    padding: 16px;
+    gap: 12px;
+    align-items: stretch;
+  }
+  .fader-area::-webkit-scrollbar { height: 6px; }
+  .fader-area::-webkit-scrollbar-track { background: transparent; }
+  .fader-area::-webkit-scrollbar-thumb { background: var(--cream-deep); border-radius: 3px; }
+
+  /* Single fader column */
+  .fader-col {
+    min-width: 130px;
+    max-width: 160px;
+    flex-shrink: 0;
+    background: var(--cream-dark);
+    border: 1px solid rgba(28,28,28,0.1);
+    border-radius: 12px;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  @media (min-width: 900px) {
+    .fader-col { min-width: 150px; max-width: 180px; }
+  }
+
+  .fader-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--charcoal);
+    min-height: 2.4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .on-off-btn {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--charcoal-3);
+    background: var(--cream);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+    color: var(--charcoal-3);
+    flex-shrink: 0;
+  }
+  .on-off-btn.on {
+    background: var(--gold);
+    border-color: var(--gold-lo);
+    color: white;
+    box-shadow: 0 0 12px rgba(201, 168, 76, 0.4);
+  }
+
+  .rl-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 1px solid rgba(28,28,28,0.15);
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--charcoal-3);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  .rl-btn:active { background: var(--gold); color: white; border-color: var(--gold-lo); }
+
+  /* Vertical slider */
+  .v-slider-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    width: 60px;
+    position: relative;
+  }
+  .v-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 200px;
+    height: 10px;
+    border-radius: 5px;
+    background: var(--cream);
+    outline: none;
+    cursor: pointer;
+    transform: rotate(-90deg);
+    transform-origin: center;
+  }
+  .v-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--gold-lo);
+    border: 2px solid var(--gold);
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  /* Fader track fill effect via gradient */
+  .v-slider {
+    background: linear-gradient(to right, var(--gold) var(--val), var(--cream) var(--val));
+  }
+
+  .fader-pct {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* Scene strip */
+  .scene-strip {
+    height: var(--scene-height);
+    background: var(--nav-bg);
+    border-top: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 10px;
+    overflow-x: auto;
+    flex-shrink: 0;
+  }
+  .scene-strip::-webkit-scrollbar { height: 4px; }
+  .scene-strip::-webkit-scrollbar-thumb { background: var(--charcoal-3); border-radius: 2px; }
+
+  .scene-btn {
+    padding: 12px 24px;
+    background: var(--charcoal-2);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    color: var(--cream);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .scene-btn:hover { background: var(--charcoal-3); }
+  .scene-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  @media (max-width: 899px) {
+    .fader-col { min-width: 110px; }
+    .v-slider-wrap { min-height: 160px; }
+    .v-slider { width: 160px; }
+    .fader-label { font-size: 0.8rem; }
+    .on-off-btn { width: 40px; height: 40px; font-size: 1rem; }
+    .rl-btn { width: 36px; height: 36px; }
+    .fader-pct { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="home-btn" title="Home">&#x2302;</button>
+  <div class="room-selector" onclick="toggleRoomDropdown()">
+    <span class="room-icon">&#x1F4A1;</span>
+    <span class="room-name" id="currentRoom">Family Room</span>
+    <span class="room-chevron" id="chevron">&#x25BC;</span>
+  </div>
+  <span class="header-title">Lighting</span>
+</header>
+
+<div class="room-dropdown-overlay" id="roomOverlay" onclick="toggleRoomDropdown()"></div>
+<div class="room-dropdown" id="roomDropdown">
+  <div class="room-grid">
+    <div class="room-option active" onclick="selectRoom(this)">Family Room</div>
+    <div class="room-option" onclick="selectRoom(this)">Kitchen</div>
+    <div class="room-option" onclick="selectRoom(this)">Master Bedroom</div>
+    <div class="room-option" onclick="selectRoom(this)">Living Room</div>
+    <div class="room-option" onclick="selectRoom(this)">Dining Room</div>
+    <div class="room-option" onclick="selectRoom(this)">Office</div>
+    <div class="room-option" onclick="selectRoom(this)">Guest Room</div>
+    <div class="room-option" onclick="selectRoom(this)">Patio</div>
+  </div>
+</div>
+
+<div class="fader-area" id="faderArea"></div>
+
+<div class="scene-strip" id="sceneStrip"></div>
+
+<script>
+  const loads = [
+    { name: 'Kitchen Pendants', level: 78, on: true },
+    { name: 'Island Lights', level: 52, on: true },
+    { name: 'Recessed Cans', level: 95, on: true },
+    { name: 'Dining Chandelier', level: 38, on: false },
+    { name: 'Entry Sconces', level: 67, on: true },
+    { name: 'Hallway', level: 88, on: true },
+    { name: 'Stairway', level: 100, on: true },
+    { name: 'Pantry', level: 0, on: false },
+  ];
+
+  const scenes = ['All On', 'All Off', 'Movie Night', 'Dinner', 'Evening', 'Bright'];
+
+  function buildFaders() {
+    const area = document.getElementById('faderArea');
+    area.innerHTML = '';
+    loads.forEach((load, i) => {
+      const col = document.createElement('div');
+      col.className = 'fader-col';
+      col.innerHTML = `
+        <div class="fader-label">${load.name}</div>
+        <button class="on-off-btn ${load.on ? 'on' : ''}" onclick="toggleLoad(${i}, this)">&#x2600;</button>
+        <button class="rl-btn" title="Raise">&#x25B2;</button>
+        <div class="v-slider-wrap">
+          <input type="range" class="v-slider" min="0" max="100" value="${load.level}"
+            style="--val: ${load.level}%"
+            oninput="updateFader(${i}, this)">
+        </div>
+        <button class="rl-btn" title="Lower">&#x25BC;</button>
+        <div class="fader-pct">${load.level}%</div>
+      `;
+      area.appendChild(col);
+    });
+  }
+
+  function buildScenes() {
+    const strip = document.getElementById('sceneStrip');
+    strip.innerHTML = '';
+    scenes.forEach((scene, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'scene-btn' + (i === 5 ? ' active' : '');
+      btn.textContent = scene;
+      btn.onclick = function() {
+        document.querySelectorAll('.scene-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      };
+      strip.appendChild(btn);
+    });
+  }
+
+  function updateFader(i, el) {
+    const val = el.value;
+    el.style.setProperty('--val', val + '%');
+    el.closest('.fader-col').querySelector('.fader-pct').textContent = val + '%';
+    loads[i].level = parseInt(val);
+  }
+
+  function toggleLoad(i, btn) {
+    loads[i].on = !loads[i].on;
+    btn.classList.toggle('on');
+  }
+
+  function toggleRoomDropdown() {
+    document.getElementById('roomOverlay').classList.toggle('open');
+    document.getElementById('roomDropdown').classList.toggle('open');
+    document.getElementById('chevron').classList.toggle('open');
+  }
+
+  function selectRoom(el) {
+    document.querySelectorAll('.room-option').forEach(r => r.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('currentRoom').textContent = el.textContent;
+    toggleRoomDropdown();
+  }
+
+  buildFaders();
+  buildScenes();
+</script>
+</body>
+</html>
