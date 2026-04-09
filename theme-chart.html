@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSCH5 Theme Color Chart</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", monospace;
+      background: #f7f7f7;
+      color: #222;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+
+    button {
+      padding: 0.45rem 1rem;
+      font-size: 0.85rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #fff;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    button:hover { background: #f0f0f0; }
+
+    button.primary {
+      background: #c9a84c;
+      border-color: #a8873a;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    button.primary:hover { background: #a8873a; }
+
+    .copy-status {
+      font-size: 0.8rem;
+      color: #2a9d2a;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .copy-status.show { opacity: 1; }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.82rem;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    thead th {
+      background: #1c1c1c;
+      color: #f0ece3;
+      padding: 0.6rem 0.75rem;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    thead th.group-light  { background: #3a3a4a; }
+    thead th.group-dark   { background: #2a2a38; }
+    thead th.group-custom { background: #2a3a2a; }
+
+    thead tr.sub-header th {
+      background: #2c2c2c;
+      font-weight: 500;
+      font-size: 0.78rem;
+      color: #ccc;
+      padding: 0.4rem 0.75rem;
+    }
+
+    tbody tr { border-bottom: 1px solid #eee; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #fafafa; }
+
+    tbody tr.same-in-dark td.col-dark-hex { color: #999; font-style: italic; }
+
+    td {
+      padding: 0.5rem 0.75rem;
+      vertical-align: middle;
+    }
+
+    td.col-var {
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: #444;
+      white-space: nowrap;
+    }
+
+    td.col-hex {
+      font-family: monospace;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    td.col-swatch {
+      width: 80px;
+      padding: 0.35rem 0.5rem;
+    }
+
+    .swatch {
+      display: block;
+      width: 100%;
+      height: 32px;
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.15);
+    }
+
+    td.col-custom {
+      white-space: nowrap;
+      padding: 0.35rem 0.5rem;
+    }
+
+    .custom-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    input[type="color"] {
+      width: 32px;
+      height: 32px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 1px;
+      cursor: pointer;
+      background: none;
+      flex-shrink: 0;
+    }
+
+    input[type="text"].hex-input {
+      font-family: monospace;
+      font-size: 0.8rem;
+      width: 82px;
+      padding: 0.3rem 0.4rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      color: #222;
+    }
+
+    input[type="text"].hex-input:focus {
+      outline: none;
+      border-color: #c9a84c;
+      box-shadow: 0 0 0 2px rgba(201,168,76,0.2);
+    }
+
+    input[type="text"].hex-input.invalid { border-color: #e74c3c; }
+
+    .same-badge {
+      font-size: 0.65rem;
+      background: #e8e8e8;
+      color: #888;
+      border-radius: 3px;
+      padding: 1px 4px;
+      margin-left: 4px;
+    }
+
+    .section-header {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #888;
+      background: #f4f4f4;
+      border-top: 2px solid #e0e0e0;
+    }
+
+    h2.other-heading {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 2.5rem 0 0.75rem;
+    }
+
+    table.other-table {
+      max-width: 500px;
+    }
+
+    table.other-table td { color: #555; }
+    table.other-table td.col-var { color: #333; }
+
+    .export-area {
+      margin-top: 2rem;
+    }
+
+    .export-area h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    pre#css-output {
+      background: #1c1c1c;
+      color: #f0ece3;
+      padding: 1rem 1.25rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      white-space: pre;
+      overflow-x: auto;
+      display: none;
+      margin-top: 0.5rem;
+      max-width: 600px;
+    }
+
+    @media print {
+      body { padding: 0.5rem; background: #fff; }
+      .toolbar, .export-area { display: none; }
+      .swatch { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      input[type="color"] { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>MSCH5 Theme Color Chart</h1>
+<p class="subtitle">app/assets/theme/custom.css — Compare light/dark themes and preview custom colors</p>
+
+<div class="toolbar">
+  <button class="primary" onclick="copyCSS()">Copy Custom CSS</button>
+  <button onclick="clearCustom()">Clear Custom</button>
+  <button onclick="copyFromLight()">Seed Custom from Light</button>
+  <button onclick="copyFromDark()">Seed Custom from Dark</button>
+  <span class="copy-status" id="copy-status">Copied!</span>
+</div>
+
+<table id="color-table">
+  <thead>
+    <tr>
+      <th rowspan="2">Variable</th>
+      <th colspan="2" class="group-light">Light Mode</th>
+      <th colspan="2" class="group-dark">Dark Mode</th>
+      <th colspan="2" class="group-custom">Custom Theme</th>
+    </tr>
+    <tr class="sub-header">
+      <th class="group-light">Hex</th>
+      <th class="group-light">Preview</th>
+      <th class="group-dark">Hex</th>
+      <th class="group-dark">Preview</th>
+      <th class="group-custom">Hex (edit me)</th>
+      <th class="group-custom">Preview</th>
+    </tr>
+  </thead>
+  <tbody id="color-tbody">
+  </tbody>
+</table>
+
+<h2 class="other-heading">Other Variables (non-color)</h2>
+<table class="other-table">
+  <thead>
+    <tr>
+      <th>Variable</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="col-var">--gold-border</td><td class="col-hex">rgba(201, 168, 76, 0.2)</td></tr>
+    <tr><td class="col-var">--charcoal-rgb</td><td class="col-hex">28, 28, 28</td></tr>
+    <tr><td class="col-var">--black-rgb</td><td class="col-hex">0, 0, 0</td></tr>
+    <tr><td class="col-var">--white-rgb</td><td class="col-hex">255, 255, 255</td></tr>
+    <tr><td class="col-var">--gold-rgb</td><td class="col-hex">201, 168, 76</td></tr>
+    <tr><td class="col-var">--header-height</td><td class="col-hex">64px</td></tr>
+    <tr><td class="col-var">--nav-height</td><td class="col-hex">64px</td></tr>
+  </tbody>
+</table>
+
+<div class="export-area">
+  <h2>Custom CSS Output</h2>
+  <pre id="css-output"></pre>
+</div>
+
+<script>
+  const VARS = [
+    { name: '--cream',            group: 'Palette',   light: '#f0ece3', dark: '#1a1a1a' },
+    { name: '--cream-dark',       group: 'Palette',   light: '#e4dfd4', dark: '#242424' },
+    { name: '--cream-deep',       group: 'Palette',   light: '#d6d0c4', dark: '#2e2e2e' },
+    { name: '--charcoal',         group: 'Palette',   light: '#1c1c1c', dark: '#1c1c1c' },
+    { name: '--charcoal-2',       group: 'Palette',   light: '#2a2a2a', dark: '#2a2a2a' },
+    { name: '--charcoal-3',       group: 'Palette',   light: '#383838', dark: '#aaaaaa' },
+    { name: '--gold',             group: 'Palette',   light: '#c9a84c', dark: '#c9a84c' },
+    { name: '--gold-hi',          group: 'Palette',   light: '#dbb85a', dark: '#dbb85a' },
+    { name: '--gold-lo',          group: 'Palette',   light: '#a8873a', dark: '#a8873a' },
+    { name: '--nav-bg',           group: 'Palette',   light: '#181818', dark: '#111111' },
+    { name: '--text',             group: 'Semantic',  light: '#1c1c1c', dark: '#e8e8e8' },
+    { name: '--text-on-dark',     group: 'Semantic',  light: '#f0ece3', dark: '#e8e8e8' },
+    { name: '--text-muted',       group: 'Semantic',  light: '#666666', dark: '#888888' },
+    { name: '--btn-danger',       group: 'Semantic',  light: '#c0392b', dark: '#e74c3c' },
+    { name: '--btn-danger-press', group: 'Semantic',  light: '#a93226', dark: '#c0392b' },
+    { name: '--btn-danger-text',  group: 'Semantic',  light: '#ffffff', dark: '#ffffff' },
+  ];
+
+  // Normalize short hex to 6-digit (#fff -> #ffffff)
+  function normalizeHex(h) {
+    h = h.trim().toLowerCase();
+    if (!h.startsWith('#')) h = '#' + h;
+    if (/^#[0-9a-f]{3}$/.test(h)) {
+      h = '#' + h[1]+h[1] + h[2]+h[2] + h[3]+h[3];
+    }
+    return h;
+  }
+
+  function isValidHex(h) {
+    return /^#[0-9a-fA-F]{6}$/.test(h);
+  }
+
+  function buildTable() {
+    const tbody = document.getElementById('color-tbody');
+    let currentGroup = null;
+
+    VARS.forEach((v, i) => {
+      if (v.group !== currentGroup) {
+        currentGroup = v.group;
+        const secRow = document.createElement('tr');
+        secRow.innerHTML = `<td colspan="7" class="section-header">${v.group}</td>`;
+        tbody.appendChild(secRow);
+      }
+
+      const same = v.light.toLowerCase() === v.dark.toLowerCase();
+      const tr = document.createElement('tr');
+      if (same) tr.classList.add('same-in-dark');
+
+      tr.innerHTML = `
+        <td class="col-var">${v.name}</td>
+        <td class="col-hex col-light-hex">${v.light}</td>
+        <td class="col-swatch"><span class="swatch" style="background:${v.light}"></span></td>
+        <td class="col-hex col-dark-hex">${v.dark}${same ? '<span class="same-badge">same</span>' : ''}</td>
+        <td class="col-swatch"><span class="swatch" style="background:${v.dark}"></span></td>
+        <td class="col-custom">
+          <div class="custom-input-wrap">
+            <input type="color" class="color-picker" data-idx="${i}" value="${v.light}">
+            <input type="text" class="hex-input" data-idx="${i}" placeholder="#______" maxlength="7" spellcheck="false">
+          </div>
+        </td>
+        <td class="col-swatch"><span class="swatch custom-swatch" data-idx="${i}" style="background:transparent;border-style:dashed"></span></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    // Wire up events
+    document.querySelectorAll('.color-picker').forEach(picker => {
+      picker.addEventListener('input', e => {
+        const idx = e.target.dataset.idx;
+        const hex = e.target.value;
+        updateRow(idx, hex, 'picker');
+      });
+    });
+
+    document.querySelectorAll('.hex-input').forEach(input => {
+      input.addEventListener('input', e => {
+        const idx = e.target.dataset.idx;
+        const raw = e.target.value.trim();
+        const hex = raw.startsWith('#') ? raw : (raw ? '#' + raw : '');
+        if (isValidHex(hex)) {
+          input.classList.remove('invalid');
+          updateRow(idx, hex, 'text');
+        } else {
+          input.classList.add('invalid');
+          // Clear swatch if empty
+          if (raw === '' || raw === '#') {
+            const swatch = document.querySelector(`.custom-swatch[data-idx="${idx}"]`);
+            swatch.style.background = 'transparent';
+            swatch.style.borderStyle = 'dashed';
+            input.classList.remove('invalid');
+          }
+        }
+      });
+
+      // Also handle paste & blur normalization
+      input.addEventListener('blur', e => {
+        let val = e.target.value.trim();
+        if (!val) return;
+        const hex = normalizeHex(val);
+        if (isValidHex(hex)) {
+          e.target.value = hex;
+          e.target.classList.remove('invalid');
+          updateRow(e.target.dataset.idx, hex, 'text');
+        }
+      });
+    });
+  }
+
+  function updateRow(idx, hex, source) {
+    const swatch = document.querySelector(`.custom-swatch[data-idx="${idx}"]`);
+    swatch.style.background = hex;
+    swatch.style.borderStyle = 'solid';
+
+    if (source !== 'picker') {
+      const picker = document.querySelector(`.color-picker[data-idx="${idx}"]`);
+      if (isValidHex(hex)) picker.value = hex;
+    }
+    if (source !== 'text') {
+      const textInput = document.querySelector(`.hex-input[data-idx="${idx}"]`);
+      textInput.value = hex;
+      textInput.classList.remove('invalid');
+    }
+  }
+
+  function clearCustom() {
+    document.querySelectorAll('.hex-input').forEach(input => {
+      input.value = '';
+      input.classList.remove('invalid');
+    });
+    document.querySelectorAll('.custom-swatch').forEach(swatch => {
+      swatch.style.background = 'transparent';
+      swatch.style.borderStyle = 'dashed';
+    });
+    document.getElementById('css-output').style.display = 'none';
+  }
+
+  function seedFrom(mode) {
+    VARS.forEach((v, i) => {
+      const hex = mode === 'light' ? v.light : v.dark;
+      updateRow(i, hex, null);
+    });
+  }
+
+  function copyFromLight() { seedFrom('light'); }
+  function copyFromDark()  { seedFrom('dark'); }
+
+  function buildCSSOutput() {
+    const lines = [];
+    VARS.forEach((v, i) => {
+      const input = document.querySelector(`.hex-input[data-idx="${i}"]`);
+      const val = input ? input.value.trim() : '';
+      if (val && isValidHex(normalizeHex(val))) {
+        lines.push(`  ${v.name}: ${normalizeHex(val)};`);
+      }
+    });
+    if (lines.length === 0) return null;
+    return `html[data-theme="custom"] {\n${lines.join('\n')}\n}`;
+  }
+
+  function copyCSS() {
+    const css = buildCSSOutput();
+    const output = document.getElementById('css-output');
+    if (!css) {
+      output.textContent = '/* No custom values entered yet */';
+      output.style.display = 'block';
+      return;
+    }
+    output.textContent = css;
+    output.style.display = 'block';
+
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(css).then(() => showCopyStatus());
+    } else {
+      // Fallback
+      const ta = document.createElement('textarea');
+      ta.value = css;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showCopyStatus();
+    }
+  }
+
+  function showCopyStatus() {
+    const el = document.getElementById('copy-status');
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2000);
+  }
+
+  buildTable();
+</script>
+</body>
+</html>
