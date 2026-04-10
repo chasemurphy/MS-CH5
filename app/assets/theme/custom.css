@@ -3,28 +3,34 @@
    ========================================================= */
 
 :root {
-  /* Color Palette */
-  --cream:       #f0ece3;
-  --cream-dark:  #e4dfd4;
-  --cream-deep:  #d6d0c4;
-  --charcoal:    #1c1c1c;
-  --charcoal-2:  #2a2a2a;
-  --charcoal-3:  #383838;
-  --gold:        #c9a84c;
-  --gold-hi:     #dbb85a;
-  --gold-lo:     #a8873a;
-  --nav-bg:      #181818;
+  /* ── Surfaces ── */
+  --surface-primary:   #f0ece3;   /* body bg, panels, slider tracks, card controls */
+  --surface-secondary: #e4dfd4;   /* tile bg, card bg, source btn bg, vol btn bg */
+  --surface-pressed:   #d6d0c4;   /* pressed bg for tiles/btns, scrollbar thumb */
 
-  /* Gold with alpha — borders & accents */
-  --gold-border: rgba(201, 168, 76, 0.2);
+  /* ── Chrome (fixed structural UI) ── */
+  --chrome-bg:         #1c1c1c;   /* header, room drawer */
+  --chrome-surface:    #2a2a2a;   /* scene btn bg, source selected bg, drawer active bg */
+  --chrome-nav:        #181818;   /* bottom nav, music/lighting bottom bars */
 
-  /* RGB channels for rgba() usage */
-  --charcoal-rgb: 28, 28, 28;
-  --black-rgb:    0, 0, 0;
-  --white-rgb:    255, 255, 255;
-  --gold-rgb:     201, 168, 76;
+  /* ── Accent (brand/theme color) ── */
+  --accent:            #c9a84c;   /* selected states, slider fills, headings on dark bg */
+  --accent-hi:         #dbb85a;   /* lighter accent (reserved) */
+  --accent-pressed:    #a8873a;   /* pressed accent: slider thumbs, pressed borders */
 
-  /* Semantic tokens */
+  /* ── Borders ── */
+  --border-accent:     rgba(201, 168, 76, 0.2);
+
+  /* ── Muted icon/label color ── */
+  --icon-muted:        #383838;   /* icons and labels in default/off states */
+
+  /* ── RGB channels (for rgba() usage) ── */
+  --chrome-bg-rgb:     28, 28, 28;
+  --black-rgb:         0, 0, 0;
+  --white-rgb:         255, 255, 255;
+  --accent-rgb:        201, 168, 76;
+
+  /* ── Semantic tokens ── */
   --text:             #1c1c1c;
   --text-on-dark:     #f0ece3;
   --text-muted:       #666;
@@ -32,7 +38,7 @@
   --btn-danger-press: #a93226;
   --btn-danger-text:  #fff;
 
-  /* Layout dimensions */
+  /* ── Layout ── */
   --header-height: 64px;
   --nav-height: 64px;
 }
@@ -52,7 +58,7 @@ html, body {
 }
 
 body {
-  background: var(--cream);
+  background: var(--surface-primary);
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 400;
   color: var(--text);
@@ -68,8 +74,8 @@ body {
   left: 0;
   right: 0;
   height: var(--header-height);
-  background: var(--charcoal);
-  border-bottom: 1px solid var(--gold-border);
+  background: var(--chrome-bg);
+  border-bottom: 1px solid var(--border-accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,7 +86,7 @@ body {
 #header-title {
   font-weight: 600;
   font-size: 1.3rem !important;
-  color: var(--gold) !important;
+  color: var(--accent) !important;
   letter-spacing: 0.02em;
   text-align: center !important;
   width: 100%;
@@ -90,7 +96,7 @@ body {
 }
 
 #header-title .ch5-text {
-  color: var(--gold) !important;
+  color: var(--accent) !important;
   background-color: transparent !important;
   font-size: 1.3rem !important;
   font-weight: 600 !important;
@@ -111,7 +117,7 @@ body {
 .header-nav-btn .ch5-button--default {
   background-color: transparent;
   border: none;
-  color: var(--gold);
+  color: var(--accent);
   height: 100%;
 }
 
@@ -126,13 +132,13 @@ body {
 }
 
 .header-nav-btn .ch5-button--default .ch5-button--icon {
-  color: var(--gold);
+  color: var(--accent);
   font-size: 1.6rem;
 }
 
 .header-nav-btn .ch5-button--default.ch5-button--pressed .ch5-button--icon,
 .header-nav-btn .ch5-button--default.ch5-button--pressed .ch5-button--label {
-  color: var(--gold-lo);
+  color: var(--accent-pressed);
 }
 
 .hidden {
@@ -183,8 +189,8 @@ body {
   left: 0;
   right: 0;
   height: var(--nav-height);
-  background: var(--nav-bg);
-  border-top: 1px solid var(--gold-border);
+  background: var(--chrome-nav);
+  border-top: 1px solid var(--border-accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -222,22 +228,22 @@ body {
 
 #bottom-nav .ch5-button--default.ch5-button--pressed {
   background-color: transparent;
-  color: var(--gold-lo);
+  color: var(--accent-pressed);
 }
 
 #bottom-nav .ch5-button--default.ch5-button--pressed .ch5-button--icon,
 #bottom-nav .ch5-button--default.ch5-button--pressed .ch5-button--label {
-  color: var(--gold-lo);
+  color: var(--accent-pressed);
 }
 
 #bottom-nav .ch5-button--default.ch5-button--selected {
   background-color: transparent;
-  color: var(--gold);
+  color: var(--accent);
 }
 
 #bottom-nav .ch5-button--default.ch5-button--selected .ch5-button--icon,
 #bottom-nav .ch5-button--default.ch5-button--selected .ch5-button--label {
-  color: var(--gold);
+  color: var(--accent);
 }
 
 /* =========================================================
@@ -254,14 +260,14 @@ body {
 .home-title {
   font-weight: 600;
   font-size: 2rem;
-  color: var(--gold);
+  color: var(--accent);
   margin-bottom: 4px;
 }
 
 .home-subtitle {
   font-weight: 300;
   font-size: 0.95rem;
-  color: var(--charcoal-3);
+  color: var(--icon-muted);
   margin-bottom: 32px;
 }
 
@@ -285,8 +291,8 @@ body {
 
 /* Default (unpressed) tile style */
 .tile-grid .ch5-button--default {
-  background-color: var(--cream-dark);
-  border: 1px solid rgba(var(--charcoal-rgb), 0.15);
+  background-color: var(--surface-secondary);
+  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
   -webkit-border-radius: 12px;
   border-radius: 12px !important;
   overflow: hidden;
@@ -310,7 +316,7 @@ body {
 
 .tile-grid .ch5-button--default .ch5-button--icon {
   font-size: 2rem;
-  color: var(--charcoal-3);
+  color: var(--icon-muted);
   margin-bottom: 10px;
   display: block;
   transition: color 0.2s ease;
@@ -325,25 +331,25 @@ body {
 
 /* Pressed state (finger down) */
 .tile-grid .ch5-button--default.ch5-button--pressed {
-  background-color: var(--cream-deep);
-  border-color: var(--gold-lo);
+  background-color: var(--surface-pressed);
+  border-color: var(--accent-pressed);
   transform: scale(0.95);
 }
 
 .tile-grid .ch5-button--default.ch5-button--pressed .ch5-button--icon,
 .tile-grid .ch5-button--default.ch5-button--pressed .ch5-button--label {
-  color: var(--gold-lo);
+  color: var(--accent-pressed);
 }
 
 /* Selected/Active state (SIMPL feedback) */
 .tile-grid .ch5-button--default.ch5-button--selected {
-  background-color: var(--cream);
-  border-color: var(--gold);
+  background-color: var(--surface-primary);
+  border-color: var(--accent);
 }
 
 .tile-grid .ch5-button--default.ch5-button--selected .ch5-button--icon,
 .tile-grid .ch5-button--default.ch5-button--selected .ch5-button--label {
-  color: var(--gold);
+  color: var(--accent);
 }
 
 /* =========================================================
@@ -405,8 +411,8 @@ body {
   justify-content: center;
   gap: 32px;
   padding: 10px 16px;
-  background: var(--nav-bg);
-  border-top: 1px solid var(--gold-border);
+  background: var(--chrome-nav);
+  border-top: 1px solid var(--border-accent);
 }
 
 .music-bottom-bar .ch5-button--default {
@@ -434,21 +440,21 @@ body {
 
 .music-bottom-bar .ch5-button--default.ch5-button--pressed {
   background-color: rgba(var(--white-rgb), 0.08);
-  border-color: var(--gold-lo);
+  border-color: var(--accent-pressed);
 }
 
 .music-bottom-bar .ch5-button--default.ch5-button--pressed .ch5-button--label {
-  color: var(--gold-lo);
+  color: var(--accent-pressed);
 }
 
 .music-bottom-bar .ch5-button--default.ch5-button--selected {
-  background-color: rgba(var(--gold-rgb), 0.15);
-  border-color: var(--gold);
+  background-color: rgba(var(--accent-rgb), 0.15);
+  border-color: var(--accent);
 }
 
 .music-bottom-bar .ch5-button--default.ch5-button--selected .ch5-button--label,
 .music-bottom-bar .ch5-button--default.ch5-button--selected .ch5-button--icon {
-  color: var(--gold);
+  color: var(--accent);
 }
 
 /* ---- Room Column ---- */
@@ -456,7 +462,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 16px 12px;
-  border-right: 1px solid rgba(var(--charcoal-rgb), 0.12);
+  border-right: 1px solid rgba(var(--chrome-bg-rgb), 0.12);
   min-width: 240px;
   width: 100%;
   height: 100%;
@@ -516,17 +522,17 @@ body {
 
 /* ---- Slider Colors (gold theme) ---- */
 .vol-slider-wrap .noUi-target {
-  background: var(--cream-dark) !important;
-  border-color: rgba(var(--charcoal-rgb), 0.15) !important;
+  background: var(--surface-secondary) !important;
+  border-color: rgba(var(--chrome-bg-rgb), 0.15) !important;
 }
 
 .vol-slider-wrap .noUi-connect {
-  background: var(--gold) !important;
+  background: var(--accent) !important;
 }
 
 .vol-slider-wrap .noUi-handle {
-  background: var(--gold-lo) !important;
-  border: 2px solid var(--gold) !important;
+  background: var(--accent-pressed) !important;
+  border: 2px solid var(--accent) !important;
   box-shadow: none !important;
 }
 
@@ -582,8 +588,8 @@ body {
 }
 
 .source-btn .ch5-button--default {
-  background-color: var(--cream-dark);
-  border: 1px solid rgba(var(--charcoal-rgb), 0.15);
+  background-color: var(--surface-secondary);
+  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
   border-radius: 8px !important;
   color: var(--text);
   height: 100%;
@@ -604,21 +610,21 @@ body {
 }
 
 .source-btn .ch5-button--default.ch5-button--pressed {
-  background-color: var(--charcoal-2);
-  border-color: var(--gold-lo);
+  background-color: var(--chrome-surface);
+  border-color: var(--accent-pressed);
 }
 
 .source-btn .ch5-button--default.ch5-button--pressed .ch5-button--label {
-  color: var(--gold-lo);
+  color: var(--accent-pressed);
 }
 
 .source-btn .ch5-button--default.ch5-button--selected {
-  background-color: var(--charcoal-2);
-  border-color: var(--gold);
+  background-color: var(--chrome-surface);
+  border-color: var(--accent);
 }
 
 .source-btn .ch5-button--default.ch5-button--selected .ch5-button--label {
-  color: var(--gold);
+  color: var(--accent);
 }
 
 /* ---- Volume Controls ---- */
@@ -636,8 +642,8 @@ body {
 }
 
 .vol-btn .ch5-button--default {
-  background-color: var(--cream-dark);
-  border: 1px solid rgba(var(--charcoal-rgb), 0.15);
+  background-color: var(--surface-secondary);
+  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
   border-radius: 8px !important;
   color: var(--text);
 }
@@ -658,17 +664,17 @@ body {
 }
 
 .vol-btn .ch5-button--default .ch5-button--icon {
-  color: var(--charcoal-3);
+  color: var(--icon-muted);
   font-size: 1.6rem;
 }
 
 .vol-btn .ch5-button--default.ch5-button--pressed {
-  background-color: var(--cream-deep);
-  border-color: var(--gold-lo);
+  background-color: var(--surface-pressed);
+  border-color: var(--accent-pressed);
 }
 
 .vol-btn .ch5-button--default.ch5-button--pressed .ch5-button--icon {
-  color: var(--gold-lo);
+  color: var(--accent-pressed);
 }
 
 /* ---- Off Button ---- */
@@ -680,8 +686,8 @@ body {
 }
 
 .off-btn .ch5-button--default {
-  background-color: var(--cream-dark);
-  border: 1px solid rgba(var(--charcoal-rgb), 0.15);
+  background-color: var(--surface-secondary);
+  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
   border-radius: 8px !important;
   color: var(--text);
   min-height: 60px !important;
@@ -705,8 +711,8 @@ body {
 }
 
 .off-btn .ch5-button--default.ch5-button--pressed {
-  background-color: var(--cream-deep);
-  border-color: var(--gold-lo);
+  background-color: var(--surface-pressed);
+  border-color: var(--accent-pressed);
 }
 
 /* Off button — active (selected) state: red */
@@ -751,9 +757,10 @@ body {
   }
 
   .tile-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 250px));
+    justify-content: center;
     gap: 20px;
-    max-width: 800px;
+    max-width: 900px;
   }
 
   .tile-grid .ch5-button--default .cb-btn {
@@ -836,13 +843,13 @@ body {
   left: 0;
   bottom: 0;
   width: 280px;
-  background: var(--charcoal);
+  background: var(--chrome-bg);
   z-index: 51;
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid var(--gold-border);
+  border-right: 1px solid var(--border-accent);
   overflow: hidden;
 }
 
@@ -856,8 +863,8 @@ body {
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--gold);
-  border-bottom: 1px solid var(--gold-border);
+  color: var(--accent);
+  border-bottom: 1px solid var(--border-accent);
   flex-shrink: 0;
 }
 
@@ -887,13 +894,13 @@ body {
 }
 
 .drawer-room:active {
-  background: var(--charcoal-2);
+  background: var(--chrome-surface);
 }
 
 .drawer-room.selected {
-  border-left-color: var(--gold);
-  color: var(--gold);
-  background: var(--charcoal-2);
+  border-left-color: var(--accent);
+  color: var(--accent);
+  background: var(--chrome-surface);
 }
 
 .drawer-room.selected .drawer-room-name {
@@ -902,13 +909,13 @@ body {
 
 .drawer-room-icon {
   font-size: 0.9rem;
-  color: var(--gold-lo);
+  color: var(--accent-pressed);
   opacity: 0.5;
 }
 
 .drawer-room.lights-on .drawer-room-icon {
   opacity: 1;
-  color: var(--gold);
+  color: var(--accent);
 }
 
 .drawer-room-name {
@@ -933,7 +940,7 @@ body {
 
 .lighting-load-grid::-webkit-scrollbar { width: 6px; }
 .lighting-load-grid::-webkit-scrollbar-track { background: transparent; }
-.lighting-load-grid::-webkit-scrollbar-thumb { background: var(--cream-deep); border-radius: 3px; }
+.lighting-load-grid::-webkit-scrollbar-thumb { background: var(--surface-pressed); border-radius: 3px; }
 
 /* Load card grid — auto-fill: fits as many cards as the container allows */
 .lighting-load-grid {
@@ -945,8 +952,8 @@ body {
 
 /* --- Load Card --- */
 .load-card {
-  background: var(--cream-dark);
-  border: 1px solid rgba(var(--charcoal-rgb), 0.1);
+  background: var(--surface-secondary);
+  border: 1px solid rgba(var(--chrome-bg-rgb), 0.1);
   border-radius: 12px;
   padding: 14px;
   display: flex;
@@ -996,21 +1003,21 @@ body {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  background: var(--cream) !important;
-  border: 2px solid var(--charcoal-3) !important;
+  background: var(--surface-primary) !important;
+  border: 2px solid var(--icon-muted) !important;
   box-shadow: none !important;
 }
 
 #page-lighting ch5-button.load-toggle .ch5-button--icon {
   font-size: 1rem !important;
-  color: var(--charcoal-3) !important;
+  color: var(--icon-muted) !important;
 }
 
 /* Selected state — class is on the inner .ch5-button div, not the custom element */
 #page-lighting ch5-button.load-toggle .ch5-button--selected .cb-btn {
-  background: var(--gold) !important;
-  border-color: var(--gold-lo) !important;
-  box-shadow: 0 0 12px rgba(var(--gold-rgb), 0.4) !important;
+  background: var(--accent) !important;
+  border-color: var(--accent-pressed) !important;
+  box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.4) !important;
 }
 
 #page-lighting ch5-button.load-toggle .ch5-button--selected .ch5-button--icon {
@@ -1054,7 +1061,7 @@ body {
   border-radius: 4px;
   outline: none;
   cursor: pointer;
-  background: linear-gradient(to right, var(--gold) var(--val, 0%), var(--cream) var(--val, 0%));
+  background: linear-gradient(to right, var(--accent) var(--val, 0%), var(--surface-primary) var(--val, 0%));
   margin: 4px 0;
 }
 
@@ -1063,8 +1070,8 @@ body {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--gold-lo);
-  border: 2px solid var(--gold);
+  background: var(--accent-pressed);
+  border: 2px solid var(--accent);
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(var(--black-rgb), 0.2);
 }
@@ -1073,20 +1080,20 @@ body {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--gold-lo);
-  border: 2px solid var(--gold);
+  background: var(--accent-pressed);
+  border: 2px solid var(--accent);
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(var(--black-rgb), 0.2);
 }
 
 #page-lighting .load-slider::-moz-range-progress {
-  background: var(--gold);
+  background: var(--accent);
   border-radius: 4px;
   height: 8px;
 }
 
 #page-lighting .load-slider::-moz-range-track {
-  background: var(--cream);
+  background: var(--surface-primary);
   border-radius: 4px;
   height: 8px;
 }
@@ -1119,8 +1126,8 @@ body {
 }
 
 #page-lighting .card-controls .cb-btn {
-  background: var(--cream) !important;
-  border: 1px solid rgba(var(--charcoal-rgb), 0.15) !important;
+  background: var(--surface-primary) !important;
+  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15) !important;
   border-radius: 8px !important;
   padding: 8px 12px !important;
   min-height: 36px !important;
@@ -1132,17 +1139,17 @@ body {
 
 #page-lighting .card-controls .ch5-button--label {
   font-size: 0.8rem !important;
-  color: var(--charcoal-3) !important;
+  color: var(--icon-muted) !important;
 }
 
 #page-lighting .card-controls .ch5-button--icon {
   font-size: 0.85rem !important;
-  color: var(--charcoal-3) !important;
+  color: var(--icon-muted) !important;
 }
 
 #page-lighting .card-controls ch5-button[class*="pressed"] .cb-btn {
-  background: var(--gold) !important;
-  border-color: var(--gold-lo) !important;
+  background: var(--accent) !important;
+  border-color: var(--accent-pressed) !important;
 }
 
 #page-lighting .card-controls ch5-button[class*="pressed"] .ch5-button--label,
@@ -1154,8 +1161,8 @@ body {
 .scene-panel {
   width: 0;
   overflow: hidden;
-  background: var(--cream);
-  border-left: 0 solid var(--gold-border);
+  background: var(--surface-primary);
+  border-left: 0 solid var(--border-accent);
   transition: width 0.3s ease, padding 0.3s ease, border-left-width 0.3s ease;
   flex-shrink: 0;
   display: flex;
@@ -1173,10 +1180,10 @@ body {
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--accent);
   text-align: center;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--gold-border);
+  border-bottom: 1px solid var(--border-accent);
   margin-bottom: 10px;
   white-space: nowrap;
   flex-shrink: 0;
@@ -1194,8 +1201,8 @@ body {
 .scene-btn {
   display: none;
   align-items: center;
-  background: var(--charcoal-2);
-  border: 2px solid var(--gold-border);
+  background: var(--chrome-surface);
+  border: 2px solid var(--border-accent);
   border-radius: 10px;
   padding: 16px 18px;
   color: var(--text-on-dark);
@@ -1212,12 +1219,12 @@ body {
 }
 
 .scene-btn:active {
-  background: var(--charcoal-3);
+  background: var(--icon-muted);
 }
 
 .scene-btn.selected {
-  border-color: var(--gold);
-  color: var(--gold);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 /* --- Lighting Bottom Bar --- */
@@ -1227,8 +1234,8 @@ body {
   gap: 12px;
   padding: 0 12px;
   height: var(--nav-height);
-  background: var(--nav-bg);
-  border-top: 1px solid var(--gold-border);
+  background: var(--chrome-nav);
+  border-top: 1px solid var(--border-accent);
   flex-shrink: 0;
 }
 
@@ -1237,11 +1244,11 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: var(--charcoal-2);
-  border: 1px solid var(--gold-border);
+  background: var(--chrome-surface);
+  border: 1px solid var(--border-accent);
   border-radius: 8px;
   padding: 10px 18px;
-  color: var(--gold);
+  color: var(--accent);
   font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 0.5px;
@@ -1252,7 +1259,7 @@ body {
 }
 
 .bar-btn:active {
-  background: var(--charcoal-3);
+  background: var(--icon-muted);
 }
 
 /* =========================================================
@@ -1345,7 +1352,7 @@ body {
 }
 
 .music-v2-room-scroll::-webkit-scrollbar-thumb {
-  background: var(--cream-deep);
+  background: var(--surface-pressed);
   border-radius: 3px;
 }
 
@@ -1354,7 +1361,7 @@ body {
   display: none;
   flex-direction: column;
   padding: 16px 12px;
-  border-right: 1px solid rgba(var(--charcoal-rgb), 0.12);
+  border-right: 1px solid rgba(var(--chrome-bg-rgb), 0.12);
   min-width: 240px;
   width: 240px;
   height: 100%;
@@ -1406,8 +1413,8 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: var(--cream-dark);
-  border: 1px solid rgba(var(--charcoal-rgb), 0.15);
+  background: var(--surface-secondary);
+  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
   border-radius: 8px;
   padding: 12px 16px;
   color: var(--text);
@@ -1426,15 +1433,15 @@ body {
 }
 
 .music-v2-src-btn:active {
-  background: var(--charcoal-2);
-  border-color: var(--gold-lo);
-  color: var(--gold-lo);
+  background: var(--chrome-surface);
+  border-color: var(--accent-pressed);
+  color: var(--accent-pressed);
 }
 
 .music-v2-src-btn.selected {
-  background: var(--charcoal-2);
-  border-color: var(--gold);
-  color: var(--gold);
+  background: var(--chrome-surface);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 /* ---- Off Button (per room) ---- */
@@ -1442,8 +1449,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--cream-dark);
-  border: 1px solid rgba(var(--charcoal-rgb), 0.15);
+  background: var(--surface-secondary);
+  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
   border-radius: 8px;
   min-height: 52px;
   margin-top: 12px;
@@ -1458,8 +1465,8 @@ body {
 }
 
 .music-v2-off-btn:active {
-  background: var(--cream-deep);
-  border-color: var(--gold-lo);
+  background: var(--surface-pressed);
+  border-color: var(--accent-pressed);
 }
 
 .music-v2-off-btn.selected {
@@ -1485,11 +1492,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--cream-dark);
-  border: 1px solid rgba(var(--charcoal-rgb), 0.15);
+  background: var(--surface-secondary);
+  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
   border-radius: 8px;
   min-height: 60px;
-  color: var(--charcoal-3);
+  color: var(--icon-muted);
   font-size: 1.6rem;
   cursor: pointer;
   user-select: none;
@@ -1499,9 +1506,9 @@ body {
 
 .music-v2-vol-btn:active,
 .music-v2-vol-btn.pressed {
-  background: var(--cream-deep);
-  border-color: var(--gold-lo);
-  color: var(--gold-lo);
+  background: var(--surface-pressed);
+  border-color: var(--accent-pressed);
+  color: var(--accent-pressed);
 }
 
 /* ---- Vertical Slider (native range input) ---- */
@@ -1524,7 +1531,7 @@ body {
   border-radius: 4px;
   outline: none;
   cursor: pointer;
-  background: linear-gradient(to top, var(--gold) var(--val, 0%), var(--cream) var(--val, 0%));
+  background: linear-gradient(to top, var(--accent) var(--val, 0%), var(--surface-primary) var(--val, 0%));
   margin: 0;
 }
 
@@ -1533,8 +1540,8 @@ body {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--gold-lo);
-  border: 2px solid var(--gold);
+  background: var(--accent-pressed);
+  border: 2px solid var(--accent);
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(var(--black-rgb), 0.2);
 }
@@ -1543,20 +1550,20 @@ body {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--gold-lo);
-  border: 2px solid var(--gold);
+  background: var(--accent-pressed);
+  border: 2px solid var(--accent);
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(var(--black-rgb), 0.2);
 }
 
 #page-music-v2 .music-v2-slider::-moz-range-progress {
-  background: var(--gold);
+  background: var(--accent);
   border-radius: 4px;
   width: 8px;
 }
 
 #page-music-v2 .music-v2-slider::-moz-range-track {
-  background: var(--cream);
+  background: var(--surface-primary);
   border-radius: 4px;
   width: 8px;
 }
@@ -1577,8 +1584,8 @@ body {
 .music-v2-media-panel {
   width: 0;
   overflow: hidden;
-  background: var(--cream);
-  border-left: 0 solid var(--gold-border);
+  background: var(--surface-primary);
+  border-left: 0 solid var(--border-accent);
   transition: width 0.3s ease, padding 0.3s ease, border-left-width 0.3s ease;
   flex-shrink: 0;
   display: flex;
@@ -1597,10 +1604,10 @@ body {
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--accent);
   text-align: center;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--gold-border);
+  border-bottom: 1px solid var(--border-accent);
   margin-bottom: 10px;
   white-space: nowrap;
   flex-shrink: 0;
@@ -1626,8 +1633,8 @@ body {
   gap: 12px;
   padding: 0 12px;
   height: var(--nav-height);
-  background: var(--nav-bg);
-  border-top: 1px solid var(--gold-border);
+  background: var(--chrome-nav);
+  border-top: 1px solid var(--border-accent);
   flex-shrink: 0;
 }
 
@@ -1668,15 +1675,41 @@ body {
    Dark Theme — driven by SIMPL analog join
    ========================================================= */
 html[data-theme="dark"] {
-  --cream:        #1a1a1a;
-  --cream-dark:   #242424;
-  --cream-deep:   #2e2e2e;
-  --charcoal-3:   #aaaaaa;
-  --nav-bg:       #111111;
+  --surface-primary:   #1a1a1a;
+  --surface-secondary: #242424;
+  --surface-pressed:   #2e2e2e;
+  --icon-muted:        #aaaaaa;
+  --chrome-nav:        #111111;
 
   --text:             #e8e8e8;
   --text-on-dark:     #e8e8e8;
   --text-muted:       #888;
   --btn-danger:       #e74c3c;
   --btn-danger-press: #c0392b;
+}
+
+/* =========================================================
+   Custom Theme — driven by SIMPL analog join (value 2)
+   ========================================================= */
+html[data-theme="custom"] {
+  --surface-primary:   #ffffff;
+  --surface-secondary: #c0c0c0;
+  --surface-pressed:   #606060;
+  --chrome-bg:         #000000;
+  --chrome-surface:    #111111;
+  --icon-muted:        #aaaaaa;
+  --accent:            #0061ff;
+  --accent-hi:         #74a7fe;
+  --accent-pressed:    #0056d6;
+  --chrome-nav:        #111111;
+
+  --border-accent:     rgba(0, 97, 255, 0.2);
+  --accent-rgb:        0, 97, 255;
+
+  --text:             #7a7a7a;
+  --text-on-dark:     #ebebeb;
+  --text-muted:       #888888;
+  --btn-danger:       #e74c3c;
+  --btn-danger-press: #c0392b;
+  --btn-danger-text:  #7a7a7a;
 }
