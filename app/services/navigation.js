@@ -20,6 +20,14 @@
     var next = document.getElementById(pages[name].id);
     if (!prev || !next) return;
 
+    /* Close lighting drawer / scene panel when leaving that page */
+    if (currentPage === 'lighting') {
+      ['lighting-room-drawer', 'lighting-drawer-overlay', 'lighting-scene-panel'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.remove('open');
+      });
+    }
+
     prev.classList.remove('active');
     next.classList.add('active');
     currentPage = name;
