@@ -1862,6 +1862,308 @@ body {
 }
 
 /* =========================================================
+   Climate Page — Thermostat
+   ========================================================= */
+#page-climate {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Active climate-room indicator in drawer */
+.drawer-room.climate-active .drawer-room-icon {
+  opacity: 1;
+  color: var(--accent);
+}
+
+.climate-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  position: relative;
+  padding: 20px 16px;
+  gap: 20px;
+  align-items: center;
+}
+
+/* --- Arc Dial --- */
+.climate-dial-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 4 / 3;
+  flex-shrink: 0;
+}
+
+.climate-dial {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.climate-dial-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  padding-top: 8%;
+}
+
+.climate-dial-label {
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.climate-current-temp {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.6rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.climate-set-temp {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.climate-deg {
+  font-size: 0.7em;
+  vertical-align: super;
+  margin-left: 2px;
+  opacity: 0.8;
+}
+
+.climate-tstat-name {
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+/* --- Controls --- */
+.climate-controls {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.climate-card {
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-accent);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.climate-card-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.climate-card-half {
+  flex: 1;
+  min-width: 0;
+}
+
+.climate-card-title {
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.climate-btn-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* --- Buttons --- */
+.climate-btn {
+  flex: 1;
+  background: var(--chrome-surface);
+  border: 1px solid var(--border-accent);
+  color: var(--text-on-dark);
+  border-radius: 8px;
+  padding: 12px 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.climate-btn i {
+  font-size: 0.9rem;
+  color: var(--accent);
+  opacity: 0.8;
+}
+
+.climate-btn:active {
+  background: var(--accent-pressed);
+  color: #fff;
+}
+
+.climate-btn:active i {
+  color: #fff;
+  opacity: 1;
+}
+
+.climate-btn.active {
+  background: var(--accent-pressed);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.climate-btn.active i {
+  color: #fff;
+  opacity: 1;
+}
+
+.climate-mode-btn {
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 6px;
+}
+
+.climate-mode-btn i {
+  font-size: 1.1rem;
+}
+
+/* --- Setpoint Rows --- */
+.climate-setpoint-row {
+  display: grid;
+  grid-template-columns: 1fr auto minmax(70px, auto) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+}
+
+.climate-setpoint-label {
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.climate-setpoint-label i {
+  color: var(--accent);
+}
+
+.climate-setpoint-value {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--text);
+  text-align: center;
+  min-width: 60px;
+}
+
+.climate-step-btn {
+  flex: 0 0 auto;
+  width: 44px;
+  padding: 10px 0;
+}
+
+.climate-step-btn i {
+  font-size: 0.9rem;
+}
+
+/* --- Bottom Bar --- */
+.climate-bottom-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  height: var(--nav-height);
+  background: var(--chrome-nav);
+  border-top: 1px solid var(--border-accent);
+  flex-shrink: 0;
+}
+
+/* --- Responsive (TSW-1080) --- */
+@media (min-width: 900px) {
+  .climate-main {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px;
+    gap: 36px;
+  }
+
+  .climate-dial-wrap {
+    max-width: 520px;
+    flex: 0 0 auto;
+  }
+
+  .climate-current-temp {
+    font-size: 3.4rem;
+  }
+
+  .climate-set-temp {
+    font-size: 2.6rem;
+  }
+
+  .climate-controls {
+    max-width: 520px;
+    gap: 16px;
+  }
+
+  .climate-card {
+    padding: 18px 22px;
+    gap: 14px;
+  }
+
+  .climate-btn {
+    padding: 14px 12px;
+    font-size: 0.95rem;
+  }
+
+  .climate-mode-btn i {
+    font-size: 1.3rem;
+  }
+
+  .climate-setpoint-value {
+    font-size: 2rem;
+    min-width: 80px;
+  }
+
+  .climate-step-btn {
+    width: 54px;
+    padding: 12px 0;
+  }
+
+  .climate-card-row {
+    flex-direction: row;
+  }
+}
+
+/* =========================================================
    Dark Theme — driven by SIMPL analog join
    ========================================================= */
 html[data-theme="dark"] {

@@ -9,6 +9,7 @@
     home:     { id: 'page-home',     title: 'Home' },
     lighting: { id: 'page-lighting', title: 'Lighting' },
     shades:   { id: 'page-shades',   title: 'Shades' },
+    climate:  { id: 'page-climate',  title: 'Climate' },
     music:    { id: 'page-music-v2', title: 'Music' }
   };
 
@@ -37,6 +38,14 @@
       });
     }
 
+    /* Close climate drawer when leaving that page */
+    if (currentPage === 'climate') {
+      ['climate-room-drawer', 'climate-drawer-overlay'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.remove('open');
+      });
+    }
+
     prev.classList.remove('active');
     next.classList.add('active');
     currentPage = name;
@@ -58,6 +67,10 @@
   document.addEventListener('DOMContentLoaded', function () {
     CrComLib.subscribeState('b', '1', function (val) {
       if (val === true || val === 'true') showPage('lighting');
+    });
+
+    CrComLib.subscribeState('b', '2', function (val) {
+      if (val === true || val === 'true') showPage('climate');
     });
 
     CrComLib.subscribeState('b', '3', function (val) {

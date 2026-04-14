@@ -1108,6 +1108,134 @@
       </div>
 
     </div>
+    <!-- ===== Climate Page =====
+         Join block: digital 901-983, analog 961-963, serial 901-962
+         Drawer: select 901-930 | show 1641-1670 | active 931-960 | label s901-930
+         Header title: s961  | Thermostat name: s962
+         Current temp a961 (×10F) | Heat setpt a962 | Cool setpt a963
+         Mode fb d961-964 (Heat/Cool/Auto/Off) | press d975-978
+         Fan  fb d965-966 (Auto/On)           | press d979-980
+         Sched fb d967-969 (Run/Hold/Away)    | press d981-983
+         Heat ± d971/972 | Cool ± d973/974
+    -->
+    <div id="page-climate" class="page">
+
+      <!-- Room Drawer Overlay -->
+      <div id="climate-drawer-overlay" class="drawer-overlay"></div>
+
+      <!-- Room Drawer (left slide-out) -->
+      <div id="climate-room-drawer" class="room-drawer">
+        <div class="drawer-header">Select Room</div>
+        <div class="drawer-list" id="climate-room-list">
+          <div class="drawer-room" data-select="901" data-show="1641" data-climate="931" data-label="901"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="902" data-show="1642" data-climate="932" data-label="902"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="903" data-show="1643" data-climate="933" data-label="903"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="904" data-show="1644" data-climate="934" data-label="904"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="905" data-show="1645" data-climate="935" data-label="905"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="906" data-show="1646" data-climate="936" data-label="906"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="907" data-show="1647" data-climate="937" data-label="907"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="908" data-show="1648" data-climate="938" data-label="908"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="909" data-show="1649" data-climate="939" data-label="909"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="910" data-show="1650" data-climate="940" data-label="910"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="911" data-show="1651" data-climate="941" data-label="911"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="912" data-show="1652" data-climate="942" data-label="912"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="913" data-show="1653" data-climate="943" data-label="913"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="914" data-show="1654" data-climate="944" data-label="914"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="915" data-show="1655" data-climate="945" data-label="915"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="916" data-show="1656" data-climate="946" data-label="916"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="917" data-show="1657" data-climate="947" data-label="917"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="918" data-show="1658" data-climate="948" data-label="918"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="919" data-show="1659" data-climate="949" data-label="919"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="920" data-show="1660" data-climate="950" data-label="920"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="921" data-show="1661" data-climate="951" data-label="921"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="922" data-show="1662" data-climate="952" data-label="922"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="923" data-show="1663" data-climate="953" data-label="923"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="924" data-show="1664" data-climate="954" data-label="924"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="925" data-show="1665" data-climate="955" data-label="925"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="926" data-show="1666" data-climate="956" data-label="926"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="927" data-show="1667" data-climate="957" data-label="927"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="928" data-show="1668" data-climate="958" data-label="928"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="929" data-show="1669" data-climate="959" data-label="929"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="930" data-show="1670" data-climate="960" data-label="930"><i class="fas fa-thermometer-half drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+        </div>
+      </div>
+
+      <!-- Main Content Wrapper -->
+      <div class="climate-main">
+
+        <!-- Arc Dial + Readouts -->
+        <div class="climate-dial-wrap">
+          <canvas id="climate-dial" class="climate-dial" width="400" height="300"></canvas>
+          <div class="climate-dial-center">
+            <div class="climate-dial-label">Current</div>
+            <div class="climate-current-temp"><span id="climate-current">--</span><span class="climate-deg">°</span></div>
+            <div class="climate-dial-label">Set <span id="climate-setpoint-label">Cool</span></div>
+            <div class="climate-set-temp"><span id="climate-setpoint">--</span><span class="climate-deg">°</span></div>
+            <div class="climate-tstat-name" id="climate-tstat-name"></div>
+          </div>
+        </div>
+
+        <!-- Control Column -->
+        <div class="climate-controls">
+
+          <!-- Mode Row -->
+          <div class="climate-card">
+            <div class="climate-card-title">Mode</div>
+            <div class="climate-btn-row">
+              <button class="climate-btn climate-mode-btn" data-click="975" data-fb="961"><i class="fas fa-fire"></i><span>Heat</span></button>
+              <button class="climate-btn climate-mode-btn" data-click="976" data-fb="962"><i class="fas fa-snowflake"></i><span>Cool</span></button>
+              <button class="climate-btn climate-mode-btn" data-click="977" data-fb="963"><i class="fas fa-sync-alt"></i><span>Auto</span></button>
+              <button class="climate-btn climate-mode-btn" data-click="978" data-fb="964"><i class="fas fa-power-off"></i><span>Off</span></button>
+            </div>
+          </div>
+
+          <!-- Setpoint Rows -->
+          <div class="climate-card">
+            <div class="climate-card-title">Setpoints</div>
+            <div class="climate-setpoint-row">
+              <span class="climate-setpoint-label"><i class="fas fa-fire"></i> Heat</span>
+              <button class="climate-btn climate-step-btn" data-click="972"><i class="fas fa-minus"></i></button>
+              <span class="climate-setpoint-value" id="climate-heat-value">--</span>
+              <button class="climate-btn climate-step-btn" data-click="971"><i class="fas fa-plus"></i></button>
+            </div>
+            <div class="climate-setpoint-row">
+              <span class="climate-setpoint-label"><i class="fas fa-snowflake"></i> Cool</span>
+              <button class="climate-btn climate-step-btn" data-click="974"><i class="fas fa-minus"></i></button>
+              <span class="climate-setpoint-value" id="climate-cool-value">--</span>
+              <button class="climate-btn climate-step-btn" data-click="973"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+
+          <!-- Fan + Schedule Row -->
+          <div class="climate-card-row">
+            <div class="climate-card climate-card-half">
+              <div class="climate-card-title">Fan</div>
+              <div class="climate-btn-row">
+                <button class="climate-btn climate-fan-btn" data-click="979" data-fb="965"><span>Auto</span></button>
+                <button class="climate-btn climate-fan-btn" data-click="980" data-fb="966"><span>On</span></button>
+              </div>
+            </div>
+            <div class="climate-card climate-card-half">
+              <div class="climate-card-title">Schedule</div>
+              <div class="climate-btn-row">
+                <button class="climate-btn climate-sched-btn" data-click="981" data-fb="967"><span>Run</span></button>
+                <button class="climate-btn climate-sched-btn" data-click="982" data-fb="968"><span>Hold</span></button>
+                <button class="climate-btn climate-sched-btn" data-click="983" data-fb="969"><span>Away</span></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Climate Bottom Bar -->
+      <div class="climate-bottom-bar">
+        <div id="climate-room-toggle" class="bar-btn"><i class="fas fa-bars"></i> Rooms</div>
+        <div style="flex:1"></div>
+      </div>
+
+    </div>
   </main>
 
   <!-- ===== Bottom Navigation (unused for now) ===== -->
