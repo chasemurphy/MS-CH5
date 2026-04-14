@@ -8,6 +8,7 @@
   var pages = {
     home:     { id: 'page-home',     title: 'Home' },
     lighting: { id: 'page-lighting', title: 'Lighting' },
+    shades:   { id: 'page-shades',   title: 'Shades' },
     music:    { id: 'page-music-v2', title: 'Music' }
   };
 
@@ -23,6 +24,14 @@
     /* Close lighting drawer / scene panel when leaving that page */
     if (currentPage === 'lighting') {
       ['lighting-room-drawer', 'lighting-drawer-overlay', 'lighting-scene-panel'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.remove('open');
+      });
+    }
+
+    /* Close shades drawer / scene panel when leaving that page */
+    if (currentPage === 'shades') {
+      ['shades-room-drawer', 'shades-drawer-overlay', 'shades-scene-panel'].forEach(function (id) {
         var el = document.getElementById(id);
         if (el) el.classList.remove('open');
       });
@@ -49,6 +58,10 @@
   document.addEventListener('DOMContentLoaded', function () {
     CrComLib.subscribeState('b', '1', function (val) {
       if (val === true || val === 'true') showPage('lighting');
+    });
+
+    CrComLib.subscribeState('b', '3', function (val) {
+      if (val === true || val === 'true') showPage('shades');
     });
 
     CrComLib.subscribeState('b', '5', function (val) {

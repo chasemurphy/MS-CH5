@@ -1672,6 +1672,196 @@ body {
 }
 
 /* =========================================================
+   Shades Page
+   ========================================================= */
+#page-shades {
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+}
+
+/* --- Shades Main Area --- */
+.shades-main {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  padding: 24px;
+}
+
+/* --- Shade Column Grid (horizontal scroll) --- */
+.shades-grid {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  align-items: stretch;
+}
+
+.shades-grid::-webkit-scrollbar { height: 6px; }
+.shades-grid::-webkit-scrollbar-track { background: transparent; }
+.shades-grid::-webkit-scrollbar-thumb { background: var(--surface-pressed); border-radius: 3px; }
+
+/* --- Shade Card Column --- */
+.shade-card {
+  background: var(--surface-secondary);
+  border: 1px solid rgba(var(--chrome-bg-rgb), 0.1);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 180px;
+  width: 180px;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.shade-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+/* --- Position Indicator --- */
+.shade-position {
+  width: 100%;
+  flex: 1;
+  min-height: 100px;
+  background: var(--surface-primary);
+  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.shade-position-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--accent);
+  opacity: 0.6;
+  border-radius: 0 0 5px 5px;
+  transition: height 0.3s ease;
+}
+
+.shade-card.shade-moving .shade-position-fill {
+  animation: shade-pulse 0.6s ease-in-out infinite;
+}
+
+@keyframes shade-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.3; }
+}
+
+.shade-pct {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+}
+
+/* --- Shade Buttons --- */
+.shade-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.shade-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--surface-primary);
+  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
+  border-radius: 6px;
+  padding: 8px 6px;
+  color: var(--text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.shade-btn i {
+  font-size: 0.7rem;
+  color: var(--icon-muted);
+}
+
+.shade-btn:active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.shade-btn:active i {
+  color: #fff;
+}
+
+/* --- Shades Room Drawer (reuses .room-drawer / .drawer-overlay) --- */
+.drawer-room.shades-active .drawer-room-icon {
+  opacity: 1;
+  color: var(--accent);
+}
+
+/* --- Shades Bottom Bar --- */
+.shades-bottom-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  height: var(--nav-height);
+  background: var(--chrome-nav);
+  border-top: 1px solid var(--border-accent);
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   Shades Page — Responsive (TSW-1080)
+   ========================================================= */
+@media (min-width: 900px) {
+  .shades-grid {
+    gap: 14px;
+    padding: 20px;
+  }
+
+  .shade-card {
+    width: 220px;
+    min-width: 220px;
+    padding: 18px;
+  }
+
+  .shade-name {
+    font-size: 1rem;
+  }
+
+  .shade-position {
+    min-height: 130px;
+  }
+
+  .shade-pct {
+    font-size: 1.1rem;
+  }
+
+  .shade-btn {
+    padding: 10px 8px;
+    font-size: 0.85rem;
+  }
+}
+
+/* =========================================================
    Dark Theme — driven by SIMPL analog join
    ========================================================= */
 html[data-theme="dark"] {

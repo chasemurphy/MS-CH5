@@ -121,10 +121,46 @@ Source click joins: pulse P→S + selected state feedback S→P. Label joins: S�
 
 ---
 
+## Shades Page
+
+### Header
+| Join | Type | Dir | Description |
+|------|------|-----|-------------|
+| s[851] | Serial | S→P | Current room name; JS appends " Shades" to form the header title |
+
+### Room Drawer (31 rooms)
+
+| Join | Type | Dir | Description |
+|------|------|-----|-------------|
+| s[1101–1131] | Serial | S→P | Room names (1101 = room 1 … 1131 = room 31) |
+| b[1101–1131] | Digital | P↔S | Room select pulse (P→S); selected highlight feedback (S→P) |
+| b[1132–1162] | Digital | S→P | Shades-active indicator per room — icon highlights gold |
+| b[1581–1611] | Digital | S→P | Room row visible/hidden (1581 = room 1 … 1611 = room 31) |
+
+### Shade Columns (10 shades per room, crosspoint-driven by SIMPL)
+
+| Join | Type | Dir | Description |
+|------|------|-----|-------------|
+| s[841–850] | Serial | S→P | Shade names (empty = card hidden from view) |
+| n[841–850] | Analog | S→P | Shade position 0–65535 (0 = closed, 65535 = open) |
+| b[841–850] | Digital | S→P | Shade moving feedback (high = in motion) |
+| b[851–860] | Digital | P→S | Shade 1–10 open (pulse) |
+| b[861–870] | Digital | P→S | Shade 1–10 close (pulse) |
+| b[881–890] | Digital | P→S | Shade 1–10 raise (hold high while pressed) |
+| b[891–900] | Digital | P→S | Shade 1–10 lower (hold high while pressed) |
+
+### Scenes (12 scenes per room)
+
+| Join | Type | Dir | Description |
+|------|------|-----|-------------|
+| s[852–863] | Serial | S→P | Scene names (empty = button hidden) |
+| b[1163–1174] | Digital | P↔S | Scene press (P→S); active scene feedback (S→P) |
+
+---
+
 ## Reserved Blocks (unassigned — for future phases)
 
 | Block | Reserved for |
 |-------|-------------|
-| b[841–900], n[841–860], s[841–860] | Phase 2 — Shades |
 | b[901–970], n[901–910], s[901–910] | Phase 3 — Climate |
 | b[971–1100], n[971–980], s[961–980] | Phase 4 — AV |

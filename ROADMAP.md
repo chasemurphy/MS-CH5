@@ -9,7 +9,7 @@ The PRD (`Reference/crestron-panel-prd.md`) defines what to build. This document
 | Home | Done |
 | Music (v2) | Done |
 | Lighting (scenes + loads) | Done |
-| Shades | Not started |
+| Shades | Done |
 | Climate | Not started |
 | AV | Not started |
 | Responsive (TSW-1080) | Not started |
@@ -33,11 +33,11 @@ The PRD (`Reference/crestron-panel-prd.md`) defines what to build. This document
 
 **Goal:** Build the simplest remaining page as a template for the column-based layout pattern.
 
-- [ ] Add `id="page-shades"` to `index.html` — up to 10 horizontally-scrollable shade columns
-- [ ] Per column: shade name, Open/Close (pulse), Raise/Lower (hold high), Stop (pulse), position indicator (analog), % readout
-- [ ] Add `app/services/shades.js` — join subscriptions and event publishing
-- [ ] Wire Shades tile on Home page
-- [ ] Add shades styles to `custom.css`
+- [x] Add `id="page-shades"` to `index.html` — up to 10 horizontally-scrollable shade columns
+- [x] Per column: shade name, Open/Close (pulse), Raise/Lower (hold high), Stop (pulse), position indicator (analog), % readout
+- [x] Add `app/services/shades.js` — join subscriptions and event publishing
+- [x] Wire Shades tile on Home page
+- [x] Add shades styles to `custom.css`
 
 **Join range:** Assign new block in `Reference/join-map.md` during Phase 1.
 
