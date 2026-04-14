@@ -6,17 +6,21 @@
               active d931-960 | label s901-930
      Header title:      s961   (page title override)
      Thermostat name:   s962   (center of dial)
-     Current temp (×10): a961
-     Heat setpoint (×10):a962
-     Cool setpoint (×10):a963
-     Mode feedback  d961-964 : Heat / Cool / Auto / Off
-     Fan  feedback  d965-966 : Auto / On
-     Sched feedback d967-969 : Run / Hold / Away
-     Heat ±         d971 / d972
-     Cool ±         d973 / d974
-     Mode press     d975-978
-     Fan press      d979-980
-     Sched press    d981-983
+     Current temp (×10):    n961
+     Heat setpoint (×10):   n962
+     Cool setpoint (×10):   n963
+     Setpoint min (×10):    n964
+     Setpoint max (×10):    n965
+     Single-Auto SP (×10):  n966
+     Mode (press+fb)    d961-964 : Heat / Cool / Auto / Off
+     Fan  (press+fb)    d965-966 : Auto / On
+     Sched (press+fb)   d967-969 : Run / Hold / Away
+     Auto mode visible      d970  (← SIMPL)
+     Heat ±                 d971 / d972
+     Cool ±                 d973 / d974
+     Show single setpoint   d975  (← SIMPL)
+     Show dual setpoint     d976  (← SIMPL)
+     Single-Auto SP ±       d977 / d978
    ========================================================= */
 (function () {
   'use strict';
@@ -26,8 +30,17 @@
     currentTempF: null,  /* decimal °F */
     heatSetF: null,
     coolSetF: null,
-    activeMode: null     /* 'heat' | 'cool' | 'auto' | 'off' */
+    singleSetF: null,    /* Single-Auto setpoint */
+    minSetF: null,       /* thermostat-reported setpoint minimum */
+    maxSetF: null,       /* thermostat-reported setpoint maximum */
+    activeMode: null,    /* 'heat' | 'cool' | 'auto' | 'off' */
+    showSingle: false,
+    showDual: false
   };
+
+  /* Fallback scale when the thermostat hasn't reported min/max yet */
+  var FALLBACK_MIN = 50;
+  var FALLBACK_MAX = 90;
 
   /* ---- Drawer ---- */
   function toggleDrawer() {
@@ -59,19 +72,16 @@
   }
 
   /* ---- Arc Dial ---- */
-  /* 280° sweep: start 135° (7 o'clock), end 45° (5 o'clock via top) */
+  /* 270° sweep, symmetric about vertical: start 135° (7:30), end 45° (4:30) */
   var DIAL_START = Math.PI * 0.75;   /* 135° */
-  var DIAL_END   = Math.PI * 2.25;   /* 405° = 45° past start, total 270° */
-  /* Use 280° to match PRD wording — push end to 2.305 rad from start */
-  var DIAL_SWEEP = Math.PI * 1.555;  /* 280° */
-
-  /* Temperature scale range for setpoint mapping on the dial */
-  var TEMP_MIN = 50;
-  var TEMP_MAX = 90;
+  var DIAL_SWEEP = Math.PI * 1.5;    /* 270° */
 
   function tempToAngle(tempF) {
-    var t = Math.max(TEMP_MIN, Math.min(TEMP_MAX, tempF));
-    var frac = (t - TEMP_MIN) / (TEMP_MAX - TEMP_MIN);
+    var min = (state.minSetF !== null) ? state.minSetF : FALLBACK_MIN;
+    var max = (state.maxSetF !== null) ? state.maxSetF : FALLBACK_MAX;
+    if (max <= min) { min = FALLBACK_MIN; max = FALLBACK_MAX; }
+    var t = Math.max(min, Math.min(max, tempF));
+    var frac = (t - min) / (max - min);
     return DIAL_START + DIAL_SWEEP * frac;
   }
 
@@ -108,19 +118,14 @@
     ctx.arc(cx, cy, radius, DIAL_START, DIAL_START + DIAL_SWEEP);
     ctx.stroke();
 
-    /* Gold fill — start of arc to setpoint angle (prefer cool, else heat) */
-    var setpoint = state.coolSetF;
-    if (setpoint === null || setpoint === undefined) setpoint = state.heatSetF;
-    if (setpoint !== null && setpoint !== undefined) {
-      var setAngle = tempToAngle(setpoint);
-      ctx.strokeStyle = accent;
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius, DIAL_START, setAngle);
-      ctx.stroke();
-
-      /* Setpoint dot */
-      var dotX = cx + Math.cos(setAngle) * radius;
-      var dotY = cy + Math.sin(setAngle) * radius;
+    /* Gold fill — arc range and setpoint dot(s) depend on mode/visibility.
+       Dual  → fill between heat and cool, dot at each end.
+       Single (auto) → fill start→singleSet, dot at singleSet.
+       Heat-only → fill start→heatSet, dot at heatSet.
+       Cool-only → fill start→coolSet, dot at coolSet. */
+    function drawDot(ang) {
+      var dotX = cx + Math.cos(ang) * radius;
+      var dotY = cy + Math.sin(ang) * radius;
       ctx.fillStyle = accent;
       ctx.beginPath();
       ctx.arc(dotX, dotY, lineW * 0.9, 0, Math.PI * 2);
@@ -129,6 +134,38 @@
       ctx.beginPath();
       ctx.arc(dotX, dotY, lineW * 0.35, 0, Math.PI * 2);
       ctx.fill();
+    }
+
+    ctx.strokeStyle = accent;
+
+    if (state.showDual && state.heatSetF !== null && state.coolSetF !== null) {
+      var heatA = tempToAngle(state.heatSetF);
+      var coolA = tempToAngle(state.coolSetF);
+      var a1 = Math.min(heatA, coolA);
+      var a2 = Math.max(heatA, coolA);
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, a1, a2);
+      ctx.stroke();
+      drawDot(heatA);
+      drawDot(coolA);
+    } else if (state.showSingle && state.singleSetF !== null) {
+      var sA = tempToAngle(state.singleSetF);
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, DIAL_START, sA);
+      ctx.stroke();
+      drawDot(sA);
+    } else if (state.activeMode === 'heat' && state.heatSetF !== null) {
+      var hA = tempToAngle(state.heatSetF);
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, DIAL_START, hA);
+      ctx.stroke();
+      drawDot(hA);
+    } else if (state.activeMode === 'cool' && state.coolSetF !== null) {
+      var cA = tempToAngle(state.coolSetF);
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, DIAL_START, cA);
+      ctx.stroke();
+      drawDot(cA);
     }
 
     /* Current temp marker (thin perpendicular tick) */
@@ -157,6 +194,7 @@
     var setpointLabel = document.getElementById('climate-setpoint-label');
     var heatEl = document.getElementById('climate-heat-value');
     var coolEl = document.getElementById('climate-cool-value');
+    var singleEl = document.getElementById('climate-single-value');
 
     if (current) current.textContent = state.currentTempF !== null
       ? (state.currentTempF).toFixed(0) : '--';
@@ -164,24 +202,49 @@
       ? (state.heatSetF).toFixed(0) : '--';
     if (coolEl) coolEl.textContent = state.coolSetF !== null
       ? (state.coolSetF).toFixed(0) : '--';
+    if (singleEl) singleEl.textContent = state.singleSetF !== null
+      ? (state.singleSetF).toFixed(0) : '--';
 
-    /* Prefer the setpoint that matches the active mode */
+    /* Dial-center setpoint summary */
     var showVal = null;
-    var showLabel = 'Cool';
-    if (state.activeMode === 'heat') {
-      showVal = state.heatSetF; showLabel = 'Heat';
-    } else if (state.activeMode === 'cool') {
-      showVal = state.coolSetF; showLabel = 'Cool';
-    } else if (state.activeMode === 'auto') {
-      showVal = state.coolSetF; showLabel = 'Cool';
+    var showLabel = '—';
+    if (state.showDual && state.coolSetF !== null && state.heatSetF !== null) {
+      showLabel = 'Heat / Cool';
+      showVal = state.heatSetF.toFixed(0) + ' / ' + state.coolSetF.toFixed(0);
+    } else if (state.showSingle && state.singleSetF !== null) {
+      showLabel = 'Set'; showVal = state.singleSetF.toFixed(0);
+    } else if (state.activeMode === 'heat' && state.heatSetF !== null) {
+      showLabel = 'Heat'; showVal = state.heatSetF.toFixed(0);
+    } else if (state.activeMode === 'cool' && state.coolSetF !== null) {
+      showLabel = 'Cool'; showVal = state.coolSetF.toFixed(0);
     } else if (state.activeMode === 'off') {
-      showVal = null; showLabel = '—';
-    } else {
-      showVal = state.coolSetF; showLabel = 'Cool';
+      showLabel = '—'; showVal = null;
     }
     if (setpointLabel) setpointLabel.textContent = showLabel;
-    if (setpointEl) setpointEl.textContent = (showVal !== null && showVal !== undefined)
-      ? showVal.toFixed(0) : '--';
+    if (setpointEl) setpointEl.textContent = (showVal !== null) ? showVal : '--';
+  }
+
+  /* ---- Setpoint row + Auto-button visibility ---- */
+  function updateSetpointVisibility() {
+    var card = document.getElementById('climate-setpoint-card');
+    var heatRow = document.getElementById('climate-heat-row');
+    var coolRow = document.getElementById('climate-cool-row');
+    var singleRow = document.getElementById('climate-single-row');
+    if (!card) return;
+
+    if (state.showDual) {
+      card.style.display = '';
+      if (heatRow) heatRow.style.display = '';
+      if (coolRow) coolRow.style.display = '';
+      if (singleRow) singleRow.style.display = 'none';
+    } else if (state.showSingle) {
+      card.style.display = '';
+      if (heatRow) heatRow.style.display = 'none';
+      if (coolRow) coolRow.style.display = 'none';
+      if (singleRow) singleRow.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
   }
 
   /* ---- Analog subscriptions ---- */
@@ -198,6 +261,43 @@
     });
     CrComLib.subscribeState('n', '963', function (val) {
       state.coolSetF = Number(val) / 10;
+      updateReadouts();
+      drawDial();
+    });
+    CrComLib.subscribeState('n', '964', function (val) {
+      state.minSetF = Number(val) / 10;
+      drawDial();
+    });
+    CrComLib.subscribeState('n', '965', function (val) {
+      state.maxSetF = Number(val) / 10;
+      drawDial();
+    });
+    CrComLib.subscribeState('n', '966', function (val) {
+      state.singleSetF = Number(val) / 10;
+      updateReadouts();
+      drawDial();
+    });
+  }
+
+  /* ---- Visibility subscriptions ---- */
+  function initVisibility() {
+    /* d970 — Auto mode button show/hide */
+    CrComLib.subscribeState('b', '970', function (val) {
+      var visible = (val === true || val === 'true');
+      var autoBtn = document.getElementById('climate-mode-auto');
+      if (autoBtn) autoBtn.style.display = visible ? '' : 'none';
+    });
+    /* d975 — Show single setpoint row */
+    CrComLib.subscribeState('b', '975', function (val) {
+      state.showSingle = (val === true || val === 'true');
+      updateSetpointVisibility();
+      updateReadouts();
+      drawDial();
+    });
+    /* d976 — Show dual setpoint rows */
+    CrComLib.subscribeState('b', '976', function (val) {
+      state.showDual = (val === true || val === 'true');
+      updateSetpointVisibility();
       updateReadouts();
       drawDial();
     });
@@ -291,7 +391,9 @@
     initTstatName();
     initTemps();
     initStateButtons();
+    initVisibility();
     initRoomButtons();
+    updateSetpointVisibility();
 
     /* Header title override when climate page active */
     CrComLib.subscribeState('s', '961', function (val) {

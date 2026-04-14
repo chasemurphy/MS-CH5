@@ -1178,31 +1178,37 @@
         <!-- Control Column -->
         <div class="climate-controls">
 
-          <!-- Mode Row -->
-          <div class="climate-card">
-            <div class="climate-card-title">Mode</div>
-            <div class="climate-btn-row">
-              <button class="climate-btn climate-mode-btn" data-click="975" data-fb="961"><i class="fas fa-fire"></i><span>Heat</span></button>
-              <button class="climate-btn climate-mode-btn" data-click="976" data-fb="962"><i class="fas fa-snowflake"></i><span>Cool</span></button>
-              <button class="climate-btn climate-mode-btn" data-click="977" data-fb="963"><i class="fas fa-sync-alt"></i><span>Auto</span></button>
-              <button class="climate-btn climate-mode-btn" data-click="978" data-fb="964"><i class="fas fa-power-off"></i><span>Off</span></button>
-            </div>
-          </div>
-
           <!-- Setpoint Rows -->
-          <div class="climate-card">
+          <div class="climate-card" id="climate-setpoint-card">
             <div class="climate-card-title">Setpoints</div>
-            <div class="climate-setpoint-row">
+            <div class="climate-setpoint-row" id="climate-single-row">
+              <span class="climate-setpoint-label"><i class="fas fa-sync-alt"></i> Auto</span>
+              <button class="climate-btn climate-step-btn" data-click="978"><i class="fas fa-minus"></i></button>
+              <span class="climate-setpoint-value" id="climate-single-value">--</span>
+              <button class="climate-btn climate-step-btn" data-click="977"><i class="fas fa-plus"></i></button>
+            </div>
+            <div class="climate-setpoint-row" id="climate-heat-row">
               <span class="climate-setpoint-label"><i class="fas fa-fire"></i> Heat</span>
               <button class="climate-btn climate-step-btn" data-click="972"><i class="fas fa-minus"></i></button>
               <span class="climate-setpoint-value" id="climate-heat-value">--</span>
               <button class="climate-btn climate-step-btn" data-click="971"><i class="fas fa-plus"></i></button>
             </div>
-            <div class="climate-setpoint-row">
+            <div class="climate-setpoint-row" id="climate-cool-row">
               <span class="climate-setpoint-label"><i class="fas fa-snowflake"></i> Cool</span>
               <button class="climate-btn climate-step-btn" data-click="974"><i class="fas fa-minus"></i></button>
               <span class="climate-setpoint-value" id="climate-cool-value">--</span>
               <button class="climate-btn climate-step-btn" data-click="973"><i class="fas fa-plus"></i></button>
+            </div>
+          </div>
+
+          <!-- Mode Row -->
+          <div class="climate-card">
+            <div class="climate-card-title">Mode</div>
+            <div class="climate-btn-row">
+              <button class="climate-btn climate-mode-btn" data-click="961" data-fb="961"><i class="fas fa-fire"></i><span>Heat</span></button>
+              <button class="climate-btn climate-mode-btn" data-click="962" data-fb="962"><i class="fas fa-snowflake"></i><span>Cool</span></button>
+              <button id="climate-mode-auto" class="climate-btn climate-mode-btn" data-click="963" data-fb="963"><i class="fas fa-sync-alt"></i><span>Auto</span></button>
+              <button class="climate-btn climate-mode-btn" data-click="964" data-fb="964"><i class="fas fa-power-off"></i><span>Off</span></button>
             </div>
           </div>
 
@@ -1211,16 +1217,16 @@
             <div class="climate-card climate-card-half">
               <div class="climate-card-title">Fan</div>
               <div class="climate-btn-row">
-                <button class="climate-btn climate-fan-btn" data-click="979" data-fb="965"><span>Auto</span></button>
-                <button class="climate-btn climate-fan-btn" data-click="980" data-fb="966"><span>On</span></button>
+                <button class="climate-btn climate-fan-btn" data-click="965" data-fb="965"><span>Auto</span></button>
+                <button class="climate-btn climate-fan-btn" data-click="966" data-fb="966"><span>On</span></button>
               </div>
             </div>
             <div class="climate-card climate-card-half">
               <div class="climate-card-title">Schedule</div>
               <div class="climate-btn-row">
-                <button class="climate-btn climate-sched-btn" data-click="981" data-fb="967"><span>Run</span></button>
-                <button class="climate-btn climate-sched-btn" data-click="982" data-fb="968"><span>Hold</span></button>
-                <button class="climate-btn climate-sched-btn" data-click="983" data-fb="969"><span>Away</span></button>
+                <button class="climate-btn climate-sched-btn" data-click="967" data-fb="967"><span>Run</span></button>
+                <button class="climate-btn climate-sched-btn" data-click="968" data-fb="968"><span>Hold</span></button>
+                <button class="climate-btn climate-sched-btn" data-click="969" data-fb="969"><span>Away</span></button>
               </div>
             </div>
           </div>
