@@ -2,61 +2,18 @@
 
 The PRD (`Reference/crestron-panel-prd.md`) defines what to build. This document sequences the work into phases. The custom join numbering scheme (not the PRD's fixed window) is authoritative — no refactor needed. Loads stay merged into the Lighting page.
 
-## Current State
+## Status
 
-| Page | Status |
-|------|--------|
-| Home | Done |
-| Music (v2) | Done |
-| Lighting (scenes + loads) | Done |
-| Shades | Done |
-| Climate | Not started |
-| AV | Not started |
-| Responsive (TSW-1080) | Not started |
-| Security | Future / out of scope |
-
----
-
-## Phase 1 — Lighting Polish + Join Documentation
-
-**Goal:** Get the partially-built Lighting page to a shippable state and lock down the real join map before more pages are wired.
-
-- [x] Audit `page-lighting` and `lighting.js` against actual behavior; fix any known gaps
-- [x] Write `Reference/join-map.md` documenting the actual custom join numbers (replaces PRD Section 6 as the SIMPL programmer's wiring doc)
-- [x] Verify navigation routing covers Home → Lighting → Music; fix any broken nav transitions
-
-**Key files:** `app/index.html`, `app/services/lighting.js`, `app/services/navigation.js`
-
----
-
-## Phase 2 — Shades Page
-
-**Goal:** Build the simplest remaining page as a template for the column-based layout pattern.
-
-- [x] Add `id="page-shades"` to `index.html` — up to 10 horizontally-scrollable shade columns
-- [x] Per column: shade name, Open/Close (pulse), Raise/Lower (hold high), Stop (pulse), position indicator (analog), % readout
-- [x] Add `app/services/shades.js` — join subscriptions and event publishing
-- [x] Wire Shades tile on Home page
-- [x] Add shades styles to `custom.css`
-
-**Join range:** Assign new block in `Reference/join-map.md` during Phase 1.
-
----
-
-## Phase 3 — Climate Page
-
-**Goal:** Build the thermostat page including the canvas arc dial.
-
-- [ ] Add `id="page-climate"` to `index.html`
-- [ ] Canvas arc dial: 280° sweep, current temp center display, setpoint dot + label
-- [ ] Mode row: Heat / Cool / Auto / Off (pulse, digital feedback → gold active)
-- [ ] Setpoint rows: Heat +/− and Cool +/− with analog readout
-- [ ] Schedule card: Run / Hold / Away
-- [ ] Fan card: Auto / On
-- [ ] Add `app/services/climate.js`
-- [ ] Wire Climate tile on Home page
-
-**Note:** Canvas redraws on join change only — not every frame.
+| Page                      | Phase | Status                                        |
+|---------------------------|-------|-----------------------------------------------|
+| Home                      | —     | Done                                          |
+| Music (v2)                | —     | Done                                          |
+| Lighting (scenes + loads) | 1     | Done → [Progress/phase-1-lighting.md]         |
+| Shades                    | 2     | Done → [Progress/phase-2-shades.md]           |
+| Climate                   | 3     | Done → [Progress/phase-3-climate.md]          |
+| AV                        | 4     | **Active**                                    |
+| Responsive (TSW-1080)     | 5     | Planned                                       |
+| Security                  | 6     | Future / out of scope                         |
 
 ---
 
