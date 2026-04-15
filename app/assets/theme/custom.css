@@ -2633,7 +2633,7 @@ html[data-theme="custom"] {
 
 .av-source-label {
   font-family: 'Jost', sans-serif;
-  color: var(--text-on-dark);
+  color: var(--text);
   font-size: 0.9rem;
 }
 .av-source-btn.selected .av-source-label { color: var(--chrome-bg); }
