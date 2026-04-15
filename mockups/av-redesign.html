@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AV Redesign Mockup</title>
+<style>
+  :root {
+    --cream:       #f0ece3;
+    --surface-2:   #e4dfd4;
+    --chrome:      #1c1c1c;
+    --chrome-surf: #2a2a2a;
+    --accent:      #b8912a;
+    --text:        #1c1c1c;
+    --text-muted:  #777;
+    --text-lt:     #f0ece3;
+    --border:      rgba(184,145,42,0.35);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #1a1a1a;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    gap: 28px;
+    padding: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .label {
+    color: #888;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  /* ─── Phone shell ─── */
+  .phone {
+    width: 390px;
+    height: 800px;
+    background: var(--cream);
+    border-radius: 42px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.8);
+    flex-shrink: 0;
+  }
+
+  /* ─── Header ─── */
+  .hdr {
+    height: 54px;
+    background: var(--chrome);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .hdr-home { color: var(--accent); font-size: 1.1rem; flex-shrink: 0; }
+  .hdr-title { color: var(--accent); font-size: 0.9rem; font-weight: 700; flex: 1; text-align: center; }
+  /* Volume cluster — right side of header, only shown on AV */
+  .hdr-vol {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 4px 8px;
+    flex-shrink: 0;
+  }
+  .hdr-vol-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: none;
+    background: var(--chrome-surf);
+    color: var(--text-lt);
+    font-size: 0.65rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hdr-vol-btn.muted { background: var(--accent); }
+  .hdr-vol-pct { color: var(--text-lt); font-size: 0.72rem; min-width: 28px; text-align: center; }
+
+  /* ─── Content area ─── */
+  .av-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ─── Swipe container (iPhone: 2 pages side-by-side, snap) ─── */
+  .swipe-wrap {
+    flex: 1;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .swipe-wrap::-webkit-scrollbar { display: none; }
+  .swipe-page {
+    min-width: 100%;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px 10px;
+    overflow-y: auto;
+  }
+
+  /* ─── Page dots indicator ─── */
+  .page-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 0;
+    flex-shrink: 0;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); }
+  .dot.active { background: var(--accent); width: 18px; border-radius: 3px; }
+
+  /* ─── Quick-access button row ─── */
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+  }
+  .av-btn {
+    padding: 10px 16px;
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid rgba(28,28,28,0.15);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .av-btn:active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* ─── Channel row ─── */
+  .ch-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ch-btn {
+    width: 48px; height: 44px;
+    border-radius: 8px;
+    border: 1px solid rgba(28,28,28,0.15);
+    background: var(--surface-2);
+    color: var(--text);
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ch-btn:active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .ch-lbl { color: var(--text-muted); font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* ─── SVG Disc D-pad ─── */
+  .disc-wrap { flex-shrink: 0; filter: drop-shadow(0 6px 22px rgba(0,0,0,0.55)); }
+
+  /* ─── Transport ─── */
+  .transport-row { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+  .t-btn {
+    width: 54px; height: 46px;
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid rgba(28,28,28,0.15);
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 2px;
+  }
+  .t-btn:active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .t-btn.wide { width: 72px; }
+
+  /* ─── Numpad ─── */
+  .numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 64px);
+    gap: 7px;
+  }
+  .n-btn {
+    height: 50px;
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid rgba(28,28,28,0.15);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+  .n-btn:active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .n-enter { background: var(--accent); color: #fff; border-color: var(--accent); font-size: 0.85rem; }
+
+  /* ─── Color buttons ─── */
+  .color-row { display: flex; gap: 12px; justify-content: center; }
+  .c-btn { width: 36px; height: 14px; border-radius: 7px; border: none; cursor: pointer; }
+
+  /* ─── Bottom bar ─── */
+  .btm {
+    height: 56px;
+    background: var(--chrome);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    flex-shrink: 0;
+  }
+  .bar-btn {
+    padding: 8px 18px;
+    background: var(--chrome-surf);
+    color: var(--text-lt);
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.07);
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  /* ─── Wide TSW phone (reuse phone styles, just wider) ─── */
+  .tsw {
+    width: 720px;
+    height: 500px;
+    border-radius: 24px;
+  }
+  .tsw .swipe-wrap {
+    /* On TSW: both pages side-by-side in one view, no scroll needed */
+    overflow-x: visible;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    scroll-snap-type: none;
+  }
+  .tsw .swipe-page { min-width: unset; padding: 16px 20px; }
+  .tsw .page-dots { display: none; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     PHONE: DirecTV — Page 1 (D-pad)
+     ═══════════════════════════════════════ -->
+<div>
+  <div class="label">DirecTV · Page 1</div>
+  <div class="phone">
+    <!-- Header with volume -->
+    <div class="hdr">
+      <span class="hdr-home">⌂</span>
+      <span class="hdr-title">Family Video — DirecTV</span>
+      <div class="hdr-vol">
+        <button class="hdr-vol-btn">🔇</button>
+        <span class="hdr-vol-pct">65%</span>
+        <button class="hdr-vol-btn">−</button>
+        <button class="hdr-vol-btn">+</button>
+      </div>
+    </div>
+
+    <div class="av-content">
+      <div class="swipe-wrap" id="sw1">
+        <!-- Page 1: quick nav + disc -->
+        <div class="swipe-page">
+          <div class="btn-row">
+            <button class="av-btn">Guide</button>
+            <button class="av-btn">Menu</button>
+            <button class="av-btn">Info</button>
+            <button class="av-btn">Exit</button>
+            <button class="av-btn">Record</button>
+            <button class="av-btn">List</button>
+          </div>
+          <div class="ch-row">
+            <button class="ch-btn">▲</button>
+            <span class="ch-lbl">Ch</span>
+            <button class="ch-btn">▼</button>
+            <button class="av-btn">Last</button>
+          </div>
+          <!-- SVG Disc -->
+          <div class="disc-wrap">
+            <svg viewBox="0 0 220 220" width="180" height="180">
+              <defs>
+                <linearGradient id="gu" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4a847"/><stop offset="100%" stop-color="#7a5a0e"/></linearGradient>
+                <linearGradient id="gd" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#d4a847"/><stop offset="100%" stop-color="#7a5a0e"/></linearGradient>
+                <linearGradient id="gl" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d4a847"/><stop offset="100%" stop-color="#7a5a0e"/></linearGradient>
+                <linearGradient id="gr" x1="1" y1="0" x2="0" y2="0"><stop offset="0%" stop-color="#d4a847"/><stop offset="100%" stop-color="#7a5a0e"/></linearGradient>
+                <radialGradient id="gc" cx="38%" cy="33%"><stop offset="0%" stop-color="#e8c458"/><stop offset="100%" stop-color="#8a6010"/></radialGradient>
+              </defs>
+              <circle cx="110" cy="110" r="110" fill="#0a0a0a"/>
+              <path d="M110,110 L32,32 A110,110 0 0,1 188,32 Z" fill="url(#gu)"/>
+              <path d="M110,110 L188,32 A110,110 0 0,1 188,188 Z" fill="url(#gr)"/>
+              <path d="M110,110 L188,188 A110,110 0 0,1 32,188 Z" fill="url(#gd)"/>
+              <path d="M110,110 L32,188 A110,110 0 0,1 32,32 Z" fill="url(#gl)"/>
+              <!-- Gap lines -->
+              <line x1="32" y1="32" x2="188" y2="188" stroke="#0a0a0a" stroke-width="6"/>
+              <line x1="188" y1="32" x2="32" y2="188" stroke="#0a0a0a" stroke-width="6"/>
+              <!-- Outer ring bevel -->
+              <circle cx="110" cy="110" r="109" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+              <!-- Center button -->
+              <circle cx="110" cy="110" r="42" fill="url(#gc)"/>
+              <circle cx="110" cy="110" r="42" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="2.5"/>
+              <circle cx="110" cy="110" r="40" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+              <text x="110" y="115" text-anchor="middle" fill="rgba(0,0,0,0.72)" font-family="Georgia,serif" font-size="13" font-weight="bold">Select</text>
+              <!-- Chevrons -->
+              <text x="110" y="50" text-anchor="middle" fill="rgba(0,0,0,0.62)" font-size="15">▲</text>
+              <text x="110" y="178" text-anchor="middle" fill="rgba(0,0,0,0.62)" font-size="15">▼</text>
+              <text x="46" y="116" text-anchor="middle" dominant-baseline="middle" fill="rgba(0,0,0,0.62)" font-size="15">◀</text>
+              <text x="174" y="116" text-anchor="middle" dominant-baseline="middle" fill="rgba(0,0,0,0.62)" font-size="15">▶</text>
+            </svg>
+          </div>
+          <!-- Swipe hint -->
+          <div style="color:var(--text-muted);font-size:0.7rem;letter-spacing:1px;">← SWIPE FOR KEYPAD →</div>
+        </div>
+
+        <!-- Page 2: numpad + transport -->
+        <div class="swipe-page">
+          <div style="color:var(--text-muted);font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;align-self:flex-start;">Transport</div>
+          <div class="transport-row">
+            <button class="t-btn">▶</button>
+            <button class="t-btn">⏸</button>
+            <button class="t-btn">⏹</button>
+            <button class="t-btn">↺</button>
+            <button class="t-btn">⏪</button>
+            <button class="t-btn">⏩</button>
+            <button class="t-btn">⏭</button>
+          </div>
+          <div style="color:var(--text-muted);font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;align-self:flex-start;">Keypad</div>
+          <div class="numpad">
+            <button class="n-btn">1</button>
+            <button class="n-btn">2</button>
+            <button class="n-btn">3</button>
+            <button class="n-btn">4</button>
+            <button class="n-btn">5</button>
+            <button class="n-btn">6</button>
+            <button class="n-btn">7</button>
+            <button class="n-btn">8</button>
+            <button class="n-btn">9</button>
+            <button class="n-btn">—</button>
+            <button class="n-btn">0</button>
+            <button class="n-btn n-enter">Enter</button>
+          </div>
+          <div style="color:var(--text-muted);font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;align-self:flex-start;margin-top:4px;">Color</div>
+          <div class="color-row">
+            <button class="c-btn" style="background:#e74c3c"></button>
+            <button class="c-btn" style="background:#27ae60"></button>
+            <button class="c-btn" style="background:#f1c40f"></button>
+            <button class="c-btn" style="background:#2980b9"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+    <div class="btm">
+      <div class="bar-btn">≡ Rooms</div>
+      <div class="bar-btn">≔ Sources</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     PHONE: AppleTV (single page, large disc)
+     ═══════════════════════════════════════ -->
+<div>
+  <div class="label">AppleTV · Single Page</div>
+  <div class="phone">
+    <div class="hdr">
+      <span class="hdr-home">⌂</span>
+      <span class="hdr-title">Family Video — Apple TV</span>
+      <div class="hdr-vol">
+        <button class="hdr-vol-btn muted">🔇</button>
+        <span class="hdr-vol-pct" style="opacity:.4">—</span>
+        <button class="hdr-vol-btn">−</button>
+        <button class="hdr-vol-btn">+</button>
+      </div>
+    </div>
+
+    <div class="av-content">
+      <div class="swipe-wrap">
+        <div class="swipe-page" style="justify-content:center;">
+          <div class="btn-row">
+            <button class="av-btn">Menu</button>
+          </div>
+          <!-- Larger disc for AppleTV -->
+          <div class="disc-wrap">
+            <svg viewBox="0 0 260 260" width="210" height="210">
+              <defs>
+                <linearGradient id="gu2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4a847"/><stop offset="100%" stop-color="#7a5a0e"/></linearGradient>
+                <linearGradient id="gd2" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#d4a847"/><stop offset="100%" stop-color="#7a5a0e"/></linearGradient>
+                <linearGradient id="gl2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d4a847"/><stop offset="100%" stop-color="#7a5a0e"/></linearGradient>
+                <linearGradient id="gr2" x1="1" y1="0" x2="0" y2="0"><stop offset="0%" stop-color="#d4a847"/><stop offset="100%" stop-color="#7a5a0e"/></linearGradient>
+                <radialGradient id="gc2" cx="38%" cy="33%"><stop offset="0%" stop-color="#e8c458"/><stop offset="100%" stop-color="#8a6010"/></radialGradient>
+              </defs>
+              <circle cx="130" cy="130" r="130" fill="#0a0a0a"/>
+              <path d="M130,130 L38,38 A130,130 0 0,1 222,38 Z" fill="url(#gu2)"/>
+              <path d="M130,130 L222,38 A130,130 0 0,1 222,222 Z" fill="url(#gr2)"/>
+              <path d="M130,130 L222,222 A130,130 0 0,1 38,222 Z" fill="url(#gd2)"/>
+              <path d="M130,130 L38,222 A130,130 0 0,1 38,38 Z" fill="url(#gl2)"/>
+              <line x1="38" y1="38" x2="222" y2="222" stroke="#0a0a0a" stroke-width="7"/>
+              <line x1="222" y1="38" x2="38" y2="222" stroke="#0a0a0a" stroke-width="7"/>
+              <circle cx="130" cy="130" r="129" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="2"/>
+              <circle cx="130" cy="130" r="52" fill="url(#gc2)"/>
+              <circle cx="130" cy="130" r="52" fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="2.5"/>
+              <circle cx="130" cy="130" r="50" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+              <text x="130" y="135" text-anchor="middle" fill="rgba(0,0,0,0.72)" font-family="Georgia,serif" font-size="15" font-weight="bold">Select</text>
+              <text x="130" y="58" text-anchor="middle" fill="rgba(0,0,0,0.62)" font-size="17">▲</text>
+              <text x="130" y="210" text-anchor="middle" fill="rgba(0,0,0,0.62)" font-size="17">▼</text>
+              <text x="54" y="132" text-anchor="middle" dominant-baseline="middle" fill="rgba(0,0,0,0.62)" font-size="17">◀</text>
+              <text x="206" y="132" text-anchor="middle" dominant-baseline="middle" fill="rgba(0,0,0,0.62)" font-size="17">▶</text>
+            </svg>
+          </div>
+          <div class="transport-row">
+            <button class="t-btn wide">▶ ⏸</button>
+            <button class="t-btn">⏪</button>
+            <button class="t-btn">⏩</button>
+          </div>
+        </div>
+      </div>
+      <div class="page-dots" style="visibility:hidden"><div class="dot active"></div></div>
+    </div>
+
+    <div class="btm">
+      <div class="bar-btn">≡ Rooms</div>
+      <div class="bar-btn">≔ Sources</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     TSW-1080: Everything on one view
+     ═══════════════════════════════════════ -->
+<div style="width:100%">
+  <div class="label">TSW-1080 · Full layout (all controls visible)</div>
+  <div class="phone tsw" style="margin:0 auto;">
+    <div class="hdr" style="height:48px">
+      <span class="hdr-home">⌂</span>
+      <span class="hdr-title">Family Video — DirecTV</span>
+      <div class="hdr-vol">
+        <button class="hdr-vol-btn">🔇</button>
+        <span class="hdr-vol-pct">65%</span>
+        <button class="hdr-vol-btn">−</button>
+        <button class="hdr-vol-btn">+</button>
+      </div>
+    </div>
+
+    <div class="av-content">
+      <div class="swipe-wrap tsw-grid">
+        <!-- Left col: nav controls + disc -->
+        <div class="swipe-page" style="border-right:1px solid rgba(0,0,0,0.08);">
+          <div class="btn-row">
+            <button class="av-btn">Guide</button>
+            <button class="av-btn">Menu</button>
+            <button class="av-btn">Info</button>
+            <button class="av-btn">Exit</button>
+            <button class="av-btn">Record</button>
+            <button class="av-btn">List</button>
+          </div>
+          <div class="ch-row">
+            <button class="ch-btn">▲</button>
+            <span class="ch-lbl">Ch</span>
+            <button class="ch-btn">▼</button>
+            <button class="av-btn">Last</button>
+          </div>
+          <div class="disc-wrap">
+            <svg viewBox="0 0 200 200" width="160" height="160">
+              <defs>
+                <linearGradient id="gu3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4a847"/><stop offset="100%" stop-color="#7a5a0e"/></linearGradient>
+                <linearGradient id="gd3" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#d4a847"/><stop offset="100%" stop-color="#7a5a0e"/></linearGradient>
+                <linearGradient id="gl3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d4a847"/><stop offset="100%" stop-color="#7a5a0e"/></linearGradient>
+                <linearGradient id="gr3" x1="1" y1="0" x2="0" y2="0"><stop offset="0%" stop-color="#d4a847"/><stop offset="100%" stop-color="#7a5a0e"/></linearGradient>
+                <radialGradient id="gc3" cx="38%" cy="33%"><stop offset="0%" stop-color="#e8c458"/><stop offset="100%" stop-color="#8a6010"/></radialGradient>
+              </defs>
+              <circle cx="100" cy="100" r="100" fill="#0a0a0a"/>
+              <path d="M100,100 L29,29 A100,100 0 0,1 171,29 Z" fill="url(#gu3)"/>
+              <path d="M100,100 L171,29 A100,100 0 0,1 171,171 Z" fill="url(#gr3)"/>
+              <path d="M100,100 L171,171 A100,100 0 0,1 29,171 Z" fill="url(#gd3)"/>
+              <path d="M100,100 L29,171 A100,100 0 0,1 29,29 Z" fill="url(#gl3)"/>
+              <line x1="29" y1="29" x2="171" y2="171" stroke="#0a0a0a" stroke-width="5"/>
+              <line x1="171" y1="29" x2="29" y2="171" stroke="#0a0a0a" stroke-width="5"/>
+              <circle cx="100" cy="100" r="99" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="2"/>
+              <circle cx="100" cy="100" r="38" fill="url(#gc3)"/>
+              <circle cx="100" cy="100" r="38" fill="none" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
+              <text x="100" y="105" text-anchor="middle" fill="rgba(0,0,0,0.7)" font-family="Georgia,serif" font-size="12" font-weight="bold">Select</text>
+              <text x="100" y="45" text-anchor="middle" fill="rgba(0,0,0,0.6)" font-size="13">▲</text>
+              <text x="100" y="161" text-anchor="middle" fill="rgba(0,0,0,0.6)" font-size="13">▼</text>
+              <text x="42" y="102" text-anchor="middle" dominant-baseline="middle" fill="rgba(0,0,0,0.6)" font-size="13">◀</text>
+              <text x="158" y="102" text-anchor="middle" dominant-baseline="middle" fill="rgba(0,0,0,0.6)" font-size="13">▶</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Right col: transport + numpad + colors -->
+        <div class="swipe-page">
+          <div style="color:var(--text-muted);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;align-self:flex-start;">Transport</div>
+          <div class="transport-row">
+            <button class="t-btn">▶</button>
+            <button class="t-btn">⏸</button>
+            <button class="t-btn">⏹</button>
+            <button class="t-btn">↺</button>
+            <button class="t-btn">⏪</button>
+            <button class="t-btn">⏩</button>
+            <button class="t-btn">⏭</button>
+          </div>
+          <div style="color:var(--text-muted);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;align-self:flex-start;">Keypad</div>
+          <div class="numpad" style="grid-template-columns:repeat(3,56px)">
+            <button class="n-btn" style="height:44px">1</button>
+            <button class="n-btn" style="height:44px">2</button>
+            <button class="n-btn" style="height:44px">3</button>
+            <button class="n-btn" style="height:44px">4</button>
+            <button class="n-btn" style="height:44px">5</button>
+            <button class="n-btn" style="height:44px">6</button>
+            <button class="n-btn" style="height:44px">7</button>
+            <button class="n-btn" style="height:44px">8</button>
+            <button class="n-btn" style="height:44px">9</button>
+            <button class="n-btn" style="height:44px">—</button>
+            <button class="n-btn" style="height:44px">0</button>
+            <button class="n-btn n-enter" style="height:44px">Enter</button>
+          </div>
+          <div class="color-row" style="margin-top:4px;">
+            <button class="c-btn" style="background:#e74c3c"></button>
+            <button class="c-btn" style="background:#27ae60"></button>
+            <button class="c-btn" style="background:#f1c40f"></button>
+            <button class="c-btn" style="background:#2980b9"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btm" style="height:48px">
+      <div class="bar-btn">≡ Rooms</div>
+      <div class="bar-btn">≔ Sources</div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .tsw .swipe-wrap {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    overflow-x: visible !important;
+    scroll-snap-type: none !important;
+  }
+  .tsw .swipe-page { min-width: unset !important; }
+</style>
+
+</body>
+</html>

@@ -59,6 +59,12 @@
     next.classList.add('active');
     currentPage = name;
 
+    /* Show AV volume pill + stacked title only on the AV page */
+    var avVol = document.getElementById('av-vol-pill');
+    if (avVol) avVol.classList.toggle('hidden', name !== 'av');
+    var avTitle = document.getElementById('av-title');
+    if (avTitle) avTitle.classList.toggle('hidden', name !== 'av');
+
     var homeBtn = document.getElementById('nav-home');
     if (homeBtn) {
       homeBtn.classList.toggle('hidden', name === 'home');
@@ -66,7 +72,14 @@
 
     var titleEl = document.getElementById('header-title');
     if (titleEl) {
-      titleEl.textContent = pages[name].title;
+      if (name === 'av') {
+        /* AV uses the stacked #av-title instead — hide the plain title */
+        titleEl.classList.add('hidden');
+        if (window._avGetTitle) window._avGetTitle();  /* keeps room/source state fresh */
+      } else {
+        titleEl.classList.remove('hidden');
+        titleEl.textContent = pages[name].title;
+      }
     }
   }
 

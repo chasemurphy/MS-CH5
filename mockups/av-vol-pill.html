@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AV Mockup — Header Pill Volume</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+<style>
+  :root {
+    --cream:       #f0ece3;
+    --surface-2:   #e4dfd4;
+    --chrome:      #1c1c1c;
+    --chrome-surf: #2a2a2a;
+    --accent:      #b8912a;
+    --accent-soft: rgba(184,145,42,0.18);
+    --text:        #1c1c1c;
+    --text-muted:  #777;
+    --text-lt:     #f0ece3;
+    --border:      rgba(184,145,42,0.35);
+    --danger:      #c34a32;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #111; color: #ddd; font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+  body { padding: 28px; display: flex; flex-direction: column; gap: 30px; align-items: center; }
+  h1 { font-size: 1.2rem; font-weight: 600; color: #eee; }
+  h1 span { color: var(--accent); }
+  p.intro { color: #aaa; max-width: 900px; text-align: center; font-size: 0.85rem; line-height: 1.5; }
+  .frames { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; align-items: flex-start; }
+  .frame-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .frame-label { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #888; }
+
+  .phone {
+    width: 390px; height: 800px;
+    background: var(--cream);
+    border-radius: 42px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.7);
+    position: relative;
+  }
+
+  .tsw-scale { transform: scale(0.42); transform-origin: top left; width: 1920px; height: 1200px; }
+  .tsw-wrap { width: calc(1920px * 0.42); height: calc(1200px * 0.42); overflow: hidden; border-radius: 8px; box-shadow: 0 24px 64px rgba(0,0,0,0.7); }
+  .tsw {
+    width: 1920px; height: 1200px;
+    background: var(--cream);
+    display: flex; flex-direction: column;
+    position: relative; overflow: hidden;
+  }
+
+  .hdr {
+    background: var(--chrome);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .phone .hdr { height: 54px; padding: 0 14px; gap: 10px; }
+  .tsw .hdr { height: 80px; padding: 0 32px; gap: 18px; }
+
+  .hdr-home { color: var(--accent); flex-shrink: 0; cursor: pointer; }
+  .phone .hdr-home { font-size: 1.2rem; }
+  .tsw .hdr-home { font-size: 1.8rem; }
+  .hdr-title {
+    color: var(--accent); font-weight: 700;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    flex-shrink: 0;
+  }
+  .phone .hdr-title { font-size: 0.85rem; max-width: 110px; }
+  .tsw .hdr-title { font-size: 1.5rem; }
+
+  /* === Inline pill volume slider in header === */
+  .vol-pill {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    display: flex; align-items: center;
+    padding: 4px 6px;
+    gap: 8px;
+    min-width: 0;
+  }
+  .phone .vol-pill { height: 36px; margin: 0 4px; }
+  .tsw .vol-pill { height: 56px; padding: 6px 10px; gap: 16px; margin: 0 24px; }
+  .vol-pill-mute {
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--chrome-surf);
+    border: none; color: var(--text-lt);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .phone .vol-pill-mute { width: 28px; height: 28px; font-size: 0.7rem; }
+  .tsw .vol-pill-mute { width: 44px; height: 44px; font-size: 1.1rem; }
+  .vol-pill-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 4px;
+    position: relative;
+    min-width: 0;
+  }
+  .tsw .vol-pill-track { height: 14px; border-radius: 7px; }
+  .vol-pill-fill {
+    position: absolute; top: 0; left: 0; height: 100%;
+    width: 42%;
+    background: var(--accent);
+    border-radius: 4px;
+  }
+  .tsw .vol-pill-fill { border-radius: 7px; }
+  .vol-pill-thumb {
+    position: absolute; left: 42%; top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  }
+  .phone .vol-pill-thumb { width: 18px; height: 18px; }
+  .tsw .vol-pill-thumb { width: 30px; height: 30px; border-width: 3px; }
+  .vol-pill-pct {
+    flex-shrink: 0;
+    color: var(--text-lt);
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    font-weight: 500;
+    min-width: 36px; text-align: right;
+  }
+  .phone .vol-pill-pct { font-size: 0.85rem; }
+  .tsw .vol-pill-pct { font-size: 1.4rem; min-width: 60px; }
+
+  /* === AV main area === */
+  .av-main {
+    flex: 1;
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .av-placeholder {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 18px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    letter-spacing: 2px; text-transform: uppercase;
+  }
+  .tsw .av-placeholder { font-size: 1.2rem; }
+  .av-placeholder .trackpad {
+    width: 300px; height: 220px;
+    background: var(--surface-2);
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); font-size: 0.8rem; letter-spacing: 3px;
+  }
+  .tsw .av-placeholder .trackpad { width: 520px; height: 380px; font-size: 1.1rem; }
+
+  .btm-pills {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between;
+    padding: 16px 18px;
+    pointer-events: none; z-index: 10;
+  }
+  .tsw .btm-pills { padding: 28px 32px; }
+  .btm-pill {
+    pointer-events: auto;
+    background: var(--chrome);
+    color: var(--accent);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 600;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    cursor: pointer; font-family: inherit;
+  }
+  .phone .btm-pill { padding: 12px 20px; font-size: 0.9rem; }
+  .tsw .btm-pill { padding: 18px 32px; font-size: 1.3rem; }
+
+  .rooms-drawer {
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    background: var(--cream);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    z-index: 20;
+    box-shadow: 4px 0 16px rgba(0,0,0,0.15);
+  }
+  .phone .rooms-drawer { width: 78%; }
+  .tsw .rooms-drawer { width: 520px; }
+  .rooms-drawer.open { transform: translateX(0); }
+
+  .drawer-title {
+    padding: 18px 20px;
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    font-weight: 500; color: var(--accent);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .phone .drawer-title { font-size: 1.4rem; }
+  .tsw .drawer-title { font-size: 2.2rem; padding: 28px 32px; }
+
+  .room-list { flex: 1; overflow-y: auto; padding: 8px 0; }
+  .room-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 20px;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+  }
+  .tsw .room-row { padding: 20px 32px; gap: 20px; }
+  .room-row.selected { background: var(--accent-soft); border-left-color: var(--accent); }
+  .room-icon {
+    width: 40px; height: 40px;
+    background: var(--surface-2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); flex-shrink: 0;
+  }
+  .tsw .room-icon { width: 56px; height: 56px; font-size: 1.3rem; }
+  .room-row.selected .room-icon { background: var(--accent); color: #fff; }
+  .room-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .room-name { color: var(--text); font-weight: 600; font-size: 0.95rem; }
+  .tsw .room-name { font-size: 1.3rem; }
+  .room-source { color: var(--text-muted); font-size: 0.78rem; display: flex; align-items: center; gap: 6px; }
+  .tsw .room-source { font-size: 1.05rem; }
+  .room-source i { font-size: 0.7rem; color: var(--accent); }
+  .tsw .room-source i { font-size: 0.9rem; }
+  .room-source.off { color: #b0a89a; font-style: italic; }
+
+  .sources-drawer {
+    position: absolute;
+    top: 0; bottom: 0; right: 0;
+    background: var(--cream);
+    border-left: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.25s ease;
+    z-index: 20;
+    box-shadow: -4px 0 16px rgba(0,0,0,0.15);
+  }
+  .phone .sources-drawer { width: 78%; }
+  .tsw .sources-drawer { width: 520px; }
+  .sources-drawer.open { transform: translateX(0); }
+
+  .power-row {
+    padding: 14px 18px;
+    flex-shrink: 0; border-bottom: 1px solid var(--border);
+  }
+  .tsw .power-row { padding: 24px 28px; }
+  .power-btn {
+    width: 100%;
+    background: var(--danger);
+    color: #fff;
+    border: none; border-radius: 28px;
+    padding: 14px 20px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    font-weight: 600; font-family: inherit;
+    cursor: pointer; font-size: 0.95rem;
+    box-shadow: 0 4px 12px rgba(195,74,50,0.3);
+  }
+  .tsw .power-btn { padding: 24px 32px; font-size: 1.35rem; border-radius: 42px; gap: 14px; }
+
+  .source-list { flex: 1; overflow-y: auto; padding: 8px 0; }
+  .source-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 20px;
+    cursor: pointer; border-left: 3px solid transparent;
+  }
+  .tsw .source-row { padding: 18px 32px; gap: 20px; }
+  .source-row.selected { background: var(--accent-soft); border-left-color: var(--accent); }
+  .source-icon {
+    width: 40px; height: 40px;
+    background: var(--surface-2); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text); flex-shrink: 0;
+  }
+  .tsw .source-icon { width: 56px; height: 56px; font-size: 1.3rem; }
+  .source-row.selected .source-icon { background: var(--accent); color: #fff; }
+  .source-name { flex: 1; color: var(--text); font-weight: 500; font-size: 0.95rem; }
+  .tsw .source-name { font-size: 1.3rem; }
+
+  .toggles { display: flex; gap: 8px; justify-content: center; margin-top: 10px; }
+  .toggles button {
+    background: #222; color: #ccc;
+    border: 1px solid #333; padding: 6px 12px;
+    border-radius: 6px; font-size: 0.75rem; cursor: pointer; font-family: inherit;
+  }
+  .toggles button.active { background: var(--accent); color: #000; border-color: var(--accent); }
+</style>
+</head>
+<body>
+
+<h1>Mockup 3 — <span>Inline Header Pill</span></h1>
+<p class="intro">
+  Volume slider lives inline in the header as a wide pill: mute icon | slider track | level %.
+  Always visible, draggable, no extra tap. Title shrinks/truncates to make room on iPhone; on TSW there's plenty of space for it plus a large slider.
+  Shared: floating Rooms/Sources pills at the bottom; Power Off moves into the Sources drawer; Rooms drawer shows active source per room.
+</p>
+
+<div class="frames">
+
+  <!-- ============ iPhone ============ -->
+  <div class="frame-wrap">
+    <div class="frame-label">iPhone 390 × 800</div>
+    <div class="phone" id="phone">
+      <div class="hdr">
+        <i class="fas fa-home hdr-home"></i>
+        <div class="hdr-title">Warehouse</div>
+        <div class="vol-pill">
+          <button class="vol-pill-mute"><i class="fas fa-volume-mute"></i></button>
+          <div class="vol-pill-track">
+            <div class="vol-pill-fill"></div>
+            <div class="vol-pill-thumb"></div>
+          </div>
+          <span class="vol-pill-pct">42%</span>
+        </div>
+      </div>
+
+      <div class="av-main">
+        <div class="av-placeholder">
+          <div class="trackpad">SWIPE · TAP</div>
+          <div>(trackpad + transport)</div>
+        </div>
+
+        <div class="rooms-drawer open" id="roomsP">
+          <div class="drawer-title">Select Room</div>
+          <div class="room-list">
+            <div class="room-row selected">
+              <div class="room-icon"><i class="fas fa-warehouse"></i></div>
+              <div class="room-info"><div class="room-name">Warehouse</div><div class="room-source"><i class="fab fa-apple"></i> Apple TV 4K</div></div>
+            </div>
+            <div class="room-row">
+              <div class="room-icon"><i class="fas fa-couch"></i></div>
+              <div class="room-info"><div class="room-name">Family Room</div><div class="room-source"><i class="fas fa-satellite-dish"></i> DirecTV</div></div>
+            </div>
+            <div class="room-row">
+              <div class="room-icon"><i class="fas fa-utensils"></i></div>
+              <div class="room-info"><div class="room-name">Kitchen</div><div class="room-source off">— off —</div></div>
+            </div>
+            <div class="room-row">
+              <div class="room-icon"><i class="fas fa-bed"></i></div>
+              <div class="room-info"><div class="room-name">Master Bedroom</div><div class="room-source"><i class="fab fa-apple"></i> Apple TV 4K</div></div>
+            </div>
+            <div class="room-row">
+              <div class="room-icon"><i class="fas fa-dumbbell"></i></div>
+              <div class="room-info"><div class="room-name">Gym</div><div class="room-source"><i class="fas fa-music"></i> Sonos Radio</div></div>
+            </div>
+            <div class="room-row">
+              <div class="room-icon"><i class="fas fa-wine-glass"></i></div>
+              <div class="room-info"><div class="room-name">Bar</div><div class="room-source off">— off —</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btm-pills">
+          <button class="btm-pill" onclick="phoneView('rooms')"><i class="fas fa-bars"></i> Rooms</button>
+          <button class="btm-pill" onclick="phoneView('sources')"><i class="fas fa-list"></i> Sources</button>
+        </div>
+      </div>
+    </div>
+    <div class="toggles">
+      <button onclick="phoneView('rooms')" class="active">Rooms</button>
+      <button onclick="phoneView('sources')">Sources</button>
+      <button onclick="phoneView('idle')">Idle</button>
+    </div>
+  </div>
+
+  <!-- ============ TSW ============ -->
+  <div class="frame-wrap">
+    <div class="frame-label">TSW-1080  1920 × 1200 (scaled 42%)</div>
+    <div class="tsw-wrap">
+      <div class="tsw-scale">
+        <div class="tsw" id="tsw">
+          <div class="hdr">
+            <i class="fas fa-home hdr-home"></i>
+            <div class="hdr-title">Warehouse — Apple TV 4K</div>
+            <div class="vol-pill">
+              <button class="vol-pill-mute"><i class="fas fa-volume-mute"></i></button>
+              <div class="vol-pill-track">
+                <div class="vol-pill-fill"></div>
+                <div class="vol-pill-thumb"></div>
+              </div>
+              <span class="vol-pill-pct">42%</span>
+            </div>
+          </div>
+
+          <div class="av-main">
+            <div class="av-placeholder">
+              <div class="trackpad">SWIPE · TAP</div>
+              <div>(trackpad + transport)</div>
+            </div>
+
+            <div class="sources-drawer open" id="sourcesT">
+              <div class="drawer-title">Sources</div>
+              <div class="power-row">
+                <button class="power-btn"><i class="fas fa-power-off"></i> Power Off Warehouse</button>
+              </div>
+              <div class="source-list">
+                <div class="source-row selected"><div class="source-icon"><i class="fab fa-apple"></i></div><div class="source-name">Apple TV 4K</div></div>
+                <div class="source-row"><div class="source-icon"><i class="fas fa-satellite-dish"></i></div><div class="source-name">DirecTV</div></div>
+                <div class="source-row"><div class="source-icon"><i class="fas fa-satellite-dish"></i></div><div class="source-name">Comcast</div></div>
+                <div class="source-row"><div class="source-icon"><i class="fas fa-compact-disc"></i></div><div class="source-name">DVD Player</div></div>
+                <div class="source-row"><div class="source-icon"><i class="fas fa-film"></i></div><div class="source-name">Kaleidescape</div></div>
+                <div class="source-row"><div class="source-icon"><i class="fas fa-music"></i></div><div class="source-name">Sonos</div></div>
+              </div>
+            </div>
+
+            <div class="btm-pills">
+              <button class="btm-pill" onclick="tswView('rooms')"><i class="fas fa-bars"></i> Rooms</button>
+              <button class="btm-pill" onclick="tswView('sources')"><i class="fas fa-list"></i> Sources</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toggles">
+      <button onclick="tswView('rooms')">Rooms</button>
+      <button onclick="tswView('sources')" class="active">Sources</button>
+      <button onclick="tswView('idle')">Idle</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function phoneView(v){
+    document.querySelectorAll('.frame-wrap:nth-child(1) .toggles button').forEach(b=>b.classList.remove('active'));
+    if (event && event.target) event.target.classList.add('active');
+    document.getElementById('roomsP').classList.remove('open');
+    const s = document.getElementById('sourcesP'); if (s) s.remove();
+    if (v === 'rooms') document.getElementById('roomsP').classList.add('open');
+    if (v === 'sources') {
+      const main = document.querySelector('#phone .av-main');
+      const tpl = document.querySelector('#tsw .sources-drawer').cloneNode(true);
+      tpl.id = 'sourcesP';
+      main.appendChild(tpl);
+    }
+  }
+  function tswView(v){
+    document.querySelectorAll('.frame-wrap:nth-child(2) .toggles button').forEach(b=>b.classList.remove('active'));
+    if (event && event.target) event.target.classList.add('active');
+    document.getElementById('sourcesT').classList.remove('open');
+    const r = document.getElementById('roomsT'); if (r) r.remove();
+    if (v === 'sources') document.getElementById('sourcesT').classList.add('open');
+    if (v === 'rooms') {
+      const main = document.querySelector('#tsw .av-main');
+      const tpl = document.querySelector('#phone .rooms-drawer').cloneNode(true);
+      tpl.id = 'roomsT';
+      main.appendChild(tpl);
+      tpl.classList.add('open');
+    }
+  }
+</script>
+
+</body>
+</html>
