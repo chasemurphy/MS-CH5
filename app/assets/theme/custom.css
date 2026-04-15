@@ -2584,9 +2584,9 @@ html[data-theme="custom"] {
 }
 
 .av-power-btn {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 21px;
   background: var(--chrome-surface);
   color: var(--text-on-dark);
   border: 1px solid rgba(255,255,255,0.09);
@@ -2594,9 +2594,13 @@ html[data-theme="custom"] {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   touch-action: manipulation;
   flex-shrink: 0;
+  white-space: nowrap;
 }
 .av-power-btn:active { background: #c0392b; color: #fff; }
 .av-power-btn.av-off { background: #e74c3c; color: #fff; border-color: #e74c3c; }

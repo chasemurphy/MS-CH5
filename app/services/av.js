@@ -3,17 +3,17 @@
              Volume / Mute / Power
    ---------------------------------------------------------
    Join block:
-     Vol up / down / mute:    d15 / d16 / d17
+     Vol up / down / mute:    d97 / d98 / d99
      Volume level:            a1  (0–65535; 0 = hide strip)
-     Room names:              s21–s37
-     Room select + ON fb:     d21–d37  (same join for both)
-     Room power off + fb:     d40
-     Active source name:      s40
+     Room names:              s21–s44
+     Room select + ON fb:     d21–d44  (same join for both)
+     Room power off + fb:     d50
+     Active source name:      s20
      Source names:            s81–s104
-     Source select + fb:      d41–d64
+     Source select + fb:      d51–d74
      Source icon (analog):    a41–a64  (0 or 99 = derive from name)
-     Subpage type (SIMPL→):   d60 none | d61 DirecTV | d62 Comcast
-                               d63 DVD1 | d67 AppleTV
+     Subpage type (SIMPL→):   d80 none | d81 DirecTV | d82 Comcast
+                               d83 DVD1 | d87 AppleTV
    ========================================================= */
 (function () {
   'use strict';
@@ -42,11 +42,11 @@
 
   /* ---- Subpage map: join → element ID ---- */
   var SUBPAGE_MAP = {
-    60: 'av-sub-nocontrol',
-    61: 'av-sub-sat1',
-    62: 'av-sub-sat2',
-    63: 'av-sub-dvd1',
-    67: 'av-sub-appletv'
+    80: 'av-sub-nocontrol',
+    81: 'av-sub-sat1',
+    82: 'av-sub-sat2',
+    83: 'av-sub-dvd1',
+    87: 'av-sub-appletv'
   };
 
   /* ---- Per-source state (name + analog icon value) ---- */
@@ -225,7 +225,7 @@
 
   /* ---- Active source name in bottom bar ---- */
   function initActiveSource() {
-    CrComLib.subscribeState('s', '40', function (val) {
+    CrComLib.subscribeState('s', '20', function (val) {
       var el = document.getElementById('av-active-source');
       if (el) el.textContent = val || '';
     });
@@ -247,7 +247,7 @@
 
   /* ---- Mute feedback ---- */
   function initMute() {
-    CrComLib.subscribeState('b', '17', function (val) {
+    CrComLib.subscribeState('b', '99', function (val) {
       var btn = document.getElementById('av-mute-btn');
       if (btn) btn.classList.toggle('muted', val === true || val === 'true');
     });
@@ -255,7 +255,7 @@
 
   /* ---- Power (room off) feedback ---- */
   function initPower() {
-    CrComLib.subscribeState('b', '40', function (val) {
+    CrComLib.subscribeState('b', '50', function (val) {
       var btn = document.getElementById('av-power-btn');
       /* d40 feedback high = room is OFF */
       if (btn) btn.classList.toggle('av-off', val === true || val === 'true');
@@ -265,7 +265,7 @@
   /* ---- Header title when AV page is active ---- */
   function initHeaderTitle() {
     /* Update title whenever active source name changes and we're on AV page */
-    CrComLib.subscribeState('s', '40', function (val) {
+    CrComLib.subscribeState('s', '20', function (val) {
       var page = document.getElementById('page-av');
       var titleEl = document.getElementById('header-title');
       if (titleEl && page && page.classList.contains('active')) {
