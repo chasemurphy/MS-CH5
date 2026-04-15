@@ -238,9 +238,9 @@
       var strip  = document.getElementById('av-vol-strip');
       var pctEl  = document.getElementById('av-vol-pct');
 
-      if (strip) strip.classList.toggle('hidden', n === 0);
       if (pctEl) {
-        pctEl.textContent = n === 0 ? '—' : Math.round(n / 655.35) + '%';
+        pctEl.textContent = n > 0 ? Math.round(n / 655.35) + '%' : '';
+        pctEl.classList.toggle('hidden', n === 0);
       }
     });
   }
