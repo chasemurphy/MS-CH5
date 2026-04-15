@@ -1242,6 +1242,293 @@
       </div>
 
     </div>
+
+    <!-- ===== AV Page ===== -->
+    <div id="page-av" class="page">
+
+      <!-- Drawer overlay -->
+      <div id="av-drawer-overlay" class="drawer-overlay"></div>
+
+      <!-- Room drawer (left slide-out) — 17 rooms d21–d37 / s21–s37 -->
+      <div id="av-room-drawer" class="room-drawer">
+        <div class="drawer-header">Select Room</div>
+        <div class="drawer-list" id="av-room-list">
+          <div class="drawer-room" data-select="21" data-label="21"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="22" data-label="22"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="23" data-label="23"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="24" data-label="24"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="25" data-label="25"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="26" data-label="26"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="27" data-label="27"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="28" data-label="28"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="29" data-label="29"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="30" data-label="30"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="31" data-label="31"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="32" data-label="32"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="33" data-label="33"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="34" data-label="34"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="35" data-label="35"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="36" data-label="36"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+          <div class="drawer-room" data-select="37" data-label="37"><i class="fas fa-tv drawer-room-icon"></i><span class="drawer-room-name"></span></div>
+        </div>
+      </div>
+
+      <!-- Content row: main area + right source panel -->
+      <div class="av-content-row">
+
+      <!-- Source panel (right slide-out) — inserted after av-main in DOM, expands left -->
+      <!-- NOTE: placed after av-main so it expands from the RIGHT side of the row -->
+      <!-- actual DOM order: av-main first, then av-source-panel -->
+
+      <!-- Main area — subpages shown/hidden by SIMPL d60–d67 -->
+      <div class="av-main">
+
+        <!-- No Control (d60) — default until SIMPL sends a subpage type -->
+        <div id="av-sub-nocontrol" class="av-subpage active">
+          <div class="av-no-source">
+            <i class="fas fa-tv"></i>
+            <span>No Source Selected</span>
+          </div>
+        </div>
+
+        <!-- DirecTV (d61) -->
+        <div id="av-sub-sat1" class="av-subpage">
+          <div class="av-sub-layout">
+            <div class="av-left-strip">
+              <button class="av-btn" data-click="143">Guide</button>
+              <button class="av-btn" data-click="142">Menu</button>
+              <button class="av-btn" data-click="144">Info</button>
+              <button class="av-btn" data-click="145">Exit</button>
+              <button class="av-btn" data-click="135">Record</button>
+              <button class="av-btn" data-click="146">List</button>
+            </div>
+            <div class="av-center-col">
+              <div class="av-ch-cluster">
+                <button class="av-ch-btn" data-click="126"><i class="fas fa-chevron-up"></i></button>
+                <span class="av-ch-label">Channel</span>
+                <button class="av-ch-btn" data-click="127"><i class="fas fa-chevron-down"></i></button>
+                <button class="av-btn av-ch-last" data-click="128">Last</button>
+              </div>
+              <div class="av-dpad-cluster av-with-colors">
+                <button class="av-color-btn av-red"    data-click="148"></button>
+                <button class="av-color-btn av-green"  data-click="149"></button>
+                <div class="av-dpad">
+                  <div></div><button class="av-dpad-btn" data-click="120"><i class="fas fa-chevron-up"></i></button><div></div>
+                  <button class="av-dpad-btn" data-click="122"><i class="fas fa-chevron-left"></i></button>
+                  <button class="av-dpad-sel" data-click="124">Select</button>
+                  <button class="av-dpad-btn" data-click="123"><i class="fas fa-chevron-right"></i></button>
+                  <div></div><button class="av-dpad-btn" data-click="121"><i class="fas fa-chevron-down"></i></button><div></div>
+                </div>
+                <button class="av-color-btn av-yellow" data-click="150"></button>
+                <button class="av-color-btn av-blue"   data-click="151"></button>
+              </div>
+              <div class="av-transport-row">
+                <button class="av-transport-btn" data-click="133" title="Play"><i class="fas fa-play"></i></button>
+                <button class="av-transport-btn" data-click="132" title="Pause"><i class="fas fa-pause"></i></button>
+                <button class="av-transport-btn" data-click="134" title="Stop"><i class="fas fa-stop"></i></button>
+                <button class="av-transport-btn" data-click="138" title="Replay"><i class="fas fa-undo"></i></button>
+                <button class="av-transport-btn" data-click="131" title="Rew"><i class="fas fa-backward"></i></button>
+                <button class="av-transport-btn" data-click="136" title="FFWD"><i class="fas fa-forward"></i></button>
+                <button class="av-transport-btn" data-click="137" title="Fwd"><i class="fas fa-step-forward"></i></button>
+              </div>
+            </div>
+            <div class="av-numpad">
+              <button class="av-num-btn" data-click="100">1</button>
+              <button class="av-num-btn" data-click="101">2</button>
+              <button class="av-num-btn" data-click="102">3</button>
+              <button class="av-num-btn" data-click="103">4</button>
+              <button class="av-num-btn" data-click="104">5</button>
+              <button class="av-num-btn" data-click="105">6</button>
+              <button class="av-num-btn" data-click="106">7</button>
+              <button class="av-num-btn" data-click="107">8</button>
+              <button class="av-num-btn" data-click="108">9</button>
+              <button class="av-num-btn" data-click="112">—</button>
+              <button class="av-num-btn" data-click="109">0</button>
+              <button class="av-num-btn av-enter-btn" data-click="115">Enter</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comcast / SAT2 (d62) -->
+        <div id="av-sub-sat2" class="av-subpage">
+          <div class="av-sub-layout">
+            <div class="av-left-strip">
+              <button class="av-btn" data-click="143">Guide</button>
+              <button class="av-btn" data-click="142">Xfinity</button>
+              <button class="av-btn" data-click="144">Info</button>
+              <button class="av-btn" data-click="145">Exit</button>
+              <button class="av-btn" data-click="135">Record</button>
+              <button class="av-btn" data-click="128">Last</button>
+            </div>
+            <div class="av-center-col">
+              <div class="av-ch-cluster">
+                <button class="av-ch-btn" data-click="126"><i class="fas fa-chevron-up"></i></button>
+                <span class="av-ch-label">Channel</span>
+                <button class="av-ch-btn" data-click="127"><i class="fas fa-chevron-down"></i></button>
+                <button class="av-ch-btn" data-click="181"><i class="fas fa-chevron-up"></i></button>
+                <span class="av-ch-label">Page</span>
+                <button class="av-ch-btn" data-click="182"><i class="fas fa-chevron-down"></i></button>
+              </div>
+              <div class="av-dpad-cluster">
+                <div class="av-dpad">
+                  <div></div><button class="av-dpad-btn" data-click="120"><i class="fas fa-chevron-up"></i></button><div></div>
+                  <button class="av-dpad-btn" data-click="122"><i class="fas fa-chevron-left"></i></button>
+                  <button class="av-dpad-sel" data-click="124">Select</button>
+                  <button class="av-dpad-btn" data-click="123"><i class="fas fa-chevron-right"></i></button>
+                  <div></div><button class="av-dpad-btn" data-click="121"><i class="fas fa-chevron-down"></i></button><div></div>
+                </div>
+              </div>
+              <div class="av-transport-row">
+                <button class="av-transport-btn" data-click="133" title="Play/Pause"><i class="fas fa-play"></i><i class="fas fa-pause"></i></button>
+                <button class="av-transport-btn" data-click="131" title="Rew"><i class="fas fa-backward"></i></button>
+                <button class="av-transport-btn" data-click="136" title="FFWD"><i class="fas fa-forward"></i></button>
+              </div>
+            </div>
+            <div class="av-numpad">
+              <button class="av-num-btn" data-click="100">1</button>
+              <button class="av-num-btn" data-click="101">2</button>
+              <button class="av-num-btn" data-click="102">3</button>
+              <button class="av-num-btn" data-click="103">4</button>
+              <button class="av-num-btn" data-click="104">5</button>
+              <button class="av-num-btn" data-click="105">6</button>
+              <button class="av-num-btn" data-click="106">7</button>
+              <button class="av-num-btn" data-click="107">8</button>
+              <button class="av-num-btn" data-click="108">9</button>
+              <button class="av-num-btn" data-click="112">—</button>
+              <button class="av-num-btn" data-click="109">0</button>
+              <button class="av-num-btn av-enter-btn" data-click="111">Enter</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DVD1 (d63) -->
+        <div id="av-sub-dvd1" class="av-subpage">
+          <div class="av-sub-layout">
+            <div class="av-left-strip">
+              <button class="av-btn" data-click="181">Home</button>
+              <button class="av-btn" data-click="182">Top Menu</button>
+              <button class="av-btn" data-click="183">Popup</button>
+              <button class="av-btn" data-click="184">Eject</button>
+              <button class="av-btn" data-click="185">Return</button>
+            </div>
+            <div class="av-center-col">
+              <div class="av-ch-cluster">
+                <button class="av-ch-btn" data-click="126"><i class="fas fa-chevron-up"></i></button>
+                <span class="av-ch-label">Chapter / Trk</span>
+                <button class="av-ch-btn" data-click="127"><i class="fas fa-chevron-down"></i></button>
+              </div>
+              <div class="av-dpad-cluster av-with-colors">
+                <button class="av-color-btn av-red"    data-click="148"></button>
+                <button class="av-color-btn av-green"  data-click="149"></button>
+                <div class="av-dpad">
+                  <div></div><button class="av-dpad-btn" data-click="120"><i class="fas fa-chevron-up"></i></button><div></div>
+                  <button class="av-dpad-btn" data-click="122"><i class="fas fa-chevron-left"></i></button>
+                  <button class="av-dpad-sel" data-click="124">Select</button>
+                  <button class="av-dpad-btn" data-click="123"><i class="fas fa-chevron-right"></i></button>
+                  <div></div><button class="av-dpad-btn" data-click="121"><i class="fas fa-chevron-down"></i></button><div></div>
+                </div>
+                <button class="av-color-btn av-yellow" data-click="150"></button>
+                <button class="av-color-btn av-blue"   data-click="151"></button>
+              </div>
+              <div class="av-transport-row">
+                <button class="av-transport-btn" data-click="127" title="Skip Start"><i class="fas fa-step-backward"></i></button>
+                <button class="av-transport-btn" data-click="131" title="Rew"><i class="fas fa-backward"></i></button>
+                <button class="av-transport-btn" data-click="136" title="FFWD"><i class="fas fa-forward"></i></button>
+                <button class="av-transport-btn" data-click="126" title="Skip Fwd"><i class="fas fa-step-forward"></i></button>
+                <button class="av-transport-btn" data-click="132" title="Pause"><i class="fas fa-pause"></i></button>
+                <button class="av-transport-btn" data-click="134" title="Stop"><i class="fas fa-stop"></i></button>
+              </div>
+            </div>
+            <div class="av-numpad">
+              <button class="av-num-btn" data-click="100">1</button>
+              <button class="av-num-btn" data-click="101">2</button>
+              <button class="av-num-btn" data-click="102">3</button>
+              <button class="av-num-btn" data-click="103">4</button>
+              <button class="av-num-btn" data-click="104">5</button>
+              <button class="av-num-btn" data-click="105">6</button>
+              <button class="av-num-btn" data-click="106">7</button>
+              <button class="av-num-btn" data-click="107">8</button>
+              <button class="av-num-btn" data-click="108">9</button>
+              <button class="av-num-btn" data-click="112">—</button>
+              <button class="av-num-btn" data-click="109">0</button>
+              <button class="av-num-btn av-enter-btn" data-click="111">Enter</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- AppleTV (d67) -->
+        <div id="av-sub-appletv" class="av-subpage">
+          <div class="av-appletv-layout">
+            <button class="av-btn av-menu-btn" data-click="142">Menu</button>
+            <div class="av-dpad">
+              <div></div><button class="av-dpad-btn" data-click="120"><i class="fas fa-chevron-up"></i></button><div></div>
+              <button class="av-dpad-btn" data-click="122"><i class="fas fa-chevron-left"></i></button>
+              <button class="av-dpad-sel" data-click="124">Select</button>
+              <button class="av-dpad-btn" data-click="123"><i class="fas fa-chevron-right"></i></button>
+              <div></div><button class="av-dpad-btn" data-click="121"><i class="fas fa-chevron-down"></i></button><div></div>
+            </div>
+            <div class="av-transport-row">
+              <button class="av-transport-btn av-transport-lg" data-click="133" title="Play/Pause"><i class="fas fa-play"></i><i class="fas fa-pause"></i></button>
+              <button class="av-transport-btn" data-click="131" title="Rew"><i class="fas fa-backward"></i></button>
+              <button class="av-transport-btn" data-click="136" title="FFWD"><i class="fas fa-forward"></i></button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.av-main -->
+
+      <!-- Source panel (right slide-out) — 24 sources s81–s104 / d41–d64 / a41–a64 -->
+      <div id="av-source-panel" class="scene-panel">
+        <div class="scene-panel-title">Sources</div>
+        <div class="scene-panel-list" id="av-source-list">
+          <div class="av-source-btn" data-click="41" data-label="81" data-icon="41"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="42" data-label="82" data-icon="42"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="43" data-label="83" data-icon="43"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="44" data-label="84" data-icon="44"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="45" data-label="85" data-icon="45"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="46" data-label="86" data-icon="46"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="47" data-label="87" data-icon="47"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="48" data-label="88" data-icon="48"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="49" data-label="89" data-icon="49"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="50" data-label="90" data-icon="50"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="51" data-label="91" data-icon="51"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="52" data-label="92" data-icon="52"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="53" data-label="93" data-icon="53"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="54" data-label="94" data-icon="54"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="55" data-label="95" data-icon="55"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="56" data-label="96" data-icon="56"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="57" data-label="97" data-icon="57"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="58" data-label="98" data-icon="58"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="59" data-label="99" data-icon="59"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="60" data-label="100" data-icon="60"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="61" data-label="101" data-icon="61"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="62" data-label="102" data-icon="62"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="63" data-label="103" data-icon="63"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+          <div class="av-source-btn" data-click="64" data-label="104" data-icon="64"><i class="av-source-icon fas fa-tv"></i><span class="av-source-label"></span></div>
+        </div>
+      </div>
+
+
+      </div><!-- /.av-content-row -->
+
+      <!-- Bottom bar: [Rooms] [source name · vol · mute · power] [Sources] -->
+      <div class="av-bottom-bar">
+        <div id="av-room-toggle" class="bar-btn"><i class="fas fa-bars"></i> Rooms</div>
+        <div class="av-controls-strip">
+          <span id="av-active-source" class="av-active-source"></span>
+          <div id="av-vol-strip" class="av-vol-strip">
+            <button id="av-vol-dn" class="av-vol-btn" data-hold="16"><i class="fas fa-minus"></i></button>
+            <span id="av-vol-pct" class="av-vol-pct">—</span>
+            <button id="av-vol-up" class="av-vol-btn" data-hold="15"><i class="fas fa-plus"></i></button>
+            <button id="av-mute-btn" class="av-vol-btn" data-click="17"><i class="fas fa-volume-mute"></i></button>
+          </div>
+          <button id="av-power-btn" class="av-power-btn" data-click="40"><i class="fas fa-power-off"></i></button>
+        </div>
+        <div id="av-source-toggle" class="bar-btn"><i class="fas fa-list"></i> Sources</div>
+      </div>
+
+    </div><!-- /#page-av -->
+
   </main>
 
   <!-- ===== Bottom Navigation (unused for now) ===== -->

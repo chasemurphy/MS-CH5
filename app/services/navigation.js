@@ -10,7 +10,8 @@
     lighting: { id: 'page-lighting', title: 'Lighting' },
     shades:   { id: 'page-shades',   title: 'Shades' },
     climate:  { id: 'page-climate',  title: 'Climate' },
-    music:    { id: 'page-music-v2', title: 'Music' }
+    music:    { id: 'page-music-v2', title: 'Music' },
+    av:       { id: 'page-av',       title: 'AV' }
   };
 
   var currentPage = 'home';
@@ -46,6 +47,14 @@
       });
     }
 
+    /* Close AV drawers when leaving that page */
+    if (currentPage === 'av') {
+      ['av-room-drawer', 'av-drawer-overlay', 'av-source-panel'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.remove('open');
+      });
+    }
+
     prev.classList.remove('active');
     next.classList.add('active');
     currentPage = name;
@@ -75,6 +84,10 @@
 
     CrComLib.subscribeState('b', '3', function (val) {
       if (val === true || val === 'true') showPage('shades');
+    });
+
+    CrComLib.subscribeState('b', '4', function (val) {
+      if (val === true || val === 'true') showPage('av');
     });
 
     CrComLib.subscribeState('b', '5', function (val) {
