@@ -1161,6 +1161,8 @@ body {
 .scene-panel {
   width: 0;
   overflow: hidden;
+  position: relative;
+  z-index: 52;
   background: var(--surface-primary);
   border-left: 0 solid var(--border-accent);
   transition: width 0.3s ease, padding 0.3s ease, border-left-width 0.3s ease;
