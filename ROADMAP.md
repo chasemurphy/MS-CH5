@@ -12,23 +12,8 @@ The PRD (`Reference/crestron-panel-prd.md`) defines what to build. This document
 | Shades                    | 2     | Done → [Progress/phase-2-shades.md]           |
 | Climate                   | 3     | Done → [Progress/phase-3-climate.md]          |
 | AV                        | 4     | Done → [Progress/phase-4-av.md]               |
-| Responsive (TSW-1080)     | 5     | **Active**                                    |
+| Responsive (TSW-1080)     | 5     | Done → [Progress/phase-5-responsive.md]       |
 | Security                  | 6     | Future / out of scope                         |
-
----
-
-## Phase 5 — Responsive Layout (TSW-1080)
-
-**Goal:** All pages correct at 1920×1200, not just phone layout.
-
-- [ ] `@media (min-width: 900px)` breakpoints in `custom.css`:
-  - Home tile grid: 2-col → 3-col
-  - Lighting load column: 110px → 130px
-  - Shade column width scaling
-  - Climate canvas sizing
-  - AV D-pad sizing
-  - Font scaling for large-format display
-- [ ] Test all pages at 1920×1200 in Chrome device emulation
 
 ---
 
