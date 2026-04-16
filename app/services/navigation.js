@@ -70,6 +70,11 @@
       homeBtn.classList.toggle('hidden', name === 'home');
     }
 
+    var setupBtn = document.getElementById('btn-setup');
+    if (setupBtn) {
+      setupBtn.classList.toggle('hidden', name !== 'home');
+    }
+
     var titleEl = document.getElementById('header-title');
     if (titleEl) {
       if (name === 'av') {

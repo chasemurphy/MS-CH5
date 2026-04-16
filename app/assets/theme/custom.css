@@ -2848,6 +2848,17 @@ html[data-theme="custom"] {
   text-align: right;
 }
 .av-vol-pill.muted > i { color: #e74c3c; }
+
+/* ===== Setup tap zone ===== */
+#btn-setup {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 60px;
+  height: var(--header-height);
+  opacity: 0;
+  z-index: 101;
+}
 .av-vol-pill.open {
   background: var(--accent);
   border-color: var(--accent);
