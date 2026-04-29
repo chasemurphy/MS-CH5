@@ -4,6 +4,18 @@
 (function () {
   'use strict';
 
+  var currentRoomName = '';
+
+  function updateShadesHeader() {
+    var page = document.getElementById('page-shades');
+    if (!page || !page.classList.contains('active')) return;
+    var titleEl = document.getElementById('header-title');
+    if (!titleEl) return;
+    titleEl.textContent = currentRoomName ? currentRoomName + ' Shades' : 'Shades';
+  }
+
+  window._shadesGetTitle = updateShadesHeader;
+
   function toggleDrawer() {
     document.getElementById('shades-room-drawer').classList.toggle('open');
     document.getElementById('shades-drawer-overlay').classList.toggle('open');
@@ -83,7 +95,7 @@
 
         CrComLib.subscribeState('n', analogJoin, function (val) {
           var pct = (val / 65535) * 100;
-          if (fillEl) fillEl.style.height = pct + '%';
+          if (fillEl) fillEl.style.height = (100 - pct) + '%';
           if (pctEl) pctEl.textContent = toPct(val);
         });
       })(cards[i]);
@@ -227,10 +239,8 @@
 
     /* Update header title with current room name from s851 */
     CrComLib.subscribeState('s', '851', function (val) {
-      var titleEl = document.getElementById('header-title');
-      if (titleEl && val) {
-        titleEl.textContent = val + ' Shades';
-      }
+      currentRoomName = val || '';
+      updateShadesHeader();
     });
 
     /* Visibility observer — recheck when DOM changes (SIMPL pushes names) */

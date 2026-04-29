@@ -109,55 +109,6 @@ body {
   min-height: 0 !important;
 }
 
-/* AV stacked title — replaces #header-title on AV page */
-#av-title {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 10px;
-  color: var(--accent);
-  letter-spacing: 0.02em;
-  overflow: hidden;
-}
-#av-title.hidden { display: none; }
-.av-title-room {
-  font-weight: 600;
-  font-size: 1.3rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-.av-title-source {
-  font-weight: 400;
-  font-size: 1rem;
-  opacity: 0.85;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-.av-title-source:empty { display: none; }
-.av-title-source::before {
-  content: '\2014';
-  margin-right: 8px;
-  opacity: 0.6;
-}
-/* Phone: stack vertically, room larger on top, source smaller below */
-@media (max-width: 899px) {
-  #av-title {
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-    line-height: 1.15;
-  }
-  .av-title-room { font-size: 1.05rem; }
-  .av-title-source { font-size: 0.72rem; opacity: 0.7; }
-  .av-title-source::before { content: none; }
-}
-
 /* Header nav button (Home / back) */
 .header-nav-btn {
   position: absolute;
@@ -877,7 +828,7 @@ body {
   position: fixed;
   inset: 0;
   background: rgba(var(--black-rgb), 0.5);
-  z-index: 50;
+  z-index: 60;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -888,6 +839,10 @@ body {
   pointer-events: auto;
 }
 
+.drawer-overlay.no-dim {
+  background: transparent;
+}
+
 /* --- Room Drawer --- */
 .room-drawer {
   position: fixed;
@@ -896,7 +851,7 @@ body {
   bottom: 0;
   width: 280px;
   background: var(--chrome-bg);
-  z-index: 51;
+  z-index: 61;
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   display: flex;
@@ -1214,7 +1169,7 @@ body {
   width: 0;
   overflow: hidden;
   position: relative;
-  z-index: 52;
+  z-index: 61;
   background: var(--surface-primary);
   border-left: 0 solid var(--border-accent);
   transition: width 0.3s ease, padding 0.3s ease, border-left-width 0.3s ease;
@@ -1291,7 +1246,7 @@ body {
   justify-content: space-between;
   padding: 0 18px;
   pointer-events: none;
-  z-index: 30;
+  z-index: 55;
 }
 .lighting-bottom-bar > * { pointer-events: auto; }
 .lighting-bottom-bar .bar-btn {
@@ -1384,6 +1339,12 @@ body {
     font-size: 1rem;
   }
 
+  .lighting-bottom-bar .bar-btn {
+    padding: 14px 28px;
+    font-size: 1.05rem;
+    gap: 10px;
+  }
+
 }
 
 /* =========================================================
@@ -1411,9 +1372,12 @@ body {
 .music-v2-room-scroll {
   flex: 1;
   display: flex;
+  gap: 12px;
+  padding: 12px;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
+  align-items: stretch;
 }
 
 .music-v2-room-scroll::-webkit-scrollbar {
@@ -1434,10 +1398,11 @@ body {
   display: none;
   flex-direction: column;
   padding: 16px 12px;
-  border-right: 1px solid rgba(var(--chrome-bg-rgb), 0.12);
+  background: var(--surface-secondary);
+  border: 1px solid rgba(var(--chrome-bg-rgb), 0.1);
+  border-radius: 12px;
   min-width: 240px;
   width: 240px;
-  height: 100%;
   flex-shrink: 0;
   overflow: hidden;
 }
@@ -1603,7 +1568,7 @@ body {
   flex: 1;
   border-radius: 4px;
   outline: none;
-  cursor: pointer;
+  pointer-events: none;
   background: linear-gradient(to top, var(--accent) var(--val, 0%), var(--surface-primary) var(--val, 0%));
   margin: 0;
 }
@@ -1709,7 +1674,7 @@ body {
   justify-content: space-between;
   padding: 0 18px;
   pointer-events: none;
-  z-index: 30;
+  z-index: 55;
 }
 .music-v2-bottom-bar > * { pointer-events: auto; }
 .music-v2-bottom-bar .bar-btn {
@@ -1759,6 +1724,12 @@ body {
   .music-v2-media-panel.open {
     width: 400px;
     padding: 24px 20px;
+  }
+
+  .music-v2-bottom-bar .bar-btn {
+    padding: 14px 28px;
+    font-size: 1.05rem;
+    gap: 10px;
   }
 }
 
@@ -1836,12 +1807,12 @@ body {
 
 .shade-position-fill {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
   background: var(--accent);
   opacity: 0.6;
-  border-radius: 0 0 5px 5px;
+  border-radius: 5px 5px 0 0;
   transition: height 0.3s ease;
 }
 
@@ -1917,7 +1888,7 @@ body {
   justify-content: space-between;
   padding: 0 18px;
   pointer-events: none;
-  z-index: 30;
+  z-index: 55;
 }
 .shades-bottom-bar > * { pointer-events: auto; }
 .shades-bottom-bar .bar-btn {
@@ -1967,6 +1938,12 @@ body {
   .shade-btn {
     padding: 10px 8px;
     font-size: 0.85rem;
+  }
+
+  .shades-bottom-bar .bar-btn {
+    padding: 14px 28px;
+    font-size: 1.05rem;
+    gap: 10px;
   }
 }
 
@@ -2214,7 +2191,7 @@ body {
   justify-content: space-between;
   padding: 0 18px;
   pointer-events: none;
-  z-index: 30;
+  z-index: 55;
 }
 .climate-bottom-bar > * { pointer-events: auto; }
 .climate-bottom-bar .bar-btn {
@@ -2288,6 +2265,12 @@ body {
 
   .climate-card-row {
     flex-direction: row;
+  }
+
+  .climate-bottom-bar .bar-btn {
+    padding: 14px 28px;
+    font-size: 1.05rem;
+    gap: 10px;
   }
 }
 
@@ -2708,8 +2691,32 @@ html[data-theme="custom"] {
   user-select: none;
 }
 .av-trackpad-lg {
-  width: 360px;
-  height: 260px;
+  width: 640px;
+  height: 380px;
+}
+
+/* Larger, more prominent edge chevrons on the AppleTV pad (hint for edge-tap-as-direction) */
+.av-trackpad-lg .av-trackpad-arrow { font-size: 2.4rem; opacity: 0.28; }
+.av-trackpad-lg .av-tp-up    { top: 18px; }
+.av-trackpad-lg .av-tp-down  { bottom: 18px; }
+.av-trackpad-lg .av-tp-left  { left: 22px; }
+.av-trackpad-lg .av-tp-right { right: 22px; }
+
+/* AppleTV-only button sizing on TSW (phone overrides below) */
+#av-sub-appletv .av-sub-layout-v { gap: 30px; }
+#av-sub-appletv .av-atv-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 640px;
+}
+#av-sub-appletv .av-atv-controls .av-atv-menu,
+#av-sub-appletv .av-atv-controls .av-atv-playpause {
+  width: 100%;
+  min-width: 0;
+  height: 96px;
+  font-size: 1.3rem;
+  border-radius: 12px;
 }
 
 /* Phone: let the trackpad shrink to fit viewport */
@@ -2720,6 +2727,15 @@ html[data-theme="custom"] {
     max-width: 360px;
     height: 240px;
   }
+  .av-trackpad-lg .av-trackpad-arrow { font-size: 0.9rem; opacity: 0.18; }
+  .av-trackpad-lg .av-tp-up    { top: 10px; }
+  .av-trackpad-lg .av-tp-down  { bottom: 10px; }
+  .av-trackpad-lg .av-tp-left  { left: 12px; }
+  .av-trackpad-lg .av-tp-right { right: 12px; }
+  #av-sub-appletv .av-sub-layout-v { gap: 10px; }
+  #av-sub-appletv .av-atv-controls { display: flex; flex-direction: column; align-items: center; gap: 10px; width: auto; }
+  #av-sub-appletv .av-atv-controls .av-atv-menu { width: auto; height: auto; font-size: inherit; border-radius: 8px; padding: 8px 14px; }
+  #av-sub-appletv .av-atv-controls .av-atv-playpause { width: 70px; height: 46px; font-size: 0.9rem; border-radius: 8px; }
 }
 
 .av-trackpad-hint {
@@ -2787,7 +2803,7 @@ html[data-theme="custom"] {
   justify-content: space-between;
   padding: 0 18px;
   pointer-events: none;
-  z-index: 30;
+  z-index: 55;
 }
 .av-bottom-bar > * { pointer-events: auto; }
 .av-bottom-bar .bar-btn {
@@ -2809,6 +2825,10 @@ html[data-theme="custom"] {
 
 /* ---- Header volume pill (tap to open drawer/rail) ---- */
 .av-vol-pill {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -2823,18 +2843,15 @@ html[data-theme="custom"] {
   font-weight: 600;
   cursor: pointer;
   flex-shrink: 0;
-  margin-left: 16px;
-  margin-right: 8px;
   touch-action: manipulation;
 }
 @media (max-width: 899px) {
   .av-vol-pill {
+    right: 10px;
     height: 34px;
     padding: 0 10px;
     gap: 6px;
     font-size: 0.8rem;
-    margin-left: 10px;
-    margin-right: 4px;
   }
   .av-vol-pill > span { font-size: 0.9rem; min-width: 28px; }
 }
@@ -3006,6 +3023,12 @@ html[data-theme="custom"] {
 }
 @media (min-width: 900px) {
   .av-vol-drawer { display: none !important; }
+
+  .av-bottom-bar .bar-btn {
+    padding: 14px 28px;
+    font-size: 1.05rem;
+    gap: 10px;
+  }
 }
 
 /* ---- Power Off row at top of Sources drawer ---- */
@@ -3092,3 +3115,182 @@ html[data-theme="custom"] {
   font-size: 0.9rem;
 }
 .av-source-btn.selected .av-source-label { color: var(--chrome-bg); }
+
+/* =========================================================
+   Theme Editor (System Page)
+   Dev-only page, not deployed in production builds.
+   ========================================================= */
+
+#page-sys-theme {
+  background: var(--chrome-bg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.te-wrap {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 0 3rem;
+}
+
+/* ---- Controls bar ---- */
+.te-controls {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--chrome-nav);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.te-preview-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.te-preview-label {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-right: 0.2rem;
+}
+
+.te-theme-btn {
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: var(--chrome-surface);
+  color: var(--text-on-dark);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s;
+}
+
+.te-theme-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--chrome-bg);
+  font-weight: 600;
+}
+
+/* ---- Section headings ---- */
+.te-section {
+  padding: 0.5rem 0;
+}
+
+.te-section-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 0.75rem 1rem 0.4rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 0.25rem;
+}
+
+/* ---- Variable rows ---- */
+.te-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.te-row:active {
+  background: rgba(255,255,255,0.03);
+}
+
+.te-label {
+  flex: 1;
+  font-size: 0.75rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--text-on-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.te-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+
+.te-picker {
+  width: 36px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: none;
+  flex-shrink: 0;
+}
+
+.te-text {
+  width: 90px;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.72rem;
+  font-family: 'Courier New', Courier, monospace;
+  background: var(--chrome-surface);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  color: var(--text-on-dark);
+  flex-shrink: 0;
+}
+
+.te-alpha-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.te-alpha {
+  width: 54px;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.72rem;
+  background: var(--chrome-surface);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  color: var(--text-on-dark);
+  flex-shrink: 0;
+}
+
+.te-row--dim .te-text {
+  width: 80px;
+}
+
+/* ---- Hidden tap zone (home page corner) ---- */
+#theme-tap-zone {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 80px;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: default;
+  z-index: 100;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---- Responsive: wider screens get more label room ---- */
+@media (min-width: 900px) {
+  .te-label { font-size: 0.8rem; }
+  .te-text  { width: 120px; }
+  .te-alpha { width: 64px; }
+}

@@ -6,12 +6,13 @@
   'use strict';
 
   var pages = {
-    home:     { id: 'page-home',     title: 'Home' },
-    lighting: { id: 'page-lighting', title: 'Lighting' },
-    shades:   { id: 'page-shades',   title: 'Shades' },
-    climate:  { id: 'page-climate',  title: 'Climate' },
-    music:    { id: 'page-music-v2', title: 'Music' },
-    av:       { id: 'page-av',       title: 'AV' }
+    home:      { id: 'page-home',      title: 'Home' },
+    lighting:  { id: 'page-lighting',  title: 'Lighting' },
+    shades:    { id: 'page-shades',    title: 'Shades' },
+    climate:   { id: 'page-climate',   title: 'Climate' },
+    music:     { id: 'page-music-v2',  title: 'Music' },
+    av:        { id: 'page-av',        title: 'AV' },
+    'sys-theme': { id: 'page-sys-theme', title: 'Theme Editor' }
   };
 
   var currentPage = 'home';
@@ -59,11 +60,9 @@
     next.classList.add('active');
     currentPage = name;
 
-    /* Show AV volume pill + stacked title only on the AV page */
+    /* Show AV volume pill only on the AV page */
     var avVol = document.getElementById('av-vol-pill');
     if (avVol) avVol.classList.toggle('hidden', name !== 'av');
-    var avTitle = document.getElementById('av-title');
-    if (avTitle) avTitle.classList.toggle('hidden', name !== 'av');
 
     var homeBtn = document.getElementById('nav-home');
     if (homeBtn) {
@@ -77,14 +76,15 @@
 
     var titleEl = document.getElementById('header-title');
     if (titleEl) {
-      if (name === 'av') {
-        /* AV uses the stacked #av-title instead — hide the plain title */
-        titleEl.classList.add('hidden');
-        if (window._avGetTitle) window._avGetTitle();  /* keeps room/source state fresh */
-      } else {
-        titleEl.classList.remove('hidden');
-        titleEl.textContent = pages[name].title;
-      }
+      titleEl.classList.remove('hidden');
+      titleEl.textContent = pages[name].title;
+      /* Let the page repaint the header with its current room name.
+         Prevents other pages' serials from clobbering the title. */
+      if (name === 'lighting' && window._lightingGetTitle) window._lightingGetTitle();
+      if (name === 'shades'   && window._shadesGetTitle)   window._shadesGetTitle();
+      if (name === 'climate'  && window._climateGetTitle)  window._climateGetTitle();
+      if (name === 'music'    && window._musicGetTitle)    window._musicGetTitle();
+      if (name === 'av'       && window._avGetTitle)       window._avGetTitle();
     }
   }
 

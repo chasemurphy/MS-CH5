@@ -25,6 +25,18 @@
 (function () {
   'use strict';
 
+  var currentRoomName = '';
+
+  function updateClimateHeader() {
+    var page = document.getElementById('page-climate');
+    if (!page || !page.classList.contains('active')) return;
+    var titleEl = document.getElementById('header-title');
+    if (!titleEl) return;
+    titleEl.textContent = currentRoomName ? currentRoomName + ' Climate' : 'Climate';
+  }
+
+  window._climateGetTitle = updateClimateHeader;
+
   /* ---- State ---- */
   var state = {
     currentTempF: null,  /* decimal °F */
@@ -397,11 +409,8 @@
 
     /* Header title override when climate page active */
     CrComLib.subscribeState('s', '961', function (val) {
-      var titleEl = document.getElementById('header-title');
-      var page = document.getElementById('page-climate');
-      if (titleEl && page && page.classList.contains('active') && val) {
-        titleEl.textContent = val + ' Climate';
-      }
+      currentRoomName = val || '';
+      updateClimateHeader();
     });
 
     /* Initial paint + redraw on resize / theme change */

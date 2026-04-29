@@ -4,6 +4,18 @@
 (function () {
   'use strict';
 
+  var currentRoomName = '';
+
+  function updateLightingHeader() {
+    var page = document.getElementById('page-lighting');
+    if (!page || !page.classList.contains('active')) return;
+    var titleEl = document.getElementById('header-title');
+    if (!titleEl) return;
+    titleEl.textContent = currentRoomName ? currentRoomName + ' Lighting' : 'Lighting';
+  }
+
+  window._lightingGetTitle = updateLightingHeader;
+
   function toggleDrawer() {
     document.getElementById('lighting-room-drawer').classList.toggle('open');
     document.getElementById('lighting-drawer-overlay').classList.toggle('open');
@@ -213,10 +225,8 @@
 
     /* Update header title with current room name from s600 */
     CrComLib.subscribeState('s', '600', function (val) {
-      var titleEl = document.getElementById('header-title');
-      if (titleEl && val) {
-        titleEl.textContent = val + ' Lighting';
-      }
+      currentRoomName = val || '';
+      updateLightingHeader();
     });
 
     /* Visibility observers */

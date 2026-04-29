@@ -27,6 +27,10 @@ let fromToList = {
   mpImages: {
     to: `${distPath}/assets/svgs/images`,
     from: `${nodeModules}@crestron/ch5-theme/output/themes/svgs/images/*`
+  },
+  projectConfig: {
+    to: `${distPath}`,
+    from: `${srcRoot}project-config.json`
   }
 };
 

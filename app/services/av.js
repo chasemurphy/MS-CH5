@@ -23,11 +23,11 @@
 
   /* ---- Icon resolution ---- */
   var SOURCE_ICON_MAP = {
-    1: 'fa-satellite-dish',
-    2: 'fa-satellite-dish',
-    3: 'fa-apple',
-    4: 'fa-film',
-    5: 'fa-compact-disc'
+    1: 'fa-tv',
+    2: 'fa-apple',
+    3: 'fa-compact-disc',
+    4: 'fa-video',
+    5: 'fa-music'
   };
 
   function iconForSource(name, analogValue) {
@@ -59,24 +59,20 @@
   /* ---- Header state ---- */
   var currentRoomName   = '';
   var currentSourceName = '';
-  var roomNamesMap      = {};   /* selectJoin string → room name */
 
   function updateAVHeader() {
-    var page    = document.getElementById('page-av');
+    var page = document.getElementById('page-av');
     if (!page || !page.classList.contains('active')) return;
-    var roomEl = document.getElementById('av-title-room');
-    var srcEl  = document.getElementById('av-title-source');
-    if (roomEl) roomEl.textContent = currentRoomName || 'AV';
-    if (srcEl)  srcEl.textContent  = currentSourceName || '';
+    var titleEl = document.getElementById('header-title');
+    if (titleEl) titleEl.textContent = currentRoomName ? currentRoomName + ' AV' : 'AV';
+    var srcLabel = document.getElementById('av-source-toggle-label');
+    if (srcLabel) srcLabel.textContent = currentSourceName || 'Sources';
   }
 
   /* Exposed so navigation.js can refresh the AV title on page switch */
   window._avGetTitle = function () {
     updateAVHeader();
-    var parts = [];
-    if (currentRoomName)   parts.push(currentRoomName);
-    if (currentSourceName) parts.push(currentSourceName);
-    return parts.length ? parts.join(' \u2014 ') : 'AV';
+    return currentRoomName ? currentRoomName + ' AV' : 'AV';
   };
 
   /* ---- Drawers ---- */
@@ -90,11 +86,15 @@
   }
   function openSourcePanel() {
     document.getElementById('av-source-panel').classList.add('open');
-    document.getElementById('av-drawer-overlay').classList.add('open');
+    var ov = document.getElementById('av-drawer-overlay');
+    ov.classList.add('open');
+    ov.classList.add('no-dim');
   }
   function closeSourcePanel() {
     document.getElementById('av-source-panel').classList.remove('open');
-    document.getElementById('av-drawer-overlay').classList.remove('open');
+    var ov = document.getElementById('av-drawer-overlay');
+    ov.classList.remove('open');
+    ov.classList.remove('no-dim');
   }
   function closeAllDrawers() {
     closeRoomDrawer();
@@ -103,6 +103,19 @@
   }
 
   /* ---- Volume panel (drawer on phone, rail on TSW) ---- */
+  var VOL_AUTOCLOSE_MS = 5000;
+  var volAutoCloseTimer = null;
+  function scheduleVolAutoClose() {
+    if (volAutoCloseTimer) clearTimeout(volAutoCloseTimer);
+    volAutoCloseTimer = setTimeout(function () {
+      volAutoCloseTimer = null;
+      closeVolPanel();
+    }, VOL_AUTOCLOSE_MS);
+  }
+  function clearVolAutoClose() {
+    if (volAutoCloseTimer) { clearTimeout(volAutoCloseTimer); volAutoCloseTimer = null; }
+  }
+
   function openVolPanel() {
     var pill   = document.getElementById('av-vol-pill');
     var drawer = document.getElementById('av-vol-drawer');
@@ -110,6 +123,7 @@
     if (pill)   pill.classList.add('open');
     if (drawer) drawer.classList.add('open');
     if (rail)   rail.classList.add('open');
+    scheduleVolAutoClose();
   }
   function closeVolPanel() {
     var pill   = document.getElementById('av-vol-pill');
@@ -118,6 +132,18 @@
     if (pill)   pill.classList.remove('open');
     if (drawer) drawer.classList.remove('open');
     if (rail)   rail.classList.remove('open');
+    clearVolAutoClose();
+  }
+
+  function initVolAutoClose() {
+    var btnIds = [
+      'av-vol-drawer-up', 'av-vol-drawer-dn', 'av-vol-drawer-mute',
+      'av-vol-rail-up',   'av-vol-rail-dn',   'av-vol-rail-mute'
+    ];
+    btnIds.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('pointerdown', scheduleVolAutoClose);
+    });
   }
   function toggleVolPanel() {
     var pill = document.getElementById('av-vol-pill');
@@ -209,10 +235,6 @@
         CrComLib.subscribeState('b', selectJoin, function (val) {
           var on = val === true || val === 'true';
           room.classList.toggle('selected', on);
-          if (on) {
-            currentRoomName = roomNamesMap[selectJoin] || '';
-            updateAVHeader();
-          }
         });
 
         /* Show/hide room based on whether name is non-empty */
@@ -220,11 +242,6 @@
           var nameEl = room.querySelector('.drawer-room-name');
           if (nameEl) nameEl.textContent = val || '';
           room.classList.toggle('visible', !!(val && val.trim()));
-          roomNamesMap[selectJoin] = val || '';
-          if (room.classList.contains('selected')) {
-            currentRoomName = val || '';
-            updateAVHeader();
-          }
         });
 
         /* Per-room active source label (secondary text) */
@@ -307,6 +324,7 @@
     for (var i = 0; i < pads.length; i++) {
       (function (pad) {
         var startX = 0, startY = 0, startT = 0, active = false;
+        var holdJoin = null, holdClass = null;
         var upJ    = pad.getAttribute('data-up');
         var downJ  = pad.getAttribute('data-down');
         var leftJ  = pad.getAttribute('data-left');
@@ -324,6 +342,15 @@
           }
         }
 
+        function releaseHold() {
+          if (holdJoin) {
+            CrComLib.publishEvent('b', holdJoin, false);
+            if (holdClass) pad.classList.remove(holdClass);
+            holdJoin = null;
+            holdClass = null;
+          }
+        }
+
         pad.addEventListener('pointerdown', function (e) {
           e.preventDefault();
           active = true;
@@ -332,6 +359,26 @@
           startT = Date.now();
           try { pad.setPointerCapture(e.pointerId); } catch (err) {}
           pad.classList.add('swiping');
+
+          /* Edge press: hold the direction join HIGH for the duration of the press */
+          var rect = pad.getBoundingClientRect();
+          var relX = e.clientX - rect.left - rect.width  / 2;
+          var relY = e.clientY - rect.top  - rect.height / 2;
+          var inCenterX = Math.abs(relX) < rect.width  * 0.25;
+          var inCenterY = Math.abs(relY) < rect.height * 0.25;
+          if (!(inCenterX && inCenterY)) {
+            if (Math.abs(relX) > Math.abs(relY)) {
+              holdJoin  = relX > 0 ? rightJ    : leftJ;
+              holdClass = relX > 0 ? 'fire-right' : 'fire-left';
+            } else {
+              holdJoin  = relY > 0 ? downJ    : upJ;
+              holdClass = relY > 0 ? 'fire-down' : 'fire-up';
+            }
+            if (holdJoin) {
+              CrComLib.publishEvent('b', holdJoin, true);
+              pad.classList.add(holdClass);
+            }
+          }
         });
 
         pad.addEventListener('pointerup', function (e) {
@@ -339,6 +386,13 @@
           active = false;
           pad.classList.remove('swiping');
 
+          /* Edge press-and-hold: release the held join and we're done */
+          if (holdJoin) {
+            releaseHold();
+            return;
+          }
+
+          /* Center-started gesture: tap → select, swipe → direction */
           var dx = e.clientX - startX;
           var dy = e.clientY - startY;
           var dt = Date.now() - startT;
@@ -358,9 +412,18 @@
         pad.addEventListener('pointercancel', function () {
           active = false;
           pad.classList.remove('swiping');
+          releaseHold();
         });
       })(pads[i]);
     }
+  }
+
+  /* ---- Active room name (drives header) ---- */
+  function initActiveRoom() {
+    CrComLib.subscribeState('s', '10', function (val) {
+      currentRoomName = val || '';
+      updateAVHeader();
+    });
   }
 
   /* ---- Active source name (drives header) ---- */
@@ -439,10 +502,12 @@
     initTrackpads();
     initRoomButtons();
     initSourceButtons();
+    initActiveRoom();
     initActiveSource();
     initVolume();
     initMute();
     initPower();
+    initVolAutoClose();
   });
 
 })();

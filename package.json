@@ -9,7 +9,8 @@
     "build:prod": "npm run clean && webpack --config webpack.prod.js",
     "build:archive": "ch5-cli archive -p msch5 -d dist/msch5 -o dist",
     "build:deploy": "echo 'Set panel IP first — see README' && exit 1",
-    "build:onestep": "npm run build:prod && npm run build:archive && npm run build:deploy"
+    "build:onestep": "npm run build:prod && npm run build:archive && npm run build:deploy",
+    "xpanel": "npm run clean && webpack --config webpack.xpanel.js && npm run build:archive"
   },
   "devDependencies": {
     "@crestron/ch5-utilities": "^0.1.52",

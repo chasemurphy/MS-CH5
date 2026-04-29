@@ -25,10 +25,6 @@
       size="regular">
     </ch5-button>
     <ch5-text id="header-title" receiveStateLabel="1"></ch5-text>
-    <div id="av-title" class="av-title hidden">
-      <span id="av-title-room" class="av-title-room"></span>
-      <span id="av-title-source" class="av-title-source"></span>
-    </div>
     <button id="av-vol-pill" class="av-vol-pill hidden" type="button" aria-label="Volume">
       <i class="fas fa-volume-up" id="av-vol-pill-icon"></i>
       <span id="av-vol-pct">—</span>
@@ -162,6 +158,8 @@
 
         </div>
       </div>
+      <!-- Hidden triple-tap zone: bottom-left corner opens Theme Editor -->
+      <button id="theme-tap-zone" aria-hidden="true" tabindex="-1"></button>
     </div>
     <!-- ===== Music Page (custom HTML, no SRL) ===== -->
     <div id="page-music-v2" class="page">
@@ -1477,9 +1475,6 @@
         <!-- AppleTV (d87) -->
         <div id="av-sub-appletv" class="av-subpage">
           <div class="av-sub-layout-v">
-            <div class="av-sub-btn-row">
-              <button class="av-btn" data-click="142">Menu</button>
-            </div>
             <div class="av-trackpad av-trackpad-lg" data-up="120" data-down="121" data-left="122" data-right="123" data-tap="124">
               <div class="av-trackpad-hint">Swipe &middot; Tap</div>
               <div class="av-trackpad-arrow av-tp-up"><i class="fas fa-chevron-up"></i></div>
@@ -1488,10 +1483,9 @@
               <div class="av-trackpad-arrow av-tp-right"><i class="fas fa-chevron-right"></i></div>
               <div class="av-trackpad-tap"><i class="fas fa-circle"></i></div>
             </div>
-            <div class="av-transport-row">
-              <button class="av-transport-btn av-transport-lg" data-click="133" title="Play/Pause"><i class="fas fa-play"></i><i class="fas fa-pause"></i></button>
-              <button class="av-transport-btn" data-click="131" title="Rew"><i class="fas fa-backward"></i></button>
-              <button class="av-transport-btn" data-click="136" title="FFWD"><i class="fas fa-forward"></i></button>
+            <div class="av-atv-controls">
+              <button class="av-transport-btn av-atv-playpause" data-click="133" title="Play/Pause"><i class="fas fa-play"></i><i class="fas fa-pause"></i></button>
+              <button class="av-btn av-atv-menu" data-click="142">Menu</button>
             </div>
           </div>
         </div>
@@ -1538,7 +1532,7 @@
       <!-- Bottom bar: floating pills left/right -->
       <div class="av-bottom-bar">
         <div id="av-room-toggle" class="bar-btn"><i class="fas fa-bars"></i> Rooms</div>
-        <div id="av-source-toggle" class="bar-btn"><i class="fas fa-list"></i> Sources</div>
+        <div id="av-source-toggle" class="bar-btn"><i class="fas fa-list"></i> <span id="av-source-toggle-label">Sources</span></div>
       </div>
 
       <!-- Volume drawer (iPhone) — drops down under header when av-vol-pill tapped -->
@@ -1570,6 +1564,24 @@
       </div>
 
     </div><!-- /#page-av -->
+
+    <!-- ===== System: Theme Editor ===== -->
+    <div id="page-sys-theme" class="page">
+      <div class="te-wrap">
+
+        <div class="te-controls">
+          <div class="te-preview-toggle">
+            <span class="te-preview-label">Preview:</span>
+            <button class="te-theme-btn active" data-t="">Default</button>
+            <button class="te-theme-btn" data-t="dark">Dark</button>
+            <button class="te-theme-btn" data-t="custom">Custom</button>
+          </div>
+        </div>
+
+        <div id="te-sections"><!-- populated by theme-editor.js --></div>
+
+      </div>
+    </div><!-- /#page-sys-theme -->
 
   </main>
 

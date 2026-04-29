@@ -6,6 +6,18 @@
 (function () {
   'use strict';
 
+  var currentRoomName = '';
+
+  function updateMusicHeader() {
+    var page = document.getElementById('page-music-v2');
+    if (!page || !page.classList.contains('active')) return;
+    var titleEl = document.getElementById('header-title');
+    if (!titleEl) return;
+    titleEl.textContent = currentRoomName || 'Music';
+  }
+
+  window._musicGetTitle = updateMusicHeader;
+
   /* ---- Media Panel Toggle ---- */
   function toggleMediaPanel() {
     var panel = document.getElementById('music-v2-media-panel');
@@ -42,73 +54,24 @@
     slider.style.setProperty('--val', pct + '%');
   }
 
-  /* ---- Init: Volume Sliders (native range inputs) ---- */
+  /* ---- Init: Volume Sliders (feedback-only, not touch settable) ---- */
   function initSliders() {
     var sliders = document.querySelectorAll('#page-music-v2 .music-v2-slider');
 
     for (var i = 0; i < sliders.length; i++) {
       (function (slider) {
         var analogJoin = slider.getAttribute('data-analog');
-        var clickJoin  = slider.getAttribute('data-click');
         var col        = slider.closest('.music-v2-room-col');
         var pctEl      = col ? col.querySelector('.music-v2-vol-pct') : null;
-        var touching = false;
-        var locked = false;
-        var throttleTimer = null;
-        var THROTTLE_MS = 100;
-        var SETTLE_MS = 500;
 
         function toPct(val) {
           return Math.round((val / 65535) * 100) + '%';
         }
 
-        function updatePct(val) {
-          if (pctEl) pctEl.textContent = toPct(val);
-        }
-
-        function sendAnalog() {
-          CrComLib.publishEvent('n', analogJoin, parseInt(slider.value, 10));
-        }
-
-        /* Throttled send during drag */
-        slider.addEventListener('input', function () {
-          updateSliderFill(slider);
-          updatePct(slider.value);
-          if (!touching) return;
-          if (!throttleTimer) {
-            sendAnalog();
-            throttleTimer = setTimeout(function () {
-              throttleTimer = null;
-            }, THROTTLE_MS);
-          }
-        });
-
-        function onTouchStart() {
-          touching = true;
-          locked = true;
-          CrComLib.publishEvent('b', clickJoin, true);
-        }
-
-        function onTouchEnd() {
-          sendAnalog();
-          touching = false;
-          throttleTimer = null;
-          CrComLib.publishEvent('b', clickJoin, false);
-          setTimeout(function () { locked = false; }, SETTLE_MS);
-        }
-
-        slider.addEventListener('mousedown', onTouchStart);
-        slider.addEventListener('mouseup', onTouchEnd);
-        slider.addEventListener('touchstart', onTouchStart);
-        slider.addEventListener('touchend', onTouchEnd);
-
-        /* Receive analog from SIMPL */
         CrComLib.subscribeState('n', analogJoin, function (val) {
-          if (!locked) {
-            slider.value = val;
-            updateSliderFill(slider);
-            updatePct(val);
-          }
+          slider.value = val;
+          updateSliderFill(slider);
+          if (pctEl) pctEl.textContent = toPct(val);
         });
 
         updateSliderFill(slider);
@@ -285,10 +248,8 @@
 
     /* Update header title with current room name from s400 */
     CrComLib.subscribeState('s', '400', function (val) {
-      var titleEl = document.getElementById('header-title');
-      if (titleEl && val) {
-        titleEl.textContent = val;
-      }
+      currentRoomName = val || '';
+      updateMusicHeader();
     });
 
     /* Visibility observers — catch text content changes from CrComLib */
