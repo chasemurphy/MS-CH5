@@ -24,6 +24,10 @@ let fromToList = {
     to: `${distPath}/assets/fonts`,
     from: `${nodeModules}@crestron/ch5-theme/output/themes/fonts/mp-font.*`
   },
+  appFonts: {
+    to: `${distPath}/assets/fonts`,
+    from: `${srcRoot}assets/fonts/*`
+  },
   mpImages: {
     to: `${distPath}/assets/svgs/images`,
     from: `${nodeModules}@crestron/ch5-theme/output/themes/svgs/images/*`

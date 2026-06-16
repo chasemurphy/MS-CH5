@@ -13,8 +13,9 @@
      Source names:            s81–s104
      Source select + fb:      d51–d74
      Source icon (analog):    a41–a64  (0 or 99 = derive from name)
-     Subpage type (SIMPL→):   d80 none | d81 DirecTV | d82 Comcast
-                               d83 DVD1 | d87 AppleTV
+     Subpage type (SIMPL→):   d80 blank | d81 DirecTV | d82 Comcast
+                               d83 DVD1 | d85 Kaleidescape | d87 AppleTV
+     Powered-off overlay:     d50 high → av-sub-poweredoff (overrides d80–d87)
      Trackpad (swipe/tap):    d120 up | d121 down | d122 left | d123 right
                                d124 tap/select
    ========================================================= */
@@ -43,12 +44,15 @@
     return 'fa-tv';
   }
 
-  /* ---- Subpage map: join → element ID ---- */
+  /* ---- Subpage map: join → element ID ----
+     Note: av-sub-poweredoff is intentionally NOT in this map. It's a separate
+     overlay state driven by d50 (room power-off feedback) — see initPower(). */
   var SUBPAGE_MAP = {
     80: 'av-sub-nocontrol',
     81: 'av-sub-sat1',
     82: 'av-sub-sat2',
     83: 'av-sub-dvd1',
+    85: 'av-sub-kaleidescape',
     87: 'av-sub-appletv'
   };
 
@@ -67,6 +71,22 @@
     if (titleEl) titleEl.textContent = currentRoomName ? currentRoomName + ' AV' : 'AV';
     var srcLabel = document.getElementById('av-source-toggle-label');
     if (srcLabel) srcLabel.textContent = currentSourceName || 'Sources';
+    updateRoomPill();
+    updateSourcePill();
+  }
+
+  /* Floating pills — show current room/source on phone, open drawers on tap */
+  function updateRoomPill() {
+    var pill = document.getElementById('av-room-pill');
+    if (!pill) return;
+    var nameEl = pill.querySelector('.room-pill-name');
+    if (nameEl) nameEl.textContent = currentRoomName || '';
+  }
+  function updateSourcePill() {
+    var pill = document.getElementById('av-source-pill');
+    if (!pill) return;
+    var nameEl = pill.querySelector('.room-pill-name');
+    if (nameEl) nameEl.textContent = currentSourceName || '';
   }
 
   /* Exposed so navigation.js can refresh the AV title on page switch */
@@ -155,24 +175,43 @@
     }
   }
 
-  /* ---- Subpage switching ---- */
+  /* ---- Subpage switching ----
+     `lastSimplJoin` tracks the most recent SUBPAGE_MAP join SIMPL pushed high,
+     so we can restore it when the room power-off overlay (d50) clears. */
+  var lastSimplJoin = 80;
+  var roomPoweredOff = false;
+
   function showSubpage(join) {
     var targetId = SUBPAGE_MAP[join];
     Object.keys(SUBPAGE_MAP).forEach(function (j) {
       var el = document.getElementById(SUBPAGE_MAP[j]);
       if (el) el.classList.remove('active');
     });
+    var off = document.getElementById('av-sub-poweredoff');
+    if (off) off.classList.remove('active');
     if (targetId) {
       var target = document.getElementById(targetId);
       if (target) target.classList.add('active');
     }
   }
 
+  function showPoweredOff() {
+    Object.keys(SUBPAGE_MAP).forEach(function (j) {
+      var el = document.getElementById(SUBPAGE_MAP[j]);
+      if (el) el.classList.remove('active');
+    });
+    var off = document.getElementById('av-sub-poweredoff');
+    if (off) off.classList.add('active');
+  }
+
   function initSubpages() {
     Object.keys(SUBPAGE_MAP).forEach(function (j) {
       (function (join) {
         CrComLib.subscribeState('b', String(join), function (val) {
-          if (val === true || val === 'true') showSubpage(join);
+          if (val === true || val === 'true') {
+            lastSimplJoin = join;
+            if (!roomPoweredOff) showSubpage(join);
+          }
         });
       })(Number(j));
     });
@@ -464,12 +503,21 @@
     });
   }
 
-  /* ---- Power (room off) feedback ---- */
+  /* ---- Power (room off) feedback ----
+     d50 high = room is OFF. We both light up the Power Off Room button and
+     swap the main area to the powered-off subpage (overrides d80–d87). When
+     d50 falls, restore whatever subpage SIMPL last pushed via SUBPAGE_MAP. */
   function initPower() {
     CrComLib.subscribeState('b', '50', function (val) {
+      var on = (val === true || val === 'true');
       var btn = document.getElementById('av-power-btn');
-      /* d40 feedback high = room is OFF */
-      if (btn) btn.classList.toggle('av-off', val === true || val === 'true');
+      if (btn) btn.classList.toggle('av-off', on);
+      roomPoweredOff = on;
+      if (on) {
+        showPoweredOff();
+      } else {
+        showSubpage(lastSimplJoin);
+      }
     });
   }
 
@@ -495,6 +543,19 @@
       toggleVolPanel();
     });
     if (overlay) overlay.addEventListener('click', closeAllDrawers);
+
+    var roomPill   = document.getElementById('av-room-pill');
+    var sourcePill = document.getElementById('av-source-pill');
+    if (roomPill) roomPill.addEventListener('click', function () {
+      closeSourcePanel();
+      closeVolPanel();
+      openRoomDrawer();
+    });
+    if (sourcePill) sourcePill.addEventListener('click', function () {
+      closeRoomDrawer();
+      closeVolPanel();
+      openSourcePanel();
+    });
 
     initSubpages();
     initPulseButtons();

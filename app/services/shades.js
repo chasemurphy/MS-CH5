@@ -1,17 +1,27 @@
 /* =========================================================
-   Shades Page — Drawer, Position Indicators, Hold Controls
+   Shades Page — Drawer, Window Visual, Hold Controls, Counts
    ========================================================= */
 (function () {
   'use strict';
 
   var currentRoomName = '';
+  var currentRoomCount = 0;
 
   function updateShadesHeader() {
     var page = document.getElementById('page-shades');
     if (!page || !page.classList.contains('active')) return;
     var titleEl = document.getElementById('header-title');
-    if (!titleEl) return;
-    titleEl.textContent = currentRoomName ? currentRoomName + ' Shades' : 'Shades';
+    if (titleEl) {
+      titleEl.textContent = currentRoomName ? currentRoomName + ' Shades' : 'Shades';
+    }
+    updateRoomPill();
+  }
+
+  function updateRoomPill() {
+    var pill = document.getElementById('shades-room-pill');
+    if (!pill) return;
+    var nameEl = pill.querySelector('.room-pill-name');
+    if (nameEl) nameEl.textContent = currentRoomName || '';
   }
 
   window._shadesGetTitle = updateShadesHeader;
@@ -81,22 +91,31 @@
     }
   }
 
-  /* Subscribe to analog position joins — update fill bars and % readouts */
+  /* Subscribe to analog position joins — drive the new window/fabric visual.
+     SIMPL convention: 0% = fully closed (window covered), 100% = fully open.
+     Fabric coverage in the visual is therefore (100 - pct). */
   function initPositionBars() {
     var cards = document.querySelectorAll('#page-shades .shade-card');
 
     for (var i = 0; i < cards.length; i++) {
       (function (card) {
-        var fillEl = card.querySelector('.shade-position-fill');
-        var pctEl = card.querySelector('.shade-pct');
-        var analogJoin = fillEl ? fillEl.getAttribute('data-analog') : null;
+        var fabric = card.querySelector('.shade-fabric');
+        var rail   = card.querySelector('.shade-rail');
+        var pctEl  = card.querySelector('.shade-pct');
+        var analogJoin = fabric ? fabric.getAttribute('data-analog') : null;
 
         if (!analogJoin) return;
 
         CrComLib.subscribeState('n', analogJoin, function (val) {
-          var pct = (val / 65535) * 100;
-          if (fillEl) fillEl.style.height = (100 - pct) + '%';
-          if (pctEl) pctEl.textContent = toPct(val);
+          var pct = (val / 65535) * 100;          /* open % (SIMPL) */
+          var coverage = 100 - pct;                /* fabric % (visual) */
+          if (fabric) fabric.style.height = coverage + '%';
+          if (rail)   rail.style.top = coverage + '%';
+          if (pctEl)  pctEl.textContent = toPct(val);
+          /* Active state when shade is at least partially deployed */
+          card.classList.toggle('shade-active', pct < 100);
+          /* Rail glow only when partially deployed (hide at full open & full close) */
+          card.classList.toggle('shade-rail-on', pct > 0 && pct < 100);
         });
       })(cards[i]);
     }
@@ -118,7 +137,7 @@
     }
   }
 
-  /* Wire up room drawer buttons (same pattern as lighting.js) */
+  /* Wire up room drawer buttons (mirrors lighting.js — count badge + selection) */
   function initRoomButtons() {
     var rooms = document.querySelectorAll('#shades-room-list .drawer-room');
 
@@ -128,6 +147,16 @@
         var showJoin   = room.getAttribute('data-show');
         var shadesJoin = room.getAttribute('data-shades');
         var labelJoin  = room.getAttribute('data-label');
+        var countJoin  = room.getAttribute('data-count');
+
+        /* Insert count badge once (right side of row) */
+        var countEl = room.querySelector('.drawer-room-count');
+        if (!countEl) {
+          countEl = document.createElement('span');
+          countEl.className = 'drawer-room-count';
+          countEl.textContent = '';
+          room.appendChild(countEl);
+        }
 
         /* Click → pulse digital select join */
         room.addEventListener('click', function () {
@@ -136,9 +165,14 @@
           setTimeout(closeDrawer, 200);
         });
 
-        /* Selected feedback */
+        /* Selected feedback — also drives header subtitle for currently-selected room */
         CrComLib.subscribeState('b', selectJoin, function (val) {
-          room.classList.toggle('selected', val === true || val === 'true');
+          var sel = (val === true || val === 'true');
+          room.classList.toggle('selected', sel);
+          if (sel) {
+            currentRoomCount = parseInt(room._shadesCount, 10) || 0;
+            updateShadesHeader();
+          }
         });
 
         /* Visible feedback */
@@ -146,7 +180,7 @@
           room.classList.toggle('visible', val === true || val === 'true');
         });
 
-        /* Shades-active indicator */
+        /* Shades-active indicator (gold dot) */
         CrComLib.subscribeState('b', shadesJoin, function (val) {
           room.classList.toggle('shades-active', val === true || val === 'true');
         });
@@ -156,6 +190,21 @@
           var nameEl = room.querySelector('.drawer-room-name');
           if (nameEl) nameEl.textContent = val;
         });
+
+        /* Active-shades count for this room (analog) — render badge + cache */
+        if (countJoin) {
+          CrComLib.subscribeState('n', countJoin, function (val) {
+            var n = parseInt(val, 10) || 0;
+            room._shadesCount = n;
+            countEl.textContent = n > 0 ? String(n) : '';
+            room.classList.toggle('has-count', n > 0);
+            /* If this room is the currently-selected one, refresh header */
+            if (room.classList.contains('selected')) {
+              currentRoomCount = n;
+              updateShadesHeader();
+            }
+          });
+        }
       })(rooms[i]);
     }
   }
@@ -170,7 +219,7 @@
     }
   }
 
-  /* Wire up scene buttons (same pattern as lighting.js) */
+  /* Wire up scene buttons */
   function initSceneButtons() {
     var btns = document.querySelectorAll('#page-shades .scene-btn');
 
@@ -219,13 +268,17 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    /* Drawer toggle */
+    /* Drawer toggle (legacy bottom-bar buttons, still wired for safety) */
     var roomToggle = document.getElementById('shades-room-toggle');
     var overlay = document.getElementById('shades-drawer-overlay');
     if (roomToggle) roomToggle.addEventListener('click', toggleDrawer);
     if (overlay) overlay.addEventListener('click', closeDrawer);
 
-    /* Scene panel toggle */
+    /* Floating room pill — opens drawer on phone */
+    var roomPill = document.getElementById('shades-room-pill');
+    if (roomPill) roomPill.addEventListener('click', toggleDrawer);
+
+    /* Scene panel toggle (legacy) */
     var sceneToggle = document.getElementById('shades-scene-toggle');
     if (sceneToggle) sceneToggle.addEventListener('click', toggleScenePanel);
 

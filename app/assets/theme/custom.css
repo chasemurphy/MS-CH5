@@ -2,38 +2,108 @@
    MSCH5 — Global Design System
    ========================================================= */
 
+/* ── Web fonts (self-hosted, matches mediasystems.com) ── */
+@font-face {
+  font-family: 'Cormorant';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/Cormorant-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/Cormorant-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/Cormorant-SemiBold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/Cormorant-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/Urbanist-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/Urbanist-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/Urbanist-SemiBold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Urbanist';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/Urbanist-Bold.woff2') format('woff2');
+}
+
 :root {
-  /* ── Surfaces ── */
-  --surface-primary:   #f0ece3;   /* body bg, panels, slider tracks, card controls */
-  --surface-secondary: #e4dfd4;   /* tile bg, card bg, source btn bg, vol btn bg */
-  --surface-pressed:   #d6d0c4;   /* pressed bg for tiles/btns, scrollbar thumb */
+  /* ── Typography ── */
+  --font-display: 'Cormorant', Georgia, 'Times New Roman', serif;
+  --font-ui:      'Urbanist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+  /* ── Surfaces (Brass & Charcoal — light values) ── */
+  --surface-primary:   #F0EDE6;                  /* page background */
+  --surface-secondary: rgba(255,255,255,0.68);   /* card / tile surface */
+  --surface-hi:        rgba(255,255,255,0.94);   /* active card surface */
+  --surface-pressed:   rgba(255,255,255,0.45);   /* pressed state */
 
   /* ── Chrome (fixed structural UI) ── */
-  --chrome-bg:         #1c1c1c;   /* header, room drawer */
-  --chrome-surface:    #2a2a2a;   /* scene btn bg, source selected bg, drawer active bg */
-  --chrome-nav:        #181818;   /* bottom nav, music/lighting bottom bars */
+  --chrome-bg:         rgba(16,14,11,0.94);      /* header bar */
+  --chrome-surface:    rgba(0,0,0,0.05);         /* scene btn bg, drawer active bg */
+  --chrome-nav:        rgba(10,9,7,0.96);        /* bottom nav */
 
-  /* ── Accent (brand/theme color) ── */
-  --accent:            #c9a84c;   /* selected states, slider fills, headings on dark bg */
-  --accent-hi:         #dbb85a;   /* lighter accent (reserved) */
-  --accent-pressed:    #a8873a;   /* pressed accent: slider thumbs, pressed borders */
+  /* ── Accent (brass) ── */
+  --accent:            #C9A35B;
+  --accent-hi:         #D6B570;
+  --accent-pressed:    #A8843A;
+  --accent-dim:        rgba(201,163,91,0.18);    /* tile borders, scene pill bg */
+  --accent-glow:       rgba(201,163,91,0.26);    /* active tile box-shadow */
+
+  /* ── Climate mode tints ── */
+  --climate-heat:      #C06020;                  /* warm orange (light) */
+  --climate-cool:      #4A80CC;                  /* cool blue (light) */
 
   /* ── Borders ── */
-  --border-accent:     rgba(201, 168, 76, 0.2);
+  --border-accent:     rgba(30,22,10,0.08);      /* hairline borders */
 
-  /* ── Muted icon/label color ── */
-  --icon-muted:        #383838;   /* icons and labels in default/off states */
+  /* ── Muted icon/label color (off-state) ── */
+  --icon-muted:        rgba(26,23,21,0.38);
 
   /* ── RGB channels (for rgba() usage) ── */
-  --chrome-bg-rgb:     28, 28, 28;
+  --chrome-bg-rgb:     16, 14, 11;
   --black-rgb:         0, 0, 0;
   --white-rgb:         255, 255, 255;
-  --accent-rgb:        201, 168, 76;
+  --accent-rgb:        201, 163, 91;
 
-  /* ── Semantic tokens ── */
-  --text:             #1c1c1c;
-  --text-on-dark:     #f0ece3;
-  --text-muted:       #666;
+  /* ── Text ── */
+  --text:             #1A1715;
+  --text-on-dark:     #F5EFE2;
+  --text-muted:       rgba(26,23,21,0.62);
+  --text-dim:         rgba(26,23,21,0.38);
   --btn-danger:       #c0392b;
   --btn-danger-press: #a93226;
   --btn-danger-text:  #fff;
@@ -59,7 +129,7 @@ html, body {
 
 body {
   background: var(--surface-primary);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-ui);
   font-weight: 400;
   color: var(--text);
   -webkit-font-smoothing: antialiased;
@@ -87,10 +157,11 @@ body {
 }
 
 #header-title {
-  font-weight: 600;
-  font-size: 1.3rem !important;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(22px, 6vw, 36px) !important;
   color: var(--accent) !important;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.005em;
   text-align: center !important;
   width: 100%;
   white-space: nowrap;
@@ -99,10 +170,11 @@ body {
 }
 
 #header-title .ch5-text {
+  font-family: var(--font-display) !important;
   color: var(--accent) !important;
   background-color: transparent !important;
-  font-size: 1.3rem !important;
-  font-weight: 600 !important;
+  font-size: clamp(22px, 6vw, 36px) !important;
+  font-weight: 700 !important;
   text-align: center !important;
   width: 100% !important;
   min-width: 0 !important;
@@ -191,168 +263,397 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: var(--nav-height);
+  height: 60px;
   background: var(--chrome-nav);
-  border-top: 1px solid var(--border-accent);
+  border-top: 1px solid var(--accent-dim);
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 32px;
+  justify-content: space-around;
   z-index: 100;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 }
 
-/* Nav ch5-button overrides */
-#bottom-nav ch5-button {
-  display: inline-block;
+#bottom-nav.hidden { display: none; }
+
+.bnav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 0 8px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.18s ease;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-ui);
 }
 
-#bottom-nav .ch5-button--default {
-  background-color: transparent;
-  border: none;
-  color: var(--text-muted);
+.bnav-item.hidden { display: none; }
+
+.bnav-icon {
+  font-size: 17px;
+  color: inherit;
+  transition: color 0.18s ease;
 }
 
-#bottom-nav .ch5-button--default .cb-btn {
-  background-color: transparent;
-  padding: 6px 12px;
-}
-
-#bottom-nav .ch5-button--default .ch5-button--icon {
-  font-size: 1.25rem;
-  color: var(--text-muted);
-}
-
-#bottom-nav .ch5-button--default .ch5-button--label {
-  font-size: 0.7rem;
+.bnav-label {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
+  color: inherit;
 }
 
-#bottom-nav .ch5-button--default.ch5-button--pressed {
-  background-color: transparent;
-  color: var(--accent-pressed);
+.bnav-item.selected {
+  color: var(--accent);
 }
-
-#bottom-nav .ch5-button--default.ch5-button--pressed .ch5-button--icon,
-#bottom-nav .ch5-button--default.ch5-button--pressed .ch5-button--label {
-  color: var(--accent-pressed);
-}
-
-#bottom-nav .ch5-button--default.ch5-button--selected {
-  background-color: transparent;
+.bnav-item.selected .bnav-icon,
+.bnav-item.selected .bnav-label {
   color: var(--accent);
 }
 
-#bottom-nav .ch5-button--default.ch5-button--selected .ch5-button--icon,
-#bottom-nav .ch5-button--default.ch5-button--selected .ch5-button--label {
-  color: var(--accent);
+.bnav-item:active { transform: scale(0.94); }
+
+/* TSW sizing */
+@media (min-width: 900px) {
+  #bottom-nav {
+    height: 72px;
+  }
+  .bnav-item { gap: 4px; padding: 0 12px; }
+  .bnav-icon { font-size: 20px; }
+  .bnav-label { font-size: 10px; }
 }
 
 /* =========================================================
-   Home Page
+   Home Page — Brass & Charcoal
    ========================================================= */
+#page-home {
+  font-family: var(--font-ui);
+  background-image:
+    radial-gradient(120% 55% at 12% 0%, rgba(201,163,91,0.09) 0%, transparent 60%);
+}
+
+html[data-theme="dark"] #page-home {
+  background-image:
+    radial-gradient(120% 55% at 12% 0%, rgba(201,163,91,0.11) 0%, transparent 60%),
+    radial-gradient(70% 40% at 88% 100%, rgba(140,80,20,0.09) 0%, transparent 50%);
+}
+
 .home-content {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  padding: 14px 14px 18px;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ── Greeting row (greeting + status pills inline on TSW, stacked on phone) ── */
+.home-greeting-row {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+/* ── Status strip ── */
+.home-status-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+.home-status-strip::-webkit-scrollbar { display: none; }
+
+.home-pill {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  min-height: 100%;
+  gap: 5px;
+  padding: 9px 16px;
+  border-radius: 99px;
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-accent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-size: 13px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.18s, border-color 0.18s, color 0.18s, transform 0.12s;
+}
+.home-pill.hidden { display: none; }
+
+.home-pill-text {
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.01em;
 }
 
-.home-title {
-  font-weight: 600;
-  font-size: 2rem;
+/* Selected (SIMPL feedback high) — brass treatment */
+.home-pill.selected {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+}
+.home-pill.selected .home-pill-text {
   color: var(--accent);
-  margin-bottom: 4px;
+  font-weight: 600;
 }
 
-.home-subtitle {
-  font-weight: 300;
-  font-size: 0.95rem;
-  color: var(--icon-muted);
-  margin-bottom: 32px;
+/* Pressed (finger down) */
+.home-pill.is-pressed {
+  transform: scale(0.96);
 }
 
-/* =========================================================
-   Tile Grid — ch5-button overrides
-   ========================================================= */
+/* ── Greeting ── */
+.home-greeting-text {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  line-height: 1.0;
+}
+
+.home-greeting-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.home-weather-sep {
+  color: var(--text-dim);
+}
+
+.home-weather {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+}
+
+.home-weather[hidden] {
+  display: none;
+}
+
+.home-weather-icon {
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.home-weather-temp {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.home-weather-cond {
+  color: var(--text-muted);
+}
+
+/* ── Tile grid (custom div tiles) ── */
 .tile-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  grid-auto-rows: 130px;
+  gap: 10px;
   width: 100%;
-  max-width: 600px;
 }
 
-/* Make ch5-button fill the grid cell */
-.tile-grid ch5-button {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* Default (unpressed) tile style */
-.tile-grid .ch5-button--default {
-  background-color: var(--surface-secondary);
-  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
-  -webkit-border-radius: 12px;
-  border-radius: 12px !important;
-  overflow: hidden;
-  color: var(--text);
-  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
-}
-
-.tile-grid .ch5-button--default .cb-btn {
-  background-color: transparent;
-  border: none;
-  -webkit-border-radius: 12px;
-  border-radius: 12px;
-  padding: 28px 16px;
+.home-tile {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 16px 14px;
+  border-radius: 18px;
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-accent);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-tile.hidden { display: none; }
+.home-tile--wide  { grid-column: span 2; }
+
+.home-tile-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.home-tile-icon {
+  font-size: 22px;
+  color: var(--text-dim);
+  transition: color 0.18s ease;
+}
+
+.home-tile-label {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.home-tile-dot {
+  margin-left: auto;
+  width: 7px;
+  height: 7px;
+  border-radius: 99px;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.home-tile-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+/* Active tile (SIMPL feedback) */
+.home-tile.is-active {
+  background: var(--surface-hi);
+  border-color: var(--accent-dim);
+  box-shadow: 0 0 0 1px var(--accent-glow), 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+html[data-theme="dark"] .home-tile.is-active {
+  box-shadow: 0 0 0 1px var(--accent-glow), 0 8px 24px rgba(0, 0, 0, 0.20);
+}
+.home-tile.is-active .home-tile-icon { color: var(--accent); }
+.home-tile.is-active .home-tile-dot  { opacity: 1; }
+
+/* Pressed tile */
+.home-tile.is-pressed {
+  transform: scale(0.97);
+  background: var(--surface-pressed);
+}
+
+/* ── Scene dock ── */
+.home-scene-dock {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.home-scene-btn {
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+  padding: 9px 4px 8px;
+  min-height: 36px;
+  border-radius: 12px;
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-accent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  text-align: center;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 }
 
-.tile-grid .ch5-button--default .ch5-button--icon {
-  font-size: 2rem;
-  color: var(--icon-muted);
-  margin-bottom: 10px;
-  display: block;
-  transition: color 0.2s ease;
+.home-scene-btn.hidden { display: none; }
+
+.home-scene-name {
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.tile-grid .ch5-button--default .ch5-button--label {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--text);
-  transition: color 0.2s ease;
-}
-
-/* Pressed state (finger down) */
-.tile-grid .ch5-button--default.ch5-button--pressed {
-  background-color: var(--surface-pressed);
-  border-color: var(--accent-pressed);
-  transform: scale(0.95);
-}
-
-.tile-grid .ch5-button--default.ch5-button--pressed .ch5-button--icon,
-.tile-grid .ch5-button--default.ch5-button--pressed .ch5-button--label {
-  color: var(--accent-pressed);
-}
-
-/* Selected/Active state (SIMPL feedback) */
-.tile-grid .ch5-button--default.ch5-button--selected {
-  background-color: var(--surface-primary);
+.home-scene-btn.is-active {
+  background: var(--accent-dim);
   border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
 }
 
-.tile-grid .ch5-button--default.ch5-button--selected .ch5-button--icon,
-.tile-grid .ch5-button--default.ch5-button--selected .ch5-button--label {
-  color: var(--accent);
+.home-scene-btn.is-pressed {
+  transform: scale(0.97);
+}
+
+/* ── TSW (≥ 900px) ── */
+@media (min-width: 900px) {
+  .home-content {
+    padding: 36px 44px 24px;
+    gap: 32px;
+  }
+  /* Greeting + pills inline on TSW: greeting left, pills right-justified */
+  .home-greeting-row {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .home-greeting { flex-shrink: 0; }
+  .home-status-strip {
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    overflow: visible;
+    padding-bottom: 0;
+    /* Align the bottom of the pill row with the greeting subtitle */
+    padding-bottom: 4px;
+  }
+  .home-pill {
+    padding: 11px 20px;
+    font-size: 14px;
+  }
+  .home-greeting-text { font-size: 48px; letter-spacing: -0.03em; line-height: 0.95; }
+  .home-greeting-sub  { font-size: 15px; margin-top: 12px; }
+
+  .tile-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 160px;
+    gap: 12px;
+  }
+  /* On TSW the design uses a uniform grid; Lighting only spans-2 on phone */
+  .home-tile--wide { grid-column: span 1; }
+  .home-tile {
+    border-radius: 20px;
+    padding: 20px 20px 16px;
+  }
+  .home-tile-icon  { font-size: 20px; }
+  .home-tile-label { font-size: 17px; }
+  .home-tile-sub   { font-size: 13px; }
+  .home-tile-dot   { width: 8px; height: 8px; }
+
+  .home-scene-dock { grid-template-columns: repeat(4, minmax(120px, 1fr)); gap: 10px; }
+  .home-scene-btn  { padding: 12px 16px; font-size: 14px; min-height: 44px; border-radius: 14px; }
+}
+
+@media (min-width: 1600px) {
+  .home-content { padding: 48px 56px 24px; gap: 40px; }
+  .home-greeting-text { font-size: 60px; }
+  .home-greeting-sub  { font-size: 17px; }
+  .tile-grid { grid-template-columns: repeat(4, 1fr); grid-auto-rows: 190px; gap: 16px; }
+  .home-tile-icon  { font-size: 24px; }
+  .home-tile-label { font-size: 20px; }
+  .home-tile-sub   { font-size: 14px; }
+  .home-scene-btn  { font-size: 15px; padding: 14px 24px; }
 }
 
 /* =========================================================
@@ -743,54 +1044,13 @@ body {
 
   #header-title,
   #header-title .ch5-text {
-    font-size: 2rem !important;
+    font-size: 48px !important;
   }
 
-  .home-content {
-    padding-top: 48px;
-  }
+  /* Home-page TSW rules live in the dedicated Home Page block above
+     (.home-content, .tile-grid, .home-tile, .home-scene-dock). */
 
-  .home-title {
-    font-size: 2.6rem;
-  }
-
-  .home-subtitle {
-    font-size: 1.1rem;
-    margin-bottom: 40px;
-  }
-
-  .tile-grid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 250px));
-    justify-content: center;
-    gap: 20px;
-    max-width: 900px;
-  }
-
-  .tile-grid .ch5-button--default .cb-btn {
-    padding: 36px 20px;
-  }
-
-  .tile-grid .ch5-button--default {
-    -webkit-border-radius: 14px;
-    border-radius: 14px !important;
-  }
-
-  .tile-grid .ch5-button--default .ch5-button--icon {
-    font-size: 2.5rem;
-    margin-bottom: 12px;
-  }
-
-  .tile-grid .ch5-button--default .ch5-button--label {
-    font-size: 1.25rem;
-  }
-
-  #bottom-nav .ch5-button--default .ch5-button--icon {
-    font-size: 1.4rem;
-  }
-
-  #bottom-nav .ch5-button--default .ch5-button--label {
-    font-size: 0.8rem;
-  }
+  /* Bottom nav TSW sizing lives in the Bottom Navigation block above. */
 
   /* Music page — larger panel */
   .room-col {
@@ -820,7 +1080,12 @@ body {
 #page-lighting {
   display: flex;
   flex-direction: column;
-  padding: 0 !important;
+  padding: 0 0 60px 0 !important; /* clear the fixed bottom nav (60px phone) */
+}
+@media (min-width: 900px) {
+  #page-lighting {
+    padding-bottom: 72px !important; /* TSW nav is 72px */
+  }
 }
 
 /* --- Room Drawer Overlay --- */
@@ -828,7 +1093,7 @@ body {
   position: fixed;
   inset: 0;
   background: rgba(var(--black-rgb), 0.5);
-  z-index: 60;
+  z-index: 69;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -843,21 +1108,30 @@ body {
   background: transparent;
 }
 
-/* --- Room Drawer --- */
+/* --- Room Drawer ---
+   Containing block is the active .page (its transform creates a new CB).
+   .page already sits below the header, so top:0 is correct here. */
 .room-drawer {
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 0;
-  width: 280px;
-  background: var(--chrome-bg);
-  z-index: 61;
+  bottom: 60px; /* sit above the bottom nav on phone */
+  width: 260px;
+  background: #F8F5EE;
+  z-index: 70; /* sits above .scene-panel (z:61) so the drawer doesn't get
+                  overlapped on phones where both are in the page flow */
   transform: translateX(-100%);
-  transition: transform 0.3s ease;
+  transition: transform 0.28s cubic-bezier(0.32, 0, 0.18, 1);
   display: flex;
   flex-direction: column;
-  border-right: 1px solid var(--border-accent);
+  border-right: 1px solid var(--accent-dim);
   overflow: hidden;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="dark"] .room-drawer {
+  background: #141210;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.40);
 }
 
 .room-drawer.open {
@@ -865,13 +1139,14 @@ body {
 }
 
 .drawer-header {
-  padding: 20px 20px 14px;
-  font-size: 0.8rem;
+  padding: 18px 18px 12px;
+  font-family: var(--font-ui);
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
-  border-bottom: 1px solid var(--border-accent);
+  border-bottom: 1px solid var(--accent-dim);
   flex-shrink: 0;
 }
 
@@ -885,13 +1160,15 @@ body {
 .drawer-room {
   display: none;
   align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
-  color: var(--text-on-dark);
-  font-size: 1.05rem;
+  gap: 10px;
+  padding: 13px 18px;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-muted);
   cursor: pointer;
   border-left: 3px solid transparent;
-  transition: all 0.2s;
+  transition: background-color 0.18s, color 0.18s, border-left-color 0.18s;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -901,32 +1178,59 @@ body {
 }
 
 .drawer-room:active {
-  background: var(--chrome-surface);
+  background: rgba(201, 163, 91, 0.05);
 }
 
 .drawer-room.selected {
   border-left-color: var(--accent);
-  color: var(--accent);
-  background: var(--chrome-surface);
+  color: var(--text);
+  background: rgba(201, 163, 91, 0.08);
+  font-weight: 600;
 }
 
 .drawer-room.selected .drawer-room-name {
   font-weight: 600;
 }
 
+/* Active room indicator dot — only on rooms with lights on */
 .drawer-room-icon {
-  font-size: 0.9rem;
-  color: var(--accent-pressed);
-  opacity: 0.5;
+  width: 7px;
+  height: 7px;
+  border-radius: 99px;
+  background: var(--accent);
+  box-shadow: 0 0 5px var(--accent);
+  font-size: 0;
+  /* Hide the FontAwesome glyph by zeroing font-size; the dot is the bg */
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.18s;
 }
 
 .drawer-room.lights-on .drawer-room-icon {
   opacity: 1;
-  color: var(--accent);
 }
 
 .drawer-room-name {
   flex: 1;
+  letter-spacing: -0.01em;
+}
+
+/* Count badge — number of loads currently on in that room (analog) */
+.drawer-room-count {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+  margin-left: 8px;
+  min-width: 22px;
+  text-align: right;
+  opacity: 0;
+  transition: opacity 0.18s;
+}
+.drawer-room.has-count .drawer-room-count {
+  opacity: 1;
 }
 
 /* --- Lighting Main Area --- */
@@ -960,18 +1264,78 @@ body {
 /* --- Load Card --- */
 .load-card {
   background: var(--surface-secondary);
-  border: 1px solid rgba(var(--chrome-bg-rgb), 0.1);
-  border-radius: 12px;
+  border: 1px solid var(--border-accent);
+  border-radius: 16px;
   padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: var(--font-ui);
 }
 
+/* Active state — JS adds .on when load-toggle is selected.
+   Also supports a pure-CSS path via :has() for the inner ch5-button selected class. */
+.load-card.on,
+.load-card:has(.load-toggle .ch5-button--selected) {
+  background: var(--surface-hi);
+  border-color: var(--accent-dim);
+  box-shadow: 0 0 0 1px var(--accent-glow), 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+html[data-theme="dark"] .load-card.on,
+html[data-theme="dark"] .load-card:has(.load-toggle .ch5-button--selected) {
+  box-shadow: 0 0 0 1px var(--accent-glow), 0 6px 20px rgba(0, 0, 0, 0.18);
+}
+
+/* Top row of the card: dial (left) | pill switch (right) */
 .card-top {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
+}
+.card-top .load-toggle { display: none !important; } /* hidden CH5 proxy */
+
+/* Pill switch (right) — sized per design */
+.load-switch {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  flex-shrink: 0;
+  width: 56px;
+  height: 32px;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, 0.12);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+html[data-theme="dark"] .load-switch {
+  background: rgba(255, 255, 255, 0.12);
+}
+.load-switch-thumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 99px;
+  background: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: left 0.18s ease;
+}
+.load-card.on .load-switch,
+.load-card:has(.load-toggle .ch5-button--selected) .load-switch {
+  background: var(--accent);
+}
+.load-card.on .load-switch-thumb,
+.load-card:has(.load-toggle .ch5-button--selected) .load-switch-thumb {
+  left: 28px;
 }
 
 /* ---- Toggle button — #page-lighting scoped for max specificity ---- */
@@ -1031,32 +1395,48 @@ body {
   color: white !important;
 }
 
-/* Load name */
+/* Load name — large, bold, left-aligned, word-wraps when long.
+   Both the name and the .card-controls share the load-card's padding, so the
+   name's content box already starts where the buttons start. We just kill any
+   extra inset that ch5-text or .ch5-text wrappers might introduce. */
 .load-name {
-  flex: 1;
-  font-size: 0.9rem;
-  font-weight: 600;
+  display: block;
+  text-align: left;
+  font-family: var(--font-ui);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
   color: var(--text) !important;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  padding: 0 !important;
+  margin: 2px 0 0 0 !important;
 }
 
 .load-name .ch5-text {
   color: var(--text) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: block;
+  white-space: normal;
 }
 
-/* Percentage — inside card-controls between Lower and Raise */
-.load-pct {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text);
-  text-align: center;
-  flex: 1 !important;
-}
-
-.load-pct ch5-jointotext-numeric {
+/* ch5-text renders an inner <span> with built-in classes that override
+   font-size, weight, and text-align. Force them, including wrapping. */
+.load-name .ch5-text--span,
+.load-name span {
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.15 !important;
+  text-align: left !important;
+  display: block !important;
   color: var(--text) !important;
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
 }
 
 /* ---- Load slider — native range input ---- */
@@ -1064,12 +1444,15 @@ body {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 8px;
-  border-radius: 4px;
+  height: 6px;
+  border-radius: 99px;
   outline: none;
   cursor: pointer;
-  background: linear-gradient(to right, var(--accent) var(--val, 0%), var(--surface-primary) var(--val, 0%));
-  margin: 4px 0;
+  background: linear-gradient(to right, var(--accent) var(--val, 0%), rgba(255,255,255,0.07) var(--val, 0%));
+  margin: 6px 0 2px;
+}
+html[data-theme="dark"] #page-lighting .load-slider {
+  background: linear-gradient(to right, var(--accent) var(--val, 0%), rgba(255,255,255,0.07) var(--val, 0%));
 }
 
 #page-lighting .load-slider::-webkit-slider-thumb {
@@ -1105,24 +1488,33 @@ body {
   height: 8px;
 }
 
-/* ---- Card controls: Lower | Pct | Raise ---- */
+/* ---- Card controls: full-width Lower | Raise (no slider, no center %) ---- */
 .card-controls {
   display: flex !important;
-  align-items: center;
-  min-height: 40px;
+  align-items: stretch;
+  gap: 6px;
+  min-height: 44px;
+  width: 100%;
 }
 
-/* Override the ch5-button wrapper at every level */
+/* Force ch5-button + every internal wrapper to fill its flex cell */
 #page-lighting .card-controls ch5-button {
   background: transparent !important;
   border: none !important;
   border-radius: 8px !important;
   overflow: hidden !important;
-  min-height: 36px !important;
-  flex: 0 0 auto !important;
-  width: auto !important;
-  display: inline-flex !important;
+  min-height: 44px !important;
+  flex: 1 1 0 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  display: flex !important;
   padding: 0 !important;
+}
+#page-lighting .card-controls ch5-button > div,
+#page-lighting .card-controls ch5-button .ch5-button {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
 }
 
 #page-lighting .card-controls ch5-button > div,
@@ -1133,25 +1525,31 @@ body {
 }
 
 #page-lighting .card-controls .cb-btn {
-  background: var(--surface-primary) !important;
-  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15) !important;
+  background: rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid var(--border-accent) !important;
   border-radius: 8px !important;
-  padding: 8px 12px !important;
-  min-height: 36px !important;
+  padding: 0 !important;
+  min-height: 44px !important;
+  width: 100% !important;
+  height: 100% !important;
+  flex: 1 1 0 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 4px !important;
 }
+html[data-theme="dark"] #page-lighting .card-controls .cb-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
 
+/* Hide the "Lower" / "Raise" text labels — buttons are icon-only per design */
 #page-lighting .card-controls .ch5-button--label {
-  font-size: 0.8rem !important;
-  color: var(--icon-muted) !important;
+  display: none !important;
 }
 
 #page-lighting .card-controls .ch5-button--icon {
-  font-size: 0.85rem !important;
-  color: var(--icon-muted) !important;
+  font-size: 14px !important;
+  color: var(--text-muted) !important;
 }
 
 #page-lighting .card-controls ch5-button[class*="pressed"] .cb-btn {
@@ -1170,29 +1568,35 @@ body {
   overflow: hidden;
   position: relative;
   z-index: 61;
-  background: var(--surface-primary);
-  border-left: 0 solid var(--border-accent);
-  transition: width 0.3s ease, padding 0.3s ease, border-left-width 0.3s ease;
+  background: rgba(0, 0, 0, 0.04);
+  border-left: 0 solid var(--accent-dim);
+  transition: width 0.28s cubic-bezier(0.32, 0, 0.18, 1), padding 0.28s, border-left-width 0.28s;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+html[data-theme="dark"] .scene-panel {
+  background: rgba(0, 0, 0, 0.28);
 }
 
 .scene-panel.open {
-  width: 260px;
+  width: 220px;
   padding: 20px 16px;
   border-left-width: 1px;
 }
 
 .scene-panel-title {
-  font-size: 0.8rem;
+  font-family: var(--font-ui);
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
   text-align: center;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--border-accent);
+  border-bottom: 1px solid var(--accent-dim);
   margin-bottom: 10px;
   white-space: nowrap;
   flex-shrink: 0;
@@ -1201,7 +1605,7 @@ body {
 .scene-panel-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   overflow-y: auto;
   flex: 1;
 }
@@ -1210,15 +1614,18 @@ body {
 .scene-btn {
   display: none;
   align-items: center;
-  background: var(--chrome-surface);
-  border: 2px solid var(--border-accent);
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border-accent);
   border-radius: 10px;
-  padding: 16px 18px;
-  color: var(--text-on-dark);
-  font-size: 1rem;
-  font-weight: 500;
+  padding: 13px 14px;
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background-color 0.18s, border-color 0.18s, color 0.18s;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -1228,12 +1635,14 @@ body {
 }
 
 .scene-btn:active {
-  background: var(--icon-muted);
+  background: var(--accent-dim);
 }
 
 .scene-btn.selected {
+  background: var(--accent-dim);
   border-color: var(--accent);
   color: var(--accent);
+  font-weight: 600;
 }
 
 /* --- Lighting Bottom Bar --- */
@@ -1244,41 +1653,49 @@ body {
   bottom: 14px;
   display: flex;
   justify-content: space-between;
-  padding: 0 18px;
+  padding: 0 16px;
   pointer-events: none;
   z-index: 55;
 }
 .lighting-bottom-bar > * { pointer-events: auto; }
 .lighting-bottom-bar .bar-btn {
-  background: var(--chrome-bg);
+  background: #1A1715;
   color: var(--accent);
-  border: 1px solid var(--border-accent);
-  border-radius: 24px;
-  padding: 10px 20px;
-  font-size: 0.9rem;
+  border: 1px solid var(--accent-dim);
+  border-radius: 99px;
+  padding: 11px 22px;
+  font-family: var(--font-ui);
+  font-size: 14px;
   font-weight: 600;
+  letter-spacing: -0.01em;
   display: flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   cursor: pointer;
   user-select: none;
 }
-.lighting-bottom-bar .bar-btn:active { background: var(--chrome-surface); }
+html[data-theme="dark"] .lighting-bottom-bar .bar-btn {
+  background: #0C0B0A;
+}
+.lighting-bottom-bar .bar-btn:active {
+  background: var(--accent-dim);
+}
 
-/* Bottom bar buttons (plain divs) */
+/* Bottom bar buttons (plain divs) — fallback shared styling */
 .bar-btn {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: var(--chrome-surface);
-  border: 1px solid var(--border-accent);
-  border-radius: 8px;
+  background: var(--surface-secondary);
+  border: 1px solid var(--accent-dim);
+  border-radius: 99px;
   padding: 10px 18px;
   color: var(--accent);
-  font-size: 0.9rem;
+  font-family: var(--font-ui);
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.5px;
+  letter-spacing: -0.01em;
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -1286,30 +1703,322 @@ body {
 }
 
 .bar-btn:active {
-  background: var(--icon-muted);
+  background: var(--accent-dim);
 }
 
 /* =========================================================
-   Lighting Page — Responsive (TSW-1080)
+   Lighting Page — New layout (Phase C, Pass 2)
+   - Phone: scenes promoted to top of page (4-col grid), floating
+     room pill at bottom-left, dual bottom bar dropped.
+   - TSW:   persistent left sidebar (drawer) + persistent right
+     scene panel; floating pill hidden.
+   ========================================================= */
+
+/* Hide the legacy dual bottom bar in all viewports */
+.lighting-bottom-bar { display: none !important; }
+
+/* Scene panel — phone layout: promote to top, render as 4-col grid,
+   no slide animation. */
+#page-lighting .scene-panel {
+  width: auto;
+  padding: 12px 14px 16px;
+  border-left: none;
+  border-bottom: 1px solid var(--border-accent);
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  display: block;
+  order: 0;
+  flex-shrink: 0;
+  transition: none;
+}
+#page-lighting .scene-panel-title {
+  display: none;
+}
+#page-lighting .scene-panel-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  overflow: visible;
+}
+#page-lighting .scene-btn.visible {
+  display: flex;
+  justify-content: center;
+  padding: 14px 6px;
+  font-size: 13px;
+  background: var(--surface-secondary);
+}
+#page-lighting .scene-btn.visible.selected {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-glow);
+}
+
+/* Lighting main becomes a column on phone so scenes sit above loads */
+#page-lighting .lighting-main {
+  flex-direction: column;
+  padding: 0;
+  gap: 0;
+}
+
+#page-lighting .lighting-load-grid {
+  order: 1;
+  padding: 12px 14px 92px; /* extra bottom padding for floating pill */
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* Load card sizing on phone — taller to fit dial + name + pct + ± row */
+#page-lighting .load-card {
+  padding: 14px;
+  border-radius: 16px;
+  gap: 8px;
+}
+#page-lighting .load-card .card-controls {
+  margin-top: 4px;
+}
+
+/* SVG dial wrapper — sized so 3-digit "100" has breathing room inside the ring */
+.load-dial-wrap {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.load-dial {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: rotate(-90deg);
+}
+.load-dial-track {
+  stroke: rgba(0, 0, 0, 0.08);
+  stroke-width: 2.5;
+}
+html[data-theme="dark"] .load-dial-track {
+  stroke: rgba(255, 255, 255, 0.10);
+}
+.load-dial-arc {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.18s ease-out, opacity 0.2s;
+}
+.load-card:not(.on) .load-dial-arc {
+  opacity: 0;
+}
+.load-card.on .load-dial-arc,
+.load-card:has(.load-toggle .ch5-button--selected) .load-dial-arc {
+  opacity: 1;
+}
+
+/* Big center number — shows level % (no suffix) when on, "Off" when off */
+.load-dial-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--text-dim);
+  pointer-events: none;
+  transition: color 0.2s, font-size 0.18s ease;
+}
+/* Slightly smaller font when reading "Off" so it doesn't crowd the ring */
+.load-card:not(.on) .load-dial-num {
+  font-size: 16px;
+  font-weight: 500;
+}
+.load-card.on .load-dial-num,
+.load-card:has(.load-toggle .ch5-button--selected) .load-dial-num {
+  color: var(--accent);
+}
+
+/* Floating room pill (phone only) — sits above the 60px bottom nav.
+   Leading hamburger glyph signals "tap to open the room list". */
+.room-pill {
+  position: absolute;
+  left: 16px;
+  bottom: 76px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 20px 11px 18px;
+  border-radius: 99px;
+  background: #1A1715;
+  border: 1px solid var(--accent-dim);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 30;
+  pointer-events: auto;
+  transition: background 0.2s, transform 0.12s;
+}
+.room-pill::before {
+  content: '\f0c9'; /* FontAwesome 5 Free — fa-bars */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+html[data-theme="dark"] .room-pill {
+  background: #0C0B0A;
+}
+.room-pill:active {
+  transform: scale(0.97);
+  background: var(--accent-dim);
+}
+.room-pill .room-pill-name:empty::before {
+  content: 'Rooms';
+  opacity: 0.5;
+}
+
+/* Mirrored pill on the right — used by AV for the Sources drawer */
+.room-pill.room-pill-right {
+  left: auto;
+  right: 16px;
+  padding: 11px 18px 11px 20px;
+  flex-direction: row-reverse;
+}
+.room-pill.room-pill-right::before {
+  content: '\f03a'; /* fa-list */
+}
+.room-pill.room-pill-right .room-pill-name:empty::before {
+  content: 'Sources';
+}
+
+/* =========================================================
+   Lighting — TSW (≥ 900px): persistent sidebars, no pill, no bar
    ========================================================= */
 @media (min-width: 900px) {
-  .room-drawer {
-    width: 300px;
+  /* Drawer becomes a persistent sidebar (no slide animation) */
+  #page-lighting .room-drawer {
+    width: 280px;
+    bottom: 72px; /* sit above TSW nav */
+    transform: none !important;
+    box-shadow: none;
+    border-right: 1px solid var(--accent-dim);
+  }
+  #page-lighting .drawer-overlay {
+    display: none !important;
   }
 
-  .lighting-load-grid {
-    gap: 14px;
+  /* Bigger drawer typography for TSW */
+  #page-lighting .drawer-header {
+    font-size: 11px;
+    padding: 22px 20px 14px;
+  }
+  #page-lighting .drawer-room {
+    font-size: 17px;
+    padding: 16px 20px;
+    gap: 12px;
+  }
+  #page-lighting .drawer-room-icon {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Make space at left for the sidebar */
+  #page-lighting .lighting-main {
+    flex-direction: row;
+    padding-left: 280px;
+    gap: 0;
+  }
+
+  /* Scene panel returns to a persistent right column */
+  #page-lighting .scene-panel {
+    width: 248px;
+    padding: 22px 18px;
+    border-left: 1px solid var(--accent-dim);
+    border-bottom: none;
+    background: rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    order: 2;
+    flex-shrink: 0;
+  }
+  html[data-theme="dark"] #page-lighting .scene-panel {
+    background: rgba(0, 0, 0, 0.28);
+  }
+  #page-lighting .scene-panel-title {
+    display: block;
+    font-size: 11px;
+    padding-bottom: 14px;
+    margin-bottom: 12px;
+  }
+  #page-lighting .scene-panel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+  }
+  #page-lighting .scene-btn.visible {
+    padding: 16px 16px;
+    font-size: 16px;
+    background: transparent;
+    justify-content: space-between;
+    text-align: left;
+  }
+  /* Indicator dot on the right — always reserves space, lights up when selected */
+  #page-lighting .scene-btn.visible::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 99px;
+    background: transparent;
+    flex-shrink: 0;
+    transition: background 0.18s ease, box-shadow 0.18s ease;
+  }
+  #page-lighting .scene-btn.visible.selected::after {
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+  }
+  #page-lighting .scene-btn-name {
+    flex: 0 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Load grid centered in middle column */
+  #page-lighting .lighting-load-grid {
+    order: 1;
+    flex: 1;
     padding: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-auto-rows: min-content;
+    gap: 12px;
   }
 
-  .scene-panel.open {
-    width: 300px;
-    padding: 24px 20px;
-  }
+  /* Floating pill is hidden on TSW (drawer is always visible) */
+  .room-pill { display: none !important; }
 
-  .load-name {
-    font-size: 1rem;
+  /* TSW load card sizing — tighter so cards don't dwarf sidebars */
+  #page-lighting .load-card {
+    padding: 12px;
+    border-radius: 16px;
+    gap: 6px;
   }
+  .load-name { font-size: 14px; }
 
   #page-lighting ch5-button.load-toggle,
   #page-lighting ch5-button.load-toggle .cb-btn {
@@ -1320,427 +2029,663 @@ body {
     max-height: 44px !important;
     min-width: 44px !important;
   }
-
   #page-lighting ch5-button.load-toggle .ch5-button--icon {
     font-size: 1.2rem !important;
   }
-
   #page-lighting .card-controls .cb-btn {
     padding: 8px 14px !important;
     min-height: 40px !important;
   }
-
   #page-lighting .card-controls .ch5-button--label {
-    font-size: 0.85rem !important;
+    font-size: 13px !important;
   }
-
-  .scene-btn {
-    padding: 16px 18px;
-    font-size: 1rem;
-  }
-
-  .lighting-bottom-bar .bar-btn {
-    padding: 14px 28px;
-    font-size: 1.05rem;
-    gap: 10px;
-  }
-
+  .load-dial { width: 52px; height: 52px; }
 }
+
 
 /* =========================================================
-   Music Page v2 — Custom HTML (no SRL)
+   Music Page — Single-active-zone audio
+   Drawer + Now Playing card + Sources grid + (TSW) Vol panel
    ========================================================= */
-
-#page-music-v2 {
+#page-music {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  position: relative;
-  padding: 0 !important;
-  overflow: hidden !important;
-}
-
-/* Main area: scrollable rooms + slide-out media panel */
-.music-v2-main {
-  flex: 1;
-  display: flex;
+  padding: 0 0 60px 0 !important; /* clear fixed bottom nav (60px phone) */
   overflow: hidden;
-  padding-bottom: 72px;
+}
+@media (min-width: 900px) {
+  #page-music {
+    padding-bottom: 72px !important; /* TSW nav */
+  }
 }
 
-/* Horizontal scroll container for room tiles */
-.music-v2-room-scroll {
-  flex: 1;
-  display: flex;
-  gap: 12px;
-  padding: 12px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  align-items: stretch;
-}
+/* Re-use shared .room-drawer / .drawer-overlay / .drawer-room visuals.
+   Music-specific tweaks below. */
 
-.music-v2-room-scroll::-webkit-scrollbar {
-  height: 6px;
-}
+/* Zone-on dot indicator (parallels lighting's .lights-on) */
+#page-music .drawer-room.zone-on .drawer-room-icon { opacity: 1; }
 
-.music-v2-room-scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.music-v2-room-scroll::-webkit-scrollbar-thumb {
-  background: var(--surface-pressed);
-  border-radius: 3px;
-}
-
-/* ---- Room Column Tile ---- */
-.music-v2-room-col {
-  display: none;
-  flex-direction: column;
-  padding: 16px 12px;
-  background: var(--surface-secondary);
-  border: 1px solid rgba(var(--chrome-bg-rgb), 0.1);
-  border-radius: 12px;
-  min-width: 240px;
-  width: 240px;
+/* Per-zone vol % badge in drawer row — matches lighting's .drawer-room-count */
+#page-music .drawer-room-vol {
   flex-shrink: 0;
-  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+  margin-left: 8px;
+  min-width: 38px;
+  text-align: right;
+  opacity: 0.85;
 }
+#page-music .drawer-room:not(.zone-on) .drawer-room-vol { opacity: 0.25; }
 
-.music-v2-room-col.visible {
-  display: flex;
-}
-
-.music-v2-room-name {
-  font-weight: 700;
-  font-size: 1.6rem;
-  color: var(--text);
-  margin-bottom: 12px;
-  text-align: center;
-  flex-shrink: 0;
-}
-
-/* Buttons left, slider right */
-.music-v2-room-body {
-  display: flex;
-  flex: 1 1 0%;
-  gap: 8px;
-  min-height: 0;
-  overflow: hidden;
-}
-
-.music-v2-room-buttons {
-  display: flex;
-  flex-direction: column;
+/* Two-line drawer row: name + active source */
+#page-music .drawer-room-info {
   flex: 1;
   min-width: 0;
-  justify-content: space-between;
-}
-
-/* ---- Source Buttons (plain divs) ---- */
-.music-v2-source-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  flex: 3;
+  gap: 2px;
+  overflow: hidden;
+}
+#page-music .drawer-room-name {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#page-music .drawer-room-source {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.85;
+}
+#page-music .drawer-room:not(.zone-on) .drawer-room-source { opacity: 0.4; font-style: italic; }
+
+/* --- Content row: main + right vol panel (TSW) --- */
+.music-content-row {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  min-height: 0;
 }
 
-.music-v2-src-btn {
-  display: none;
+.music-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  padding: 14px 14px 0;
+  gap: 12px;
+  position: relative; /* containing block for #music-media-panel */
+}
+
+/* --- Now Playing card --- */
+.music-now-playing {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
+  gap: 14px;
+  padding: 16px 16px 14px;
+  border-radius: 16px;
   background: var(--surface-secondary);
-  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
-  border-radius: 8px;
-  padding: 12px 16px;
-  color: var(--text);
-  font-size: 1.15rem;
-  font-weight: 500;
+  border: 1px solid var(--border-accent);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.18), 0 6px 18px rgba(0,0,0,0.06);
+  flex-shrink: 0;
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  transition: all 0.15s;
-  flex: 1;
-  min-height: 0;
+  transition: transform 0.1s, box-shadow 0.15s;
 }
+.music-now-playing:active {
+  transform: scale(0.99);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.28), 0 4px 12px rgba(0,0,0,0.08);
+}
+.music-now-playing.hidden { display: none; }
 
-.music-v2-src-btn.visible {
+.music-np-art {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.25), rgba(var(--accent-rgb), 0.08));
+  border: 1px solid var(--border-accent);
   display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.music-np-art-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.music-np-fallback-icon {
+  font-size: 1.25rem;
+  color: var(--accent);
 }
 
-.music-v2-src-btn:active {
-  background: var(--chrome-surface);
-  border-color: var(--accent-pressed);
-  color: var(--accent-pressed);
+.music-np-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.music-np-line {
+  display: flex;
+  align-items: baseline;
+}
+.music-np-line .music-np-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+  display: block;
+  white-space: nowrap;
+}
+.music-np-text-inner {
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform;
+}
+.music-np-text.scrolling .music-np-text-inner {
+  animation: np-scroll var(--np-scroll-dur, 8s) ease-in-out infinite alternate;
+}
+@keyframes np-scroll {
+  0%, 18%   { transform: translateX(0); }
+  82%, 100% { transform: translateX(calc(var(--np-scroll-d, 0px) * -1)); }
+}
+.music-np-title .music-np-text {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.music-np-artist .music-np-text {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+.music-np-album .music-np-text {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.music-np-station .music-np-text {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
-.music-v2-src-btn.selected {
-  background: var(--chrome-surface);
+.music-vol-arc {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+.music-vol-arc-bg {
+  fill: none;
+  stroke: rgba(var(--accent-rgb), 0.08);
+  stroke-width: 3;
+}
+.music-vol-arc-fg {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 0.18s ease;
+  filter: drop-shadow(0 0 4px rgba(var(--accent-rgb), 0.4));
+}
+.music-vol-arc.muted .music-vol-arc-fg { stroke: var(--text-muted); filter: none; }
+.music-vol-arc-num {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  fill: var(--accent);
+}
+.music-vol-arc-lbl {
+  font-size: 8px;
+  fill: rgba(var(--accent-rgb), 0.5);
+  letter-spacing: 0.06em;
+}
+
+/* --- Transport row --- */
+.music-transport-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.music-transport-row.hidden { display: none; }
+.music-transport-grp { display: flex; gap: 8px; }
+.music-transport-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-accent);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.15s, transform 0.1s;
+}
+.music-transport-btn:active { transform: scale(0.94); background: var(--surface-pressed); }
+.music-transport-btn.selected {
+  background: rgba(var(--accent-rgb), 0.18);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.26);
+}
+.music-vol-micro-grp { display: flex; gap: 6px; }
+.music-vol-micro {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-accent);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.music-vol-micro.pressed,
+.music-vol-micro:active {
+  background: var(--accent);
+  color: var(--text-on-dark, #fff);
+  border-color: var(--accent);
+}
+
+/* --- Sources --- */
+.music-sources-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: 4px 2px;
+  flex-shrink: 0;
+}
+.music-sources-grid {
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding-bottom: 80px; /* clear floating bottom pills */
+  align-content: start;
+}
+.music-sources-grid::-webkit-scrollbar { width: 6px; }
+.music-sources-grid::-webkit-scrollbar-track { background: transparent; }
+.music-sources-grid::-webkit-scrollbar-thumb { background: var(--surface-pressed); border-radius: 3px; }
+
+.music-source-btn {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-accent);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.music-source-btn.visible { display: flex; }
+.music-source-btn:active { background: var(--surface-pressed); }
+.music-source-btn.selected {
+  background: rgba(var(--accent-rgb), 0.10);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.26), 0 4px 12px rgba(0,0,0,0.05);
+}
+.music-source-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 99px;
+  background: var(--surface-pressed);
+}
+.music-source-btn.selected .music-source-dot {
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+.music-source-name {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  letter-spacing: -0.01em;
+}
+.music-source-btn.selected .music-source-name {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* --- Right Volume Panel (TSW only) --- */
+.music-vol-panel {
+  display: none; /* phone hides; revealed at >=900px */
+  flex-shrink: 0;
+  width: 320px;
+  border-left: 1px solid var(--accent-dim);
+  background: var(--surface-primary);
+  flex-direction: column;
+  overflow: hidden;
+}
+.music-vol-panel-head {
+  padding: 16px 18px 10px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  border-bottom: 1px solid var(--accent-dim);
+  flex-shrink: 0;
+}
+.music-vol-panel-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px;
+  gap: 18px;
+}
+.music-vol-big {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--font-display);
+  color: var(--accent);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.music-vol-big > span:first-child {
+  font-size: 3.2rem;
+  font-weight: 700;
+}
+.music-vol-big-unit {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+.music-vol-bar {
+  height: 8px;
+  border-radius: 99px;
+  background: var(--surface-pressed);
+  overflow: hidden;
+}
+.music-vol-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 99px;
+  background: linear-gradient(to right, rgba(var(--accent-rgb), 0.7), var(--accent));
+  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.4);
+  transition: width 0.18s ease;
+}
+.music-vol-row { display: flex; gap: 10px; }
+.music-vol-btn {
+  flex: 1;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-accent);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.music-vol-btn.pressed,
+.music-vol-btn:active {
+  background: var(--accent);
+  color: var(--text-on-dark, #fff);
+  border-color: var(--accent);
+}
+
+.music-mute-btn,
+.music-power-btn {
+  height: 52px;
+  border-radius: 12px;
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-accent);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+.music-mute-btn.muted {
+  background: rgba(220, 60, 50, 0.12);
+  border-color: rgba(220, 60, 50, 0.5);
+  color: rgb(220, 80, 70);
+}
+.music-power-btn.off {
+  background: rgba(var(--accent-rgb), 0.14);
   border-color: var(--accent);
   color: var(--accent);
 }
+.music-vol-divider { height: 1px; background: var(--border-accent); }
 
-/* ---- Off Button (per room) ---- */
-.music-v2-off-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--surface-secondary);
-  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
-  border-radius: 8px;
-  min-height: 52px;
-  margin-top: 12px;
-  color: var(--text);
-  font-size: 1.15rem;
-  font-weight: 600;
-  cursor: pointer;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  transition: all 0.15s;
-  flex-shrink: 0;
-}
-
-.music-v2-off-btn:active {
-  background: var(--surface-pressed);
-  border-color: var(--accent-pressed);
-}
-
-.music-v2-off-btn.selected {
-  background: var(--btn-danger);
-  border-color: var(--btn-danger);
-  color: var(--btn-danger-text);
-}
-
-.music-v2-off-btn.selected:active {
-  background: var(--btn-danger-press);
-}
-
-/* ---- Volume Controls (plain divs) ---- */
-.music-v2-vol-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  margin-top: 12px;
-}
-
-.music-v2-vol-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--surface-secondary);
-  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
-  border-radius: 8px;
-  min-height: 60px;
-  color: var(--icon-muted);
-  font-size: 1.6rem;
-  cursor: pointer;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  transition: all 0.15s;
-}
-
-.music-v2-vol-btn:active,
-.music-v2-vol-btn.pressed {
-  background: var(--surface-pressed);
-  border-color: var(--accent-pressed);
-  color: var(--accent-pressed);
-}
-
-/* ---- Vertical Slider (native range input) ---- */
-.music-v2-slider-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50px;
-  flex-shrink: 0;
-  align-self: stretch;
-}
-
-#page-music-v2 .music-v2-slider {
-  -webkit-appearance: none;
-  appearance: none;
-  writing-mode: vertical-lr;
-  direction: rtl;
-  width: 8px;
-  flex: 1;
-  border-radius: 4px;
-  outline: none;
-  pointer-events: none;
-  background: linear-gradient(to top, var(--accent) var(--val, 0%), var(--surface-primary) var(--val, 0%));
-  margin: 0;
-}
-
-#page-music-v2 .music-v2-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--accent-pressed);
-  border: 2px solid var(--accent);
-  cursor: pointer;
-  box-shadow: 0 1px 4px rgba(var(--black-rgb), 0.2);
-}
-
-#page-music-v2 .music-v2-slider::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--accent-pressed);
-  border: 2px solid var(--accent);
-  cursor: pointer;
-  box-shadow: 0 1px 4px rgba(var(--black-rgb), 0.2);
-}
-
-#page-music-v2 .music-v2-slider::-moz-range-progress {
-  background: var(--accent);
-  border-radius: 4px;
-  width: 8px;
-}
-
-#page-music-v2 .music-v2-slider::-moz-range-track {
-  background: var(--surface-primary);
-  border-radius: 4px;
-  width: 8px;
-}
-
-/* ---- Volume Percentage ---- */
-.music-v2-vol-pct {
-  flex-shrink: 0;
-  text-align: center;
-  color: var(--text);
-  font-size: 1rem;
-  font-weight: 600;
-  padding-top: 6px;
-  width: 100%;
-  display: block;
-}
-
-/* ---- Media Panel (right slide-out) ---- */
-.music-v2-media-panel {
-  width: 0;
-  overflow: hidden;
-  background: var(--surface-primary);
-  border-left: 0 solid var(--border-accent);
-  transition: width 0.3s ease, padding 0.3s ease, border-left-width 0.3s ease;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  max-height: 100%;
-}
-
-.music-v2-media-panel.open {
-  width: 400px;
-  padding: 20px 16px;
-  border-left-width: 1px;
-}
-
-.music-v2-media-panel-title {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--accent);
-  text-align: center;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border-accent);
-  margin-bottom: 10px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.music-v2-media-panel ch5-media-player {
-  flex: 1;
-  width: 100%;
-  display: block;
-}
-
-/* Media player sizing */
-.music-v2-media-panel .ch5-media-player {
-  width: 100% !important;
-  max-height: 100% !important;
-  overflow: hidden !important;
-}
-
-/* ---- Music v2 Bottom Bar ---- */
-.music-v2-bottom-bar {
+/* --- Bottom pills hidden globally (Now Playing tap opens Media; zones via drawer) --- */
+.music-bottom-bar { display: none !important; }
+.music-bottom-bar-legacy {
   position: absolute;
+  bottom: 12px;
   left: 0;
   right: 0;
-  bottom: 14px;
   display: flex;
   justify-content: space-between;
-  padding: 0 18px;
+  padding: 0 16px;
   pointer-events: none;
-  z-index: 55;
+  z-index: 30;
 }
-.music-v2-bottom-bar > * { pointer-events: auto; }
-.music-v2-bottom-bar .bar-btn {
-  background: var(--chrome-bg);
-  color: var(--accent);
-  border: 1px solid var(--border-accent);
-  border-radius: 24px;
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  display: flex;
+.music-bottom-bar > * { pointer-events: auto; }
+.music-bottom-bar .bar-btn {
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  padding: 11px 22px;
+  border-radius: 99px;
+  background: #1A1715;
+  border: 1px solid var(--accent-dim);
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.35);
   cursor: pointer;
-  user-select: none;
 }
-.music-v2-bottom-bar .bar-btn:active { background: var(--chrome-surface); }
+html[data-theme="dark"] .music-bottom-bar .bar-btn { background: #0C0B0A; }
+
+/* --- Room Select pill (iPhone only; drawer isn't persistent on phone) --- */
+.music-room-pill {
+  position: absolute;
+  left: 16px;
+  bottom: 76px; /* clear the 60px fixed bottom-nav + 16px gap */
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: 99px;
+  background: #1A1715;
+  border: 1px solid var(--accent-dim);
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+  -webkit-tap-highlight-color: transparent;
+}
+html[data-theme="dark"] .music-room-pill { background: #0C0B0A; }
+.music-room-pill > i { font-size: 0.78rem; }
+.music-room-pill-chev { font-size: 0.62rem !important; opacity: 0.85; }
+.music-room-pill:active { transform: translateY(1px); }
+@media (min-width: 900px) {
+  .music-room-pill { display: none; }
+  /* Right vol panel is persistent on TSW; header pill + drawer aren't needed */
+  #music-vol-pill { display: none !important; }
+  #music-vol-drawer { display: none !important; }
+}
+
+/* --- Media Player Panel: fills .music-main between drawer + vol panel --- */
+.music-media-panel {
+  position: absolute;
+  inset: 0;
+  background: var(--surface-primary);
+  z-index: 50;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+.music-media-panel.open { opacity: 1; pointer-events: auto; }
+.music-media-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--accent-dim);
+  flex-shrink: 0;
+}
+.music-media-panel-title {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+}
+.music-media-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-accent);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.music-media-close:active {
+  background: var(--surface-pressed);
+  color: var(--text);
+}
+.music-media-panel ch5-media-player,
+.music-media-panel .ch5-media-player {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+}
 
 /* =========================================================
-   Music v2 — Responsive (TSW-1080)
+   Music Page — TSW (≥ 900px)
+   Drawer becomes persistent sidebar; vol panel appears.
    ========================================================= */
 @media (min-width: 900px) {
-  .music-v2-room-col {
-    min-width: 280px;
+  #page-music .room-drawer {
     width: 280px;
-    padding: 20px 16px;
+    bottom: 72px;
+    transform: none !important;
+    box-shadow: none;
+    border-right: 1px solid var(--accent-dim);
+  }
+  #page-music .drawer-overlay { display: none !important; }
+  #page-music .drawer-header { font-size: 11px; padding: 22px 20px 14px; }
+  #page-music .drawer-room { font-size: 17px; padding: 16px 20px; gap: 12px; }
+  #page-music .drawer-room-icon { width: 8px; height: 8px; }
+
+  /* Make space at left for the sidebar */
+  .music-content-row { padding-left: 280px; }
+
+  .music-main {
+    padding: 20px 24px 0;
+    gap: 16px;
   }
 
-  .music-v2-room-name {
-    font-size: 1.8rem;
+  /* Now Playing scales up */
+  .music-now-playing { padding: 22px 22px 18px; gap: 18px; border-radius: 20px; }
+  .music-np-art { width: 80px; height: 80px; border-radius: 12px; }
+  .music-np-fallback-icon { font-size: 1.6rem; }
+  .music-np-title .music-np-text { font-size: 1.4rem; }
+  .music-np-artist .music-np-text { font-size: 1rem; }
+  .music-np-album .music-np-text { font-size: 0.88rem; }
+  .music-np-station .music-np-text { font-size: 0.82rem; }
+  /* Vol arc hides when the right vol sidebar is visible (TSW) */
+  .music-vol-arc { display: none; }
+
+  .music-transport-btn { width: 52px; height: 52px; font-size: 1.05rem; }
+  .music-transport-grp { gap: 12px; }
+  .music-vol-micro-grp { display: none; }   /* TSW uses right vol panel */
+
+  .music-sources-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding-bottom: 24px;
   }
 
-  .music-v2-src-btn {
-    font-size: 1.25rem;
-    padding: 14px 18px;
-  }
+  .music-vol-panel { display: flex; }
 
-  .music-v2-vol-btn {
-    min-height: 64px;
+  .music-bottom-bar {
+    /* Drawer is persistent; hide Zones pill, keep Media affordance */
+    bottom: 88px;
+    justify-content: flex-end;
+    padding: 0 24px;
   }
-
-  .music-v2-slider-wrap {
-    width: 56px;
-  }
-
-  .music-v2-media-panel.open {
-    width: 400px;
-    padding: 24px 20px;
-  }
-
-  .music-v2-bottom-bar .bar-btn {
-    padding: 14px 28px;
-    font-size: 1.05rem;
-    gap: 10px;
-  }
+  #music-room-toggle { display: none; }
 }
 
+/* TSW-1080 wide: 3-column source grid */
+@media (min-width: 1600px) {
+  .music-vol-panel { width: 360px; }
+  .music-sources-grid { grid-template-columns: repeat(3, 1fr); }
+  .music-vol-big > span:first-child { font-size: 3.6rem; }
+  .music-vol-bar { height: 10px; }
+}
+
+
 /* =========================================================
-   Shades Page
+   Shades Page — Brass & Charcoal (mirrors Lighting layout)
    ========================================================= */
 #page-shades {
   display: flex;
   flex-direction: column;
-  padding: 0 !important;
+  padding: 0 0 60px 0 !important; /* clear the fixed bottom nav (60px phone) */
 }
+@media (min-width: 900px) {
+  #page-shades {
+    padding-bottom: 72px !important; /* TSW nav is 72px */
+  }
+}
+
+/* Hide the legacy dual bottom bar in all viewports */
+.shades-bottom-bar { display: none !important; }
 
 /* --- Shades Main Area --- */
 .shades-main {
@@ -1748,202 +2693,402 @@ body {
   display: flex;
   overflow: hidden;
   position: relative;
-  padding: 24px 24px 72px;
 }
 
-/* --- Shade Column Grid (horizontal scroll) --- */
+/* --- Active room indicator dot (drawer) --- */
+.drawer-room.shades-active .drawer-room-icon {
+  opacity: 1;
+}
+
+/* --- Shade Card Grid --- */
 .shades-grid {
   flex: 1;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  display: flex;
-  gap: 12px;
-  padding: 12px;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 12px 14px 92px; /* extra bottom padding for floating pill */
+  align-content: start;
+  order: 1;
 }
 
-.shades-grid::-webkit-scrollbar { height: 6px; }
+.shades-grid::-webkit-scrollbar { width: 6px; }
 .shades-grid::-webkit-scrollbar-track { background: transparent; }
 .shades-grid::-webkit-scrollbar-thumb { background: var(--surface-pressed); border-radius: 3px; }
 
-/* --- Shade Card Column --- */
+/* --- Shade Card --- */
 .shade-card {
   background: var(--surface-secondary);
-  border: 1px solid rgba(var(--chrome-bg-rgb), 0.1);
-  border-radius: 12px;
-  padding: 14px;
+  border: 1px solid var(--border-accent);
+  border-radius: 14px;
+  padding: 12px 12px 11px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-width: 180px;
-  width: 180px;
-  flex-shrink: 0;
-  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  font-family: var(--font-ui);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Active state — when fabric position > 0 (set by JS) */
+.shade-card.shade-active {
+  background: var(--surface-hi);
+  border-color: var(--accent-dim);
+  box-shadow: 0 0 0 1px var(--accent-glow), 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+html[data-theme="dark"] .shade-card.shade-active {
+  box-shadow: 0 0 0 1px var(--accent-glow), 0 6px 20px rgba(0, 0, 0, 0.18);
 }
 
 .shade-name {
-  font-size: 0.9rem;
+  font-size: 15px;
   font-weight: 600;
   color: var(--text);
-  text-align: center;
+  letter-spacing: -0.01em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 100%;
+  flex-shrink: 0;
 }
 
-/* --- Position Indicator --- */
-.shade-position {
+/* --- Window visual: pane + fabric drops from top + rail edge + percent --- */
+.shade-window {
   width: 100%;
-  flex: 1;
-  min-height: 100px;
-  background: var(--surface-primary);
-  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
+  height: 120px;
   border-radius: 6px;
-  position: relative;
   overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  background: rgba(201, 163, 91, 0.07);
+  border: 1px solid rgba(30, 22, 10, 0.08);
+  transition: border-color 0.2s ease;
+}
+html[data-theme="dark"] .shade-window {
+  background: rgba(201, 163, 91, 0.07);
+  border-color: rgba(255, 235, 190, 0.09);
+}
+.shade-card.shade-active .shade-window {
+  background: rgba(201, 163, 91, 0.09);
+  border-color: rgba(201, 163, 91, 0.18);
+}
+html[data-theme="dark"] .shade-card.shade-active .shade-window {
+  background: rgba(201, 163, 91, 0.07);
+  border-color: rgba(201, 163, 91, 0.18);
 }
 
-.shade-position-fill {
+/* Two faint horizontal guide lines (venetian-style) */
+.shade-window::before,
+.shade-window::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.04);
+  z-index: 0;
+  pointer-events: none;
+}
+.shade-window::before { top: 33%; }
+.shade-window::after  { top: 66%; }
+html[data-theme="dark"] .shade-window::before,
+html[data-theme="dark"] .shade-window::after {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Fabric drops from top — height set by JS */
+.shade-fabric {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  background: var(--accent);
-  opacity: 0.6;
-  border-radius: 5px 5px 0 0;
+  height: 0%;
+  background: linear-gradient(180deg, rgba(201, 163, 91, 0.38) 0%, rgba(201, 163, 91, 0.22) 100%);
+  z-index: 1;
   transition: height 0.3s ease;
+  pointer-events: none;
+}
+html[data-theme="dark"] .shade-fabric {
+  background: linear-gradient(180deg, rgba(201, 163, 91, 0.30) 0%, rgba(201, 163, 91, 0.18) 100%);
 }
 
-.shade-card.shade-moving .shade-position-fill {
+/* Rail edge — positioned via JS top property to track fabric bottom */
+.shade-rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: rgba(201, 163, 91, 0.65);
+  box-shadow: 0 2px 8px rgba(201, 163, 91, 0.35);
+  z-index: 2;
+  opacity: 0;
+  transition: top 0.3s ease, opacity 0.18s ease;
+  pointer-events: none;
+}
+html[data-theme="dark"] .shade-rail {
+  background: rgba(201, 163, 91, 0.55);
+}
+.shade-card.shade-rail-on .shade-rail {
+  opacity: 1;
+}
+
+/* Pulse animation when shade is moving */
+.shade-card.shade-moving .shade-fabric {
   animation: shade-pulse 0.6s ease-in-out infinite;
 }
-
 @keyframes shade-pulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 0.3; }
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
 }
 
+/* Percent label inside the window */
 .shade-pct {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text);
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  right: 0;
   text-align: center;
+  z-index: 3;
+  font-family: var(--font-display, 'Inter Tight'), 'Inter Tight', system-ui;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: rgba(26, 23, 21, 0.22);
+  pointer-events: none;
+}
+html[data-theme="dark"] .shade-pct {
+  color: rgba(245, 239, 226, 0.28);
+}
+.shade-card.shade-active .shade-pct {
+  color: var(--accent);
 }
 
 /* --- Shade Buttons --- */
 .shade-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  flex-shrink: 0;
 }
 
 .shade-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  background: var(--surface-primary);
-  border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
-  border-radius: 6px;
-  padding: 8px 6px;
-  color: var(--text);
-  font-size: 0.75rem;
-  font-weight: 600;
+  gap: 5px;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-accent);
+  border-radius: 8px;
+  padding: 0 8px;
+  height: 36px;
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
+html[data-theme="dark"] .shade-btn {
+  background: rgba(255, 255, 255, 0.06);
+}
 
 .shade-btn i {
-  font-size: 0.7rem;
+  font-size: 10px;
   color: var(--icon-muted);
 }
 
 .shade-btn:active {
-  background: var(--accent);
-  color: #fff;
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent);
 }
-
 .shade-btn:active i {
-  color: #fff;
-}
-
-/* --- Shades Room Drawer (reuses .room-drawer / .drawer-overlay) --- */
-.drawer-room.shades-active .drawer-room-icon {
-  opacity: 1;
   color: var(--accent);
 }
-
-/* --- Shades Bottom Bar --- */
-.shades-bottom-bar {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 14px;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 18px;
-  pointer-events: none;
-  z-index: 55;
-}
-.shades-bottom-bar > * { pointer-events: auto; }
-.shades-bottom-bar .bar-btn {
-  background: var(--chrome-bg);
-  color: var(--accent);
-  border: 1px solid var(--border-accent);
-  border-radius: 24px;
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-  cursor: pointer;
-  user-select: none;
-}
-.shades-bottom-bar .bar-btn:active { background: var(--chrome-surface); }
 
 /* =========================================================
-   Shades Page — Responsive (TSW-1080)
+   Shades Page — Phone defaults (scene strip promoted to top)
+   ========================================================= */
+#page-shades .shades-main {
+  flex-direction: column;
+  padding: 0;
+  gap: 0;
+}
+
+#page-shades .scene-panel {
+  width: auto;
+  padding: 12px 14px 16px;
+  border-left: none;
+  border-bottom: 1px solid var(--border-accent);
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  display: block;
+  order: 0;
+  flex-shrink: 0;
+  transition: none;
+}
+#page-shades .scene-panel-title {
+  display: none;
+}
+#page-shades .scene-panel-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  overflow: visible;
+}
+#page-shades .scene-btn.visible {
+  display: flex;
+  justify-content: center;
+  padding: 14px 6px;
+  font-size: 13px;
+  background: var(--surface-secondary);
+}
+#page-shades .scene-btn.visible.selected {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-glow);
+}
+
+/* =========================================================
+   Shades Page — TSW (≥ 900px): persistent sidebars, no pill
    ========================================================= */
 @media (min-width: 900px) {
-  .shades-grid {
-    gap: 14px;
+  /* Drawer becomes a persistent left sidebar */
+  #page-shades .room-drawer {
+    width: 280px;
+    bottom: 72px;
+    transform: none !important;
+    box-shadow: none;
+    border-right: 1px solid var(--accent-dim);
+  }
+  #page-shades .drawer-overlay {
+    display: none !important;
+  }
+  #page-shades .drawer-header {
+    font-size: 11px;
+    padding: 22px 20px 14px;
+  }
+  #page-shades .drawer-room {
+    font-size: 17px;
+    padding: 16px 20px;
+    gap: 12px;
+  }
+  #page-shades .drawer-room-icon {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Make room at left for sidebar */
+  #page-shades .shades-main {
+    flex-direction: row;
+    padding-left: 280px;
+    gap: 0;
+  }
+
+  /* Scene panel returns to a persistent right column */
+  #page-shades .scene-panel {
+    width: 248px;
+    padding: 22px 18px;
+    border-left: 1px solid var(--accent-dim);
+    border-bottom: none;
+    background: rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    order: 2;
+    flex-shrink: 0;
+  }
+  html[data-theme="dark"] #page-shades .scene-panel {
+    background: rgba(0, 0, 0, 0.28);
+  }
+  #page-shades .scene-panel-title {
+    display: block;
+    font-size: 11px;
+    padding-bottom: 14px;
+    margin-bottom: 12px;
+  }
+  #page-shades .scene-panel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+  }
+  #page-shades .scene-btn.visible {
+    padding: 16px 16px;
+    font-size: 16px;
+    background: transparent;
+    justify-content: space-between;
+    text-align: left;
+  }
+  #page-shades .scene-btn.visible::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 99px;
+    background: transparent;
+    flex-shrink: 0;
+    transition: background 0.18s ease, box-shadow 0.18s ease;
+  }
+  #page-shades .scene-btn.visible.selected::after {
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+  }
+  #page-shades .scene-btn-name {
+    flex: 0 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Card grid centered in middle column */
+  #page-shades .shades-grid {
+    order: 1;
+    flex: 1;
     padding: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-auto-rows: min-content;
+    gap: 14px;
   }
 
-  .shade-card {
-    width: 220px;
-    min-width: 220px;
-    padding: 18px;
-  }
+  /* Floating pill is hidden on TSW */
+  #page-shades .room-pill { display: none !important; }
 
-  .shade-name {
-    font-size: 1rem;
-  }
-
-  .shade-position {
-    min-height: 130px;
-  }
-
-  .shade-pct {
-    font-size: 1.1rem;
-  }
-
-  .shade-btn {
-    padding: 10px 8px;
-    font-size: 0.85rem;
-  }
-
-  .shades-bottom-bar .bar-btn {
-    padding: 14px 28px;
-    font-size: 1.05rem;
+  /* TSW shade card sizing — bigger window, room for both control rows */
+  #page-shades .shade-card {
+    padding: 14px 14px 13px;
+    border-radius: 17px;
     gap: 10px;
+  }
+  #page-shades .shade-name {
+    font-size: 17px;
+  }
+  #page-shades .shade-window {
+    height: 180px;
+  }
+  #page-shades .shade-pct {
+    font-size: 15px;
+    bottom: 8px;
+  }
+  #page-shades .shade-controls {
+    gap: 6px;
+  }
+  #page-shades .shade-btn {
+    height: 40px;
+    font-size: 12px;
+  }
+  #page-shades .shade-controls-fine .shade-btn {
+    height: 36px;
+    font-size: 11px;
   }
 }
 
@@ -1971,6 +3116,15 @@ body {
   padding: 4px 16px 72px;
   gap: 12px;
   align-items: center;
+}
+
+.climate-center {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 
 /* --- Arc Dial --- */
@@ -2008,7 +3162,7 @@ body {
 }
 
 .climate-current-temp {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-display);
   font-size: 2.6rem;
   font-weight: 500;
   color: var(--text);
@@ -2017,7 +3171,7 @@ body {
 }
 
 .climate-set-temp {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-display);
   font-size: 2rem;
   font-weight: 500;
   color: var(--accent);
@@ -2087,7 +3241,7 @@ body {
   flex: 1;
   background: var(--chrome-surface);
   border: 1px solid var(--border-accent);
-  color: var(--text-on-dark);
+  color: var(--text);
   border-radius: 8px;
   padding: 12px 10px;
   font-size: 0.85rem;
@@ -2140,36 +3294,63 @@ body {
   font-size: 1.1rem;
 }
 
-/* --- Setpoint Rows --- */
-.climate-setpoint-row {
-  display: grid;
-  grid-template-columns: 1fr auto minmax(70px, auto) auto;
-  align-items: center;
-  gap: 10px;
-  padding: 4px 0;
+/* --- Setpoint Cards (Heat | Cool | Single) --- */
+.climate-setpoint-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 560px;
 }
 
-.climate-setpoint-label {
-  color: var(--text);
-  font-weight: 600;
-  font-size: 0.9rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+.climate-sp-card {
+  flex: 1;
+  min-width: 0;
 }
 
-.climate-setpoint-label i {
-  color: var(--accent);
-}
-
-.climate-setpoint-value {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.6rem;
-  font-weight: 500;
-  color: var(--text);
+.climate-sp-card .climate-card-title {
   text-align: center;
-  min-width: 60px;
 }
+.climate-sp-card.heat   .climate-card-title { color: var(--climate-heat); }
+.climate-sp-card.cool   .climate-card-title { color: var(--climate-cool); }
+.climate-sp-card.single .climate-card-title { color: var(--accent); }
+
+.climate-sp-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.climate-sp-display {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  min-width: 0;
+}
+
+.climate-sp-mini-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.climate-sp-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.climate-sp-card.heat   .climate-sp-value { color: var(--climate-heat); }
+.climate-sp-card.cool   .climate-sp-value { color: var(--climate-cool); }
+.climate-sp-card.single .climate-sp-value { color: var(--accent); }
 
 .climate-step-btn {
   flex: 0 0 auto;
@@ -2179,6 +3360,76 @@ body {
 
 .climate-step-btn i {
   font-size: 0.9rem;
+}
+
+/* --- Dial Center: Heat | Cool dual readout --- */
+.climate-dial-dual {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.climate-dial-mini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  line-height: 1;
+}
+
+.climate-dial-mini-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.climate-dial-mini.heat .climate-dial-mini-label,
+.climate-dial-mini.heat .climate-dial-mini-val { color: var(--climate-heat); }
+.climate-dial-mini.cool .climate-dial-mini-label,
+.climate-dial-mini.cool .climate-dial-mini-val { color: var(--climate-cool); }
+
+.climate-dial-mini-val {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.climate-dial-mini-sep {
+  width: 1px;
+  height: 30px;
+  background: var(--border-accent);
+}
+
+/* --- Sensors Card --- */
+.climate-sensor-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-accent);
+}
+.climate-sensor-row:last-child {
+  border-bottom: none;
+}
+.climate-sensor-row.hidden {
+  display: none;
+}
+.climate-sensor-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.climate-sensor-value {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
 }
 
 /* --- Bottom Bar --- */
@@ -2211,14 +3462,69 @@ body {
 }
 .climate-bottom-bar .bar-btn:active { background: var(--chrome-surface); }
 
-/* --- Responsive (TSW-1080) --- */
+/* --- Responsive: setpoint cards side-by-side from 700px+ --- */
+@media (min-width: 700px) {
+  .climate-setpoint-cards {
+    flex-direction: row;
+  }
+}
+
+/* --- Responsive (TSW-1080 / desktop): persistent sidebar + right controls --- */
 @media (min-width: 900px) {
+  /* Climate page becomes a row: [drawer-as-sidebar] [main]  */
+  #page-climate {
+    flex-direction: row;
+  }
+
+  /* Drawer becomes a persistent left sidebar */
+  #page-climate .room-drawer {
+    position: relative;
+    transform: none !important;
+    width: 280px;
+    height: auto;
+    box-shadow: none;
+    border-right: 1px solid var(--accent-dim);
+    flex-shrink: 0;
+  }
+  #page-climate .drawer-overlay { display: none !important; }
+  #page-climate .climate-bottom-bar { display: none !important; }
+
+  #page-climate .drawer-header {
+    font-size: 11px;
+    padding: 22px 20px 14px;
+  }
+  #page-climate .drawer-room {
+    font-size: 17px;
+    padding: 16px 20px;
+    gap: 12px;
+  }
+  #page-climate .drawer-room-icon {
+    width: 8px;
+    height: 8px;
+  }
+  #page-climate .drawer-room-name {
+    font-size: 17px;
+    font-weight: 400;
+  }
+  #page-climate .drawer-room.selected .drawer-room-name {
+    font-weight: 600;
+  }
+
+  /* Main becomes 2-column: center (dial+sp cards) | right (mode/fan/sched/sensors) */
   .climate-main {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: stretch;
     justify-content: center;
-    padding: 32px;
-    gap: 36px;
+    padding: 32px 28px 32px 28px;
+    gap: 24px;
+    overflow: hidden;
+  }
+
+  .climate-center {
+    flex: 1;
+    max-width: 720px;
+    align-self: center;
+    overflow-y: auto;
   }
 
   .climate-dial-wrap {
@@ -2231,46 +3537,73 @@ body {
   }
 
   .climate-set-temp {
-    font-size: 2.6rem;
+    font-size: 2.4rem;
   }
 
+  .climate-dial-mini-val {
+    font-size: 1.7rem;
+  }
+
+  .climate-dial-mini-sep {
+    height: 36px;
+  }
+
+  /* Right controls panel — fixed-width sidebar */
   .climate-controls {
-    max-width: 520px;
-    gap: 16px;
+    width: 320px;
+    max-width: 320px;
+    flex-shrink: 0;
+    overflow-y: auto;
+    gap: 14px;
+    padding: 4px 4px;
   }
 
   .climate-card {
-    padding: 18px 22px;
-    gap: 14px;
+    padding: 14px 16px;
+    gap: 12px;
   }
 
   .climate-btn {
-    padding: 14px 12px;
-    font-size: 0.95rem;
+    padding: 12px 10px;
+    font-size: 0.9rem;
   }
 
   .climate-mode-btn i {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
-  .climate-setpoint-value {
-    font-size: 2rem;
-    min-width: 80px;
+  .climate-sp-value {
+    font-size: 2.4rem;
   }
 
   .climate-step-btn {
-    width: 54px;
+    width: 50px;
     padding: 12px 0;
   }
 
-  .climate-card-row {
-    flex-direction: row;
+  /* Schedule: stacked rows with right-aligned dot at desktop */
+  .climate-controls .climate-card:has(> .climate-card-title:first-child + .climate-btn-row .climate-sched-btn) .climate-btn-row,
+  .climate-controls .climate-btn-row:has(> .climate-sched-btn) {
+    flex-direction: column;
+    gap: 6px;
   }
-
-  .climate-bottom-bar .bar-btn {
-    padding: 14px 28px;
-    font-size: 1.05rem;
-    gap: 10px;
+  .climate-sched-btn {
+    justify-content: space-between;
+    text-align: left;
+    padding: 12px 14px;
+  }
+  .climate-sched-btn::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: none;
+    transition: background 0.15s, box-shadow 0.15s;
+  }
+  .climate-sched-btn.active::after {
+    background: #fff;
+    box-shadow: 0 0 6px rgba(255,255,255,0.8);
   }
 }
 
@@ -2278,43 +3611,29 @@ body {
    Dark Theme — driven by SIMPL analog join
    ========================================================= */
 html[data-theme="dark"] {
-  --surface-primary:   #1a1a1a;
-  --surface-secondary: #242424;
-  --surface-pressed:   #2e2e2e;
-  --icon-muted:        #aaaaaa;
-  --chrome-nav:        #111111;
+  --surface-primary:   #0E0D0C;
+  --surface-secondary: rgba(255,245,215,0.055);
+  --surface-hi:        rgba(255,245,215,0.095);
+  --surface-pressed:   rgba(255,245,215,0.04);
 
-  --text:             #e8e8e8;
-  --text-on-dark:     #e8e8e8;
-  --text-muted:       #888;
+  --chrome-bg:         #090908;
+  --chrome-surface:    rgba(255,255,255,0.05);
+  --chrome-nav:        #070706;
+
+  --border-accent:     rgba(255,235,190,0.09);
+  --icon-muted:        rgba(245,239,226,0.33);
+
+  --text:             #F5EFE2;
+  --text-on-dark:     #F5EFE2;
+  --text-muted:       rgba(245,239,226,0.60);
+  --text-dim:         rgba(245,239,226,0.33);
+
   --btn-danger:       #e74c3c;
   --btn-danger-press: #c0392b;
-}
 
-/* =========================================================
-   Custom Theme — driven by SIMPL analog join (value 2)
-   ========================================================= */
-html[data-theme="custom"] {
-  --surface-primary:   #ffffff;
-  --surface-secondary: #c0c0c0;
-  --surface-pressed:   #606060;
-  --chrome-bg:         #000000;
-  --chrome-surface:    #111111;
-  --icon-muted:        #aaaaaa;
-  --accent:            #0061ff;
-  --accent-hi:         #74a7fe;
-  --accent-pressed:    #0056d6;
-  --chrome-nav:        #111111;
-
-  --border-accent:     rgba(0, 97, 255, 0.2);
-  --accent-rgb:        0, 97, 255;
-
-  --text:             #7a7a7a;
-  --text-on-dark:     #ebebeb;
-  --text-muted:       #888888;
-  --btn-danger:       #e74c3c;
-  --btn-danger-press: #c0392b;
-  --btn-danger-text:  #7a7a7a;
+  /* Climate mode tints — slightly brighter for dark surfaces */
+  --climate-heat:      #E08040;
+  --climate-cool:      #6FA0E6;
 }
 
 /* =========================================================
@@ -2367,7 +3686,7 @@ html[data-theme="custom"] {
   color: var(--text-muted);
 }
 .av-no-source i    { font-size: 2.8rem; }
-.av-no-source span { font-family: 'Jost', sans-serif; font-size: 1rem; letter-spacing: 0.04em; }
+.av-no-source span { font-family: var(--font-ui); font-size: 1rem; letter-spacing: 0.04em; }
 
 /* ---- 3-column subpage layout (SAT / DVD) ---- */
 .av-sub-layout {
@@ -2414,7 +3733,7 @@ html[data-theme="custom"] {
   border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
   border-radius: 8px;
   padding: 8px 10px;
-  font-family: 'Jost', sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.82rem;
   cursor: pointer;
   text-align: center;
@@ -2461,7 +3780,7 @@ html[data-theme="custom"] {
 .av-ch-btn:active { background: var(--accent); color: var(--text-on-dark); }
 
 .av-ch-label {
-  font-family: 'Jost', sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.62rem;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -2528,7 +3847,7 @@ html[data-theme="custom"] {
   border-radius: 50%;
   background: var(--accent);
   color: var(--chrome-bg);
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-display);
   font-size: 0.72rem;
   font-weight: 600;
   cursor: pointer;
@@ -2590,7 +3909,7 @@ html[data-theme="custom"] {
   background: var(--surface-secondary);
   color: var(--text);
   border: 1px solid rgba(var(--chrome-bg-rgb), 0.15);
-  font-family: 'Jost', sans-serif;
+  font-family: var(--font-ui);
   font-size: 1.05rem;
   cursor: pointer;
   display: flex;
@@ -2732,15 +4051,12 @@ html[data-theme="custom"] {
   .av-trackpad-lg .av-tp-down  { bottom: 10px; }
   .av-trackpad-lg .av-tp-left  { left: 12px; }
   .av-trackpad-lg .av-tp-right { right: 12px; }
-  #av-sub-appletv .av-sub-layout-v { gap: 10px; }
-  #av-sub-appletv .av-atv-controls { display: flex; flex-direction: column; align-items: center; gap: 10px; width: auto; }
-  #av-sub-appletv .av-atv-controls .av-atv-menu { width: auto; height: auto; font-size: inherit; border-radius: 8px; padding: 8px 14px; }
-  #av-sub-appletv .av-atv-controls .av-atv-playpause { width: 70px; height: 46px; font-size: 0.9rem; border-radius: 8px; }
+  #av-sub-appletv .av-atv-controls { width: 100%; max-width: 360px; }
 }
 
 .av-trackpad-hint {
   color: var(--text-muted);
-  font-family: 'Jost', sans-serif;
+  font-family: var(--font-ui);
   font-size: 0.85rem;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -2823,6 +4139,52 @@ html[data-theme="custom"] {
 }
 .av-bottom-bar .bar-btn:active { background: var(--chrome-surface); }
 
+/* Legacy AV bottom bar — superseded by .room-pill (left) + .room-pill-right (right) */
+.av-bottom-bar { display: none !important; }
+
+/* Source panel must sit above the drawer overlay (z:69), otherwise the overlay
+   intercepts source-button taps and closes the drawer without registering the
+   selection. Drawer is at z:70 already, so 71 here keeps drawer above panel. */
+#page-av .scene-panel { z-index: 71; }
+
+/* AV — TSW (≥ 900px): persistent room drawer (left) + persistent source
+   panel (right), pills hidden (mirrors the Music page layout). */
+@media (min-width: 900px) {
+  #page-av .room-drawer {
+    width: 280px;
+    bottom: 72px; /* sit above TSW nav */
+    transform: none !important;
+    box-shadow: none;
+    border-right: 1px solid var(--accent-dim);
+  }
+  #page-av .drawer-overlay { display: none !important; }
+  #page-av .drawer-header { font-size: 11px; padding: 22px 20px 14px; }
+  #page-av .av-drawer-room { font-size: 16px; padding: 14px 20px; gap: 12px; }
+  #page-av .av-drawer-room .drawer-room-icon { width: 8px; height: 8px; }
+
+  /* Make space at left for the persistent room sidebar; pills are hidden so
+     drop the bottom reserve too. */
+  #page-av .av-content-row {
+    padding-left: 280px;
+    padding-bottom: 0;
+  }
+
+  /* Source panel becomes a persistent right sidebar (no slide animation) */
+  #page-av .scene-panel {
+    width: 240px !important;
+    padding: 20px 16px !important;
+    border-left: 1px solid var(--accent-dim) !important;
+    background: rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+  }
+  html[data-theme="dark"] #page-av .scene-panel {
+    background: rgba(0, 0, 0, 0.28);
+  }
+
+  /* Pills hidden on TSW — drawers are always visible */
+  #page-av .room-pill { display: none !important; }
+}
+
 /* ---- Header volume pill (tap to open drawer/rail) ---- */
 .av-vol-pill {
   position: absolute;
@@ -2858,7 +4220,7 @@ html[data-theme="custom"] {
 .av-vol-pill.hidden { display: none; }
 .av-vol-pill > i { color: var(--accent); font-size: 1rem; }
 .av-vol-pill > span {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-display);
   color: var(--accent);
   font-size: 1rem;
   min-width: 34px;
@@ -2925,7 +4287,7 @@ html[data-theme="custom"] {
 .av-vol-drawer-btn:active { background: var(--accent); color: var(--chrome-bg); }
 .av-vol-drawer-btn.muted  { background: var(--accent); color: var(--chrome-bg); }
 .av-vol-drawer-pct {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-display);
   color: var(--accent);
   font-size: 1.3rem;
   min-width: 54px;
@@ -2972,7 +4334,7 @@ html[data-theme="custom"] {
 .av-vol-rail.open { transform: translateX(0); }
 .av-vol-rail-head { flex-shrink: 0; }
 .av-vol-rail-pct {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-display);
   color: var(--accent);
   font-size: 1.6rem;
 }
@@ -3110,187 +4472,9 @@ html[data-theme="custom"] {
 .av-source-btn.selected .av-source-icon { color: var(--chrome-bg); }
 
 .av-source-label {
-  font-family: 'Jost', sans-serif;
+  font-family: var(--font-ui);
   color: var(--text);
   font-size: 0.9rem;
 }
 .av-source-btn.selected .av-source-label { color: var(--chrome-bg); }
 
-/* =========================================================
-   Theme Editor (System Page)
-   Dev-only page, not deployed in production builds.
-   ========================================================= */
-
-#page-sys-theme {
-  background: var(--chrome-bg);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.te-wrap {
-  flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 0 0 3rem;
-}
-
-/* ---- Controls bar ---- */
-.te-controls {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: var(--chrome-nav);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.6rem 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-.te-preview-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.te-preview-label {
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  margin-right: 0.2rem;
-}
-
-.te-theme-btn {
-  padding: 0.3rem 0.75rem;
-  font-size: 0.8rem;
-  border-radius: 4px;
-  border: 1px solid rgba(255,255,255,0.15);
-  background: var(--chrome-surface);
-  color: var(--text-on-dark);
-  cursor: pointer;
-  font-family: inherit;
-  transition: background 0.15s, color 0.15s;
-}
-
-.te-theme-btn.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--chrome-bg);
-  font-weight: 600;
-}
-
-/* ---- Section headings ---- */
-.te-section {
-  padding: 0.5rem 0;
-}
-
-.te-section-title {
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-  padding: 0.75rem 1rem 0.4rem;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  margin-top: 0.25rem;
-}
-
-/* ---- Variable rows ---- */
-.te-row {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.45rem 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-
-.te-row:active {
-  background: rgba(255,255,255,0.03);
-}
-
-.te-label {
-  flex: 1;
-  font-size: 0.75rem;
-  font-family: 'Courier New', Courier, monospace;
-  color: var(--text-on-dark);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 0;
-}
-
-.te-swatch {
-  width: 28px;
-  height: 28px;
-  border-radius: 4px;
-  border: 1px solid rgba(255,255,255,0.2);
-  flex-shrink: 0;
-}
-
-.te-picker {
-  width: 36px;
-  height: 28px;
-  padding: 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  background: none;
-  flex-shrink: 0;
-}
-
-.te-text {
-  width: 90px;
-  padding: 0.25rem 0.4rem;
-  font-size: 0.72rem;
-  font-family: 'Courier New', Courier, monospace;
-  background: var(--chrome-surface);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 4px;
-  color: var(--text-on-dark);
-  flex-shrink: 0;
-}
-
-.te-alpha-label {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  flex-shrink: 0;
-}
-
-.te-alpha {
-  width: 54px;
-  padding: 0.25rem 0.4rem;
-  font-size: 0.72rem;
-  background: var(--chrome-surface);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 4px;
-  color: var(--text-on-dark);
-  flex-shrink: 0;
-}
-
-.te-row--dim .te-text {
-  width: 80px;
-}
-
-/* ---- Hidden tap zone (home page corner) ---- */
-#theme-tap-zone {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 80px;
-  height: 80px;
-  background: transparent;
-  border: none;
-  outline: none;
-  cursor: default;
-  z-index: 100;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* ---- Responsive: wider screens get more label room ---- */
-@media (min-width: 900px) {
-  .te-label { font-size: 0.8rem; }
-  .te-text  { width: 120px; }
-  .te-alpha { width: 64px; }
-}

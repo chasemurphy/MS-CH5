@@ -8,8 +8,7 @@
 
   var themes = [
     'light',
-    'dark',
-    'custom'
+    'dark'
   ];
 
   function applyTheme(index) {

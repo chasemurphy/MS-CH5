@@ -10,12 +10,24 @@
     lighting:  { id: 'page-lighting',  title: 'Lighting' },
     shades:    { id: 'page-shades',    title: 'Shades' },
     climate:   { id: 'page-climate',   title: 'Climate' },
-    music:     { id: 'page-music-v2',  title: 'Music' },
-    av:        { id: 'page-av',        title: 'AV' },
-    'sys-theme': { id: 'page-sys-theme', title: 'Theme Editor' }
+    music:     { id: 'page-music',     title: 'Music' },
+    av:        { id: 'page-av',        title: 'AV' }
   };
 
   var currentPage = 'home';
+
+  function updateBottomNav(name) {
+    var nav = document.getElementById('bottom-nav');
+    if (!nav) return;
+    /* Hidden on Home, visible on every subsystem page */
+    nav.classList.toggle('hidden', name === 'home');
+    /* Sync selected state */
+    var items = nav.querySelectorAll('.bnav-item');
+    for (var i = 0; i < items.length; i++) {
+      var page = items[i].getAttribute('data-page');
+      items[i].classList.toggle('selected', page === name);
+    }
+  }
 
   function showPage(name) {
     if (name === currentPage) return;
@@ -56,6 +68,14 @@
       });
     }
 
+    /* Close Music drawers when leaving that page */
+    if (currentPage === 'music') {
+      ['music-room-drawer', 'music-drawer-overlay', 'music-media-panel', 'music-vol-drawer', 'music-vol-pill'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.remove('open');
+      });
+    }
+
     prev.classList.remove('active');
     next.classList.add('active');
     currentPage = name;
@@ -63,6 +83,9 @@
     /* Show AV volume pill only on the AV page */
     var avVol = document.getElementById('av-vol-pill');
     if (avVol) avVol.classList.toggle('hidden', name !== 'av');
+    /* Show Music volume pill only on the Music page */
+    var musicVol = document.getElementById('music-vol-pill');
+    if (musicVol) musicVol.classList.toggle('hidden', name !== 'music');
 
     var homeBtn = document.getElementById('nav-home');
     if (homeBtn) {
@@ -86,12 +109,41 @@
       if (name === 'music'    && window._musicGetTitle)    window._musicGetTitle();
       if (name === 'av'       && window._avGetTitle)       window._avGetTitle();
     }
+
+    updateBottomNav(name);
   }
 
   /* Dev console helper: nav.go('music') */
   window.nav = { go: showPage };
 
   document.addEventListener('DOMContentLoaded', function () {
+    /* Wire bottom-nav items: pulse on click, sync visibility from SIMPL show join */
+    var navItems = document.querySelectorAll('#bottom-nav .bnav-item');
+    for (var i = 0; i < navItems.length; i++) {
+      (function (item) {
+        var pulseJoin = item.getAttribute('data-pulse');
+        var showJoin  = item.getAttribute('data-show');
+
+        item.addEventListener('click', function () {
+          if (!window.CrComLib || !pulseJoin) return;
+          CrComLib.publishEvent('b', pulseJoin, true);
+          setTimeout(function () {
+            CrComLib.publishEvent('b', pulseJoin, false);
+          }, 100);
+        });
+
+        if (window.CrComLib && showJoin) {
+          CrComLib.subscribeState('b', showJoin, function (val) {
+            var on = (val === true || val === 'true');
+            item.classList.toggle('hidden', !on);
+          });
+        }
+      })(navItems[i]);
+    }
+
+    /* Initial nav state */
+    updateBottomNav(currentPage);
+
     CrComLib.subscribeState('b', '1', function (val) {
       if (val === true || val === 'true') showPage('lighting');
     });

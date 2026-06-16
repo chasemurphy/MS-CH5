@@ -32,7 +32,7 @@ Only write custom JS when no CH5 attribute exists for the needed behavior.
 
 ### CrComLib
 
-- Uses `@crestron/ch5-crcomlib` v2.17.2 (UMD bundle)
+- Uses `@crestron/ch5-crcomlib` v2.17.3 (UMD bundle)
 - CH5 web components (`<ch5-button>`, etc.) are defined inside CrComLib — no separate import needed
 - `app/services/joins.js` provides a dev shim when CrComLib isn't present (browser testing)
 - Connection to processor is configured on the panel/app itself, never hardcoded in HTML/JS

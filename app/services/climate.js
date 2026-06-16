@@ -3,7 +3,8 @@
    ---------------------------------------------------------
    Join block (crosspoint-driven; SIMPL routes per room):
      Drawer:  select d901-930 | show d1641-1670 |
-              active d931-960 | label s901-930
+              active d931-960 | label s901-930  |
+              per-zone temp n931-960 (raw °F or ×10 tenths)
      Header title:      s961   (page title override)
      Thermostat name:   s962   (center of dial)
      Current temp (×10):    n961
@@ -12,6 +13,7 @@
      Setpoint min (×10):    n964
      Setpoint max (×10):    n965
      Single-Auto SP (×10):  n966
+     Humidity (raw %):      n967  (hides row when 0/empty)
      Mode (press+fb)    d961-964 : Heat / Cool / Auto / Off
      Fan  (press+fb)    d965-966 : Auto / On
      Sched (press+fb)   d967-969 : Run / Hold / Away
@@ -21,9 +23,21 @@
      Show single setpoint   d975  (← SIMPL)
      Show dual setpoint     d976  (← SIMPL)
      Single-Auto SP ±       d977 / d978
+   Outdoor temp comes from weather.js (Open-Meteo) via the
+   `weather:update` window event — no SIMPL join.
    ========================================================= */
 (function () {
   'use strict';
+
+  /* Mode-specific accent colors — pulled from CSS custom properties so the
+     dark/light themes can override them via :root and html[data-theme="dark"]. */
+  function readVar(name, fallback) {
+    var css = getComputedStyle(document.documentElement)
+      .getPropertyValue(name).trim();
+    return css || fallback;
+  }
+  function HEAT() { return readVar('--climate-heat', '#E08040'); }
+  function COOL() { return readVar('--climate-cool', '#6FA0E6'); }
 
   var currentRoomName = '';
 
@@ -33,6 +47,14 @@
     var titleEl = document.getElementById('header-title');
     if (!titleEl) return;
     titleEl.textContent = currentRoomName ? currentRoomName + ' Climate' : 'Climate';
+  }
+
+  /* Floating room pill — shows current room name on phone, opens drawer on tap */
+  function updateRoomPill() {
+    var pill = document.getElementById('climate-room-pill');
+    if (!pill) return;
+    var nameEl = pill.querySelector('.room-pill-name');
+    if (nameEl) nameEl.textContent = currentRoomName || '';
   }
 
   window._climateGetTitle = updateClimateHeader;
@@ -65,13 +87,6 @@
   }
 
   /* ---- Helpers ---- */
-  function fmtTemp(valTenths) {
-    if (valTenths === null || valTenths === undefined) return '--';
-    var n = Number(valTenths);
-    if (isNaN(n)) return '--';
-    return (n / 10).toFixed(0);
-  }
-
   function getAccentColor() {
     var css = getComputedStyle(document.documentElement)
       .getPropertyValue('--accent').trim();
@@ -81,6 +96,13 @@
     var css = getComputedStyle(document.documentElement)
       .getPropertyValue('--chrome-surface').trim();
     return css || '#2a2a2a';
+  }
+
+  /* Mode-driven primary color for dial fill / center setpoint digits */
+  function getModeColor() {
+    if (state.activeMode === 'heat') return HEAT();
+    if (state.activeMode === 'cool') return COOL();
+    return getAccentColor();
   }
 
   /* ---- Arc Dial ---- */
@@ -130,15 +152,10 @@
     ctx.arc(cx, cy, radius, DIAL_START, DIAL_START + DIAL_SWEEP);
     ctx.stroke();
 
-    /* Gold fill — arc range and setpoint dot(s) depend on mode/visibility.
-       Dual  → fill between heat and cool, dot at each end.
-       Single (auto) → fill start→singleSet, dot at singleSet.
-       Heat-only → fill start→heatSet, dot at heatSet.
-       Cool-only → fill start→coolSet, dot at coolSet. */
-    function drawDot(ang) {
+    function drawDot(ang, color) {
       var dotX = cx + Math.cos(ang) * radius;
       var dotY = cy + Math.sin(ang) * radius;
-      ctx.fillStyle = accent;
+      ctx.fillStyle = color;
       ctx.beginPath();
       ctx.arc(dotX, dotY, lineW * 0.9, 0, Math.PI * 2);
       ctx.fill();
@@ -148,36 +165,35 @@
       ctx.fill();
     }
 
-    ctx.strokeStyle = accent;
-
-    if (state.showDual && state.heatSetF !== null && state.coolSetF !== null) {
-      var heatA = tempToAngle(state.heatSetF);
-      var coolA = tempToAngle(state.coolSetF);
-      var a1 = Math.min(heatA, coolA);
-      var a2 = Math.max(heatA, coolA);
+    function strokeArc(a1, a2, color) {
+      ctx.strokeStyle = color;
       ctx.beginPath();
       ctx.arc(cx, cy, radius, a1, a2);
       ctx.stroke();
-      drawDot(heatA);
-      drawDot(coolA);
+    }
+
+    /* Dual mode → split fill: heat half (start→heat) in orange,
+       cool half (cool→end) in blue. Dot colors match. */
+    if (state.showDual && state.heatSetF !== null && state.coolSetF !== null) {
+      var heatA = tempToAngle(state.heatSetF);
+      var coolA = tempToAngle(state.coolSetF);
+      strokeArc(DIAL_START, heatA, HEAT());
+      strokeArc(coolA, DIAL_START + DIAL_SWEEP, COOL());
+      drawDot(heatA, HEAT());
+      drawDot(coolA, COOL());
     } else if (state.showSingle && state.singleSetF !== null) {
       var sA = tempToAngle(state.singleSetF);
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius, DIAL_START, sA);
-      ctx.stroke();
-      drawDot(sA);
+      var sColor = getModeColor();
+      strokeArc(DIAL_START, sA, sColor);
+      drawDot(sA, sColor);
     } else if (state.activeMode === 'heat' && state.heatSetF !== null) {
       var hA = tempToAngle(state.heatSetF);
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius, DIAL_START, hA);
-      ctx.stroke();
-      drawDot(hA);
+      strokeArc(DIAL_START, hA, HEAT());
+      drawDot(hA, HEAT());
     } else if (state.activeMode === 'cool' && state.coolSetF !== null) {
       var cA = tempToAngle(state.coolSetF);
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius, DIAL_START, cA);
-      ctx.stroke();
-      drawDot(cA);
+      strokeArc(DIAL_START, cA, COOL());
+      drawDot(cA, COOL());
     }
 
     /* Current temp marker (thin perpendicular tick) */
@@ -207,55 +223,78 @@
     var heatEl = document.getElementById('climate-heat-value');
     var coolEl = document.getElementById('climate-cool-value');
     var singleEl = document.getElementById('climate-single-value');
+    var dialHeatEl = document.getElementById('climate-dial-heat-val');
+    var dialCoolEl = document.getElementById('climate-dial-cool-val');
+    var sensorCurrent = document.getElementById('climate-sensor-current');
 
-    if (current) current.textContent = state.currentTempF !== null
-      ? (state.currentTempF).toFixed(0) : '--';
-    if (heatEl) heatEl.textContent = state.heatSetF !== null
-      ? (state.heatSetF).toFixed(0) : '--';
-    if (coolEl) coolEl.textContent = state.coolSetF !== null
-      ? (state.coolSetF).toFixed(0) : '--';
-    if (singleEl) singleEl.textContent = state.singleSetF !== null
-      ? (state.singleSetF).toFixed(0) : '--';
+    var curTxt = state.currentTempF !== null ? (state.currentTempF).toFixed(0) : '--';
+    if (current) current.textContent = curTxt;
+    if (sensorCurrent) sensorCurrent.textContent = curTxt + '°';
 
-    /* Dial-center setpoint summary */
+    var heatTxt = state.heatSetF !== null ? (state.heatSetF).toFixed(0) : '--';
+    var coolTxt = state.coolSetF !== null ? (state.coolSetF).toFixed(0) : '--';
+    var singleTxt = state.singleSetF !== null ? (state.singleSetF).toFixed(0) : '--';
+
+    if (heatEl) heatEl.textContent = heatTxt;
+    if (coolEl) coolEl.textContent = coolTxt;
+    if (singleEl) singleEl.textContent = singleTxt;
+    if (dialHeatEl) dialHeatEl.textContent = heatTxt;
+    if (dialCoolEl) dialCoolEl.textContent = coolTxt;
+
+    /* Single-readout (used when not dual) */
     var showVal = null;
-    var showLabel = '—';
-    if (state.showDual && state.coolSetF !== null && state.heatSetF !== null) {
-      showLabel = 'Heat / Cool';
-      showVal = state.heatSetF.toFixed(0) + ' / ' + state.coolSetF.toFixed(0);
-    } else if (state.showSingle && state.singleSetF !== null) {
-      showLabel = 'Set'; showVal = state.singleSetF.toFixed(0);
+    var showLabel = 'Set';
+    var centerColor = getAccentColor();
+    if (state.showSingle && state.singleSetF !== null) {
+      showLabel = 'Set'; showVal = singleTxt; centerColor = getModeColor();
     } else if (state.activeMode === 'heat' && state.heatSetF !== null) {
-      showLabel = 'Heat'; showVal = state.heatSetF.toFixed(0);
+      showLabel = 'Heat'; showVal = heatTxt; centerColor = HEAT();
     } else if (state.activeMode === 'cool' && state.coolSetF !== null) {
-      showLabel = 'Cool'; showVal = state.coolSetF.toFixed(0);
+      showLabel = 'Cool'; showVal = coolTxt; centerColor = COOL();
     } else if (state.activeMode === 'off') {
-      showLabel = '—'; showVal = null;
+      showLabel = 'Off'; showVal = null;
     }
     if (setpointLabel) setpointLabel.textContent = showLabel;
-    if (setpointEl) setpointEl.textContent = (showVal !== null) ? showVal : '--';
+    if (setpointEl) {
+      setpointEl.textContent = (showVal !== null) ? showVal : '--';
+      setpointEl.style.color = centerColor;
+    }
   }
 
-  /* ---- Setpoint row + Auto-button visibility ---- */
+  /* ---- Setpoint card + dial-readout visibility ---- */
   function updateSetpointVisibility() {
-    var card = document.getElementById('climate-setpoint-card');
-    var heatRow = document.getElementById('climate-heat-row');
-    var coolRow = document.getElementById('climate-cool-row');
-    var singleRow = document.getElementById('climate-single-row');
-    if (!card) return;
+    var heatCard = document.getElementById('climate-heat-card');
+    var coolCard = document.getElementById('climate-cool-card');
+    var singleCard = document.getElementById('climate-single-card');
+    var cardsWrap = document.getElementById('climate-setpoint-cards');
+    var dialDual = document.getElementById('climate-dial-dual');
+    var dialSingle = document.getElementById('climate-dial-single');
+
+    function show(el, on) { if (el) el.style.display = on ? '' : 'none'; }
 
     if (state.showDual) {
-      card.style.display = '';
-      if (heatRow) heatRow.style.display = '';
-      if (coolRow) coolRow.style.display = '';
-      if (singleRow) singleRow.style.display = 'none';
+      show(heatCard, true);
+      show(coolCard, true);
+      show(singleCard, false);
+      show(dialDual, true);
+      show(dialSingle, false);
+      show(cardsWrap, true);
     } else if (state.showSingle) {
-      card.style.display = '';
-      if (heatRow) heatRow.style.display = 'none';
-      if (coolRow) coolRow.style.display = 'none';
-      if (singleRow) singleRow.style.display = '';
+      show(heatCard, false);
+      show(coolCard, false);
+      show(singleCard, true);
+      show(dialDual, false);
+      show(dialSingle, true);
+      show(cardsWrap, true);
     } else {
-      card.style.display = 'none';
+      /* No setpoint mode flagged — hide all cards, fall back to single readout
+         in dial center driven by activeMode. */
+      show(heatCard, false);
+      show(coolCard, false);
+      show(singleCard, false);
+      show(dialDual, false);
+      show(dialSingle, true);
+      show(cardsWrap, false);
     }
   }
 
@@ -293,7 +332,7 @@
 
   /* ---- Visibility subscriptions ---- */
   function initVisibility() {
-    /* d970 — Auto mode button show/hide */
+    /* d970 — Show Auto mode button (high = visible). */
     CrComLib.subscribeState('b', '970', function (val) {
       var visible = (val === true || val === 'true');
       var autoBtn = document.getElementById('climate-mode-auto');
@@ -312,6 +351,40 @@
       updateSetpointVisibility();
       updateReadouts();
       drawDial();
+    });
+  }
+
+  /* ---- Humidity (n967, raw %) ---- */
+  function initHumidity() {
+    CrComLib.subscribeState('n', '967', function (val) {
+      var n = parseInt(val, 10);
+      var row = document.getElementById('climate-sensor-humidity-row');
+      var valEl = document.getElementById('climate-sensor-humidity');
+      if (!row || !valEl) return;
+      if (isFinite(n) && n > 0) {
+        valEl.textContent = n + '%';
+        row.classList.remove('hidden');
+      } else {
+        valEl.textContent = '--%';
+        row.classList.add('hidden');
+      }
+    });
+  }
+
+  /* ---- Outdoor temp (from weather.js) ---- */
+  function applyWeather(payload) {
+    var row = document.getElementById('climate-sensor-outdoor-row');
+    var valEl = document.getElementById('climate-sensor-outdoor');
+    if (!row || !valEl || !payload) return;
+    if (isFinite(payload.tempF)) {
+      valEl.textContent = payload.tempF + '°';
+      row.classList.remove('hidden');
+    }
+  }
+  function initOutdoor() {
+    if (window._currentWeather) applyWeather(window._currentWeather);
+    window.addEventListener('weather:update', function (ev) {
+      applyWeather(ev && ev.detail);
     });
   }
 
@@ -359,7 +432,7 @@
     });
   }
 
-  /* ---- Room drawer (matches shades pattern) ---- */
+  /* ---- Room drawer (matches lighting/shades pattern) ---- */
   function initRoomButtons() {
     var rooms = document.querySelectorAll('#climate-room-list .drawer-room');
 
@@ -369,6 +442,16 @@
         var showJoin    = room.getAttribute('data-show');
         var climateJoin = room.getAttribute('data-climate');
         var labelJoin   = room.getAttribute('data-label');
+        var tempJoin    = room.getAttribute('data-temp');
+
+        /* Inject per-zone temp badge (matches lighting/shades) */
+        var countEl = room.querySelector('.drawer-room-count');
+        if (!countEl) {
+          countEl = document.createElement('span');
+          countEl.className = 'drawer-room-count';
+          countEl.textContent = '';
+          room.appendChild(countEl);
+        }
 
         room.addEventListener('click', function () {
           CrComLib.publishEvent('b', selectJoin, true);
@@ -389,21 +472,39 @@
           var nameEl = room.querySelector('.drawer-room-name');
           if (nameEl) nameEl.textContent = val || '';
         });
+
+        /* Per-zone current temp — analog n931-n960.
+           Raw °F (e.g. 76) or ×10 tenths (e.g. 760) — values ≥ 200 are divided by 10. */
+        if (tempJoin) {
+          CrComLib.subscribeState('n', tempJoin, function (val) {
+            var n = parseInt(val, 10) || 0;
+            if (n <= 0) {
+              countEl.textContent = '';
+              room.classList.remove('has-count');
+              return;
+            }
+            if (n >= 200) n = Math.round(n / 10);
+            countEl.textContent = n + '°';
+            room.classList.add('has-count');
+          });
+        }
       })(rooms[i]);
     }
   }
 
   /* ---- Init ---- */
   document.addEventListener('DOMContentLoaded', function () {
-    var roomToggle = document.getElementById('climate-room-toggle');
+    var roomPill = document.getElementById('climate-room-pill');
     var overlay = document.getElementById('climate-drawer-overlay');
-    if (roomToggle) roomToggle.addEventListener('click', toggleDrawer);
+    if (roomPill) roomPill.addEventListener('click', toggleDrawer);
     if (overlay) overlay.addEventListener('click', closeDrawer);
 
     initTstatName();
     initTemps();
     initStateButtons();
     initVisibility();
+    initHumidity();
+    initOutdoor();
     initRoomButtons();
     updateSetpointVisibility();
 
@@ -411,6 +512,7 @@
     CrComLib.subscribeState('s', '961', function (val) {
       currentRoomName = val || '';
       updateClimateHeader();
+      updateRoomPill();
     });
 
     /* Initial paint + redraw on resize / theme change */
